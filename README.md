@@ -26,10 +26,6 @@ de données et au calcul. Les données qui sont entreposées dans `/scratch` ser
 périodiquement. Les utilisateurs doivent donc transférer les résultats essentiels de leurs analyses 
 vers `/data` ou vers `/home` pour l'entreposage à plus long terme.
 
-/dev/sda3       3.0T   76K  2.9T   1% /home
-/dev/sda4       5.0T   28K  4.8T   1% /data
-/dev/sda5       9.2T   28K  8.7T   1% /scratch
-
 ## Organisation du Github du cours
 
 Les travaux sont organisés par thème dans des dossiers:

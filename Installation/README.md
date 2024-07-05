@@ -1,6 +1,6 @@
 # Installation des programmes sur le serveur du cours
 
-**Les étudiants du cours ne doivent pas faire rouler ces scripts. Si vous faites rouler un de ces scripts **
+**Les étudiants du cours ne doivent pas faire rouler ces scripts. Si vous faites rouler un de ces scripts** 
 **volontairement ou par erreur, il y aura des conséquences!**
 
 Ce dossier contient des scripts pour l'installation des programmes sur le serveur du cours. Il sert 
