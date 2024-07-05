@@ -1,6 +1,6 @@
 # Télécharger des données publiques HybSeq
 
-### Trouver des données sur le SRA
+## Trouver des données sur le SRA
 
 Le [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra) est le plus important dépôt de séquences 
 Illumina. Il est utilisé pour archiver les données brutes produites dans presques toutes les études 
@@ -35,12 +35,12 @@ rsync --progress $LOCAL/SraRunInfo.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REM
 
 ```
 
-### Code to create a small HybSeq test dataset
+## Télécharger des données depuis le SRA
 
 Le code ci-dessous va chercher les données Illumina pour 7 échantillons utilisés dans Tiley et al. (2024), 
 incluant deux allotétraploïdes et cinq diploïdes:  
 ```bash
-SRC_SRA=/opt/sratoolkit.3.1.0-ubuntu64/bin
+SRC_SRA=/opt/sratoolkit.3.1.1-ubuntu64/bin
 WD=/data/$USER/HybSeqTest
 SCRATCH=/scratch/$USER
 ACCLIST_PATH=/home/$USER
@@ -70,39 +70,39 @@ for i in "${TARGETS[@]}"
      echo $Acc_i >> SraAccList.csv
   done
 
-## 
-## Télécharger les
-echo "$SRC_SRA/prefetch --option-file AccList.test > prefetch.log
-  $SRA_SRC/fasterq-dump -t $SCRATCH --split-files SRR* > fasterq-dump.log
-  
-  
-## when done, dump to fastq files
-nohup $SRA_SRC/fasterq-dump -t $SCRATCH --split-files SRR* > fasterq-dump.log &
 
-## check progress on task
-top -u $USER
 
-## wait until done
 
-## when done, compress the fastq files and delete the prefetch folders
-nohup gzip *.fastq &
-
-## wait until done
-
-## when done, cleanup
-mv *.fastq.gz ./reads/
-rm -r SRR*/ nohup.out
-
-## include species name in read file name
-cd $WD/reads
+## Shell script pour télécharger les données depuis SRA
+echo "$SRC_SRA/prefetch --option-file SraAccList.csv
+$SRC_SRA/fasterq-dump -t $SCRATCH --split-files *RR*
+gzip *.fastq
+rm -r *RR*/
 for i in *_1.fastq.gz
-  do
-    NAME=$(basename $i _1.fastq.gz)
-    SP=$(grep "$NAME" $WD/SraRunInfo.csv | cut -d',' -f29 | sed 's/ /_/g')
-    mv ${NAME}_1.fastq.gz ${SP}_${NAME}_1.fastq.gz
-    mv ${NAME}_2.fastq.gz ${SP}_${NAME}_2.fastq.gz
-  done
+do
+  NAME=\$(basename \$i _1.fastq.gz)
+  SP=\$(grep "\$NAME" SraRunInfo.csv | cut -d',' -f29 | sed 's/ /_/g')
+  mv \${NAME}_1.fastq.gz \${SP}_\${NAME}_1.fastq.gz
+  mv \${NAME}_2.fastq.gz \${SP}_\${NAME}_2.fastq.gz
+done" > dataFetch.sh
+
+## Rouler le shell script
+chmod +x ./dataFetch.sh
+nohup ./dataFetch.sh > dataFetch.log &
 
 ```
 
+Maintenant, il faut être patient car le serveur prendra plusieurs minutes (voir heures) pour télécharger 
+les données. Le téléchargement se fait "en background" grâce à la commande `nohup [...] &`. Le progrès est 
+inscrit dans un fichier ".log", nommé ici `dataFetch.log`. Il est possible de suivre le progrès en temps 
+réel en tapant `tail -f dataFetch.log` dans le dossier où les données sont téléchargées. Pour quitter le 
+suivi avec tail -f, il faut taper Ctrl+C.
+
+Lorsque le téléchargement est terminé, vérifier combien de fichiers et quelle est leur taille à l'aide de 
+la commande `ls -sh`.
+
+**Question:** Pourquoi y a-t-il plus de fichiers téléchargés que de nombre d'échantillons?
+
+**Questions:** Quels échantillons ont une meilleure couverture de séquençage? Quels ont une moins bonne 
+couverture? Quelles sont les conséquences attendues d'une moins bonne couverture?
 
