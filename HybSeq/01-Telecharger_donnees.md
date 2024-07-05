@@ -8,41 +8,57 @@ phylogénomiques, incluant celles que nous allons utiliser pour tester les méth
 Voici un petit guide pour obtenir les données de 
 [Tiley et al. (2024)](https://doi.org/10.1093/sysbio/syae024) depuis le SRA:  
 
-1. Search through Tiley et al. (2024) for a SRA study number. At the end of the paper, they mention that the study number is in the supplementary table S1.  
-2. Go to [https://www.ncbi.nlm.nih.gov/sra/](https://www.ncbi.nlm.nih.gov/sra/)  
-3. Search terms: `SRP316248[study]`, which is the SRA study number  
-4. Click Send to -> File -> Accession list   
-5. Click Send to -> File -> RunInfo  
+1. Feuilleter Tiley et al. (2024) en cherchant un numéro d'étude SRA. À la fin de l'article, ils mentionnent 
+que leur numéro d'étude SRA est dans le tableau S1 du matériel supplémentaire.  
+2. Naviguer vers [https://www.ncbi.nlm.nih.gov/sra/](https://www.ncbi.nlm.nih.gov/sra/)  
+3. Rechercher le terme: `SRP316248[study]`, qui est le numéro d'étude SRA  
+4. Cliquer sur *Send to -> File -> Accession list*   
+5. Cliquer sur *Send to -> File -> RunInfo*  
 
-Il faut ensuite transférer les fichiers `SraRunInfo.csv` et `SraAccList.csv` sur le serveur.
-The code below is an example of how this could be transferred (but alternative methods exist):
+Il faut ensuite transférer les fichiers `SraRunInfo.csv` et `SraAccList.csv` sur le serveur. Pour ce faire, 
+vous pouvez utiliser plusieurs approches. L'approche que je préconise est d'envoyer les fichiers avec la 
+commande `rsync`, qui doit être **utilisée à partir de votre machine locale, non pas du serveur**. 
+En d'autres mots, il faut ouvrir un terminal Unix à partir de votre ordinateur, ne pas vous connecter au 
+serveur. À partir de votre ordinateur, tapez les lignes ci-dessous, en modifiant de façon appropriée les 
+variables qui indiquent le chemin vers les fichiers enregistrés sur votre ordinateur et le chemin d'arrivée 
+sur le serveur de calcul:  
 ```bash
-## run this on local machine to send files to remote cluster
-LOCAL=~/Downloads
-REMOTE=/home/bourret/projects/def-bourret/shared/test/HybSeqTest
+## Rouler le code ci-dessous à partir de votre machine locale
 
-cd $LOCAL
-rsync --progress SraAccList.csv bourret@beluga.computecanada.ca:$REMOTE/
-rsync --progress SraRunInfo.csv bourret@beluga.computecanada.ca:$REMOTE/
+## Modifier les variables ci-dessous de façon appropriée
+USERNAME=elbourret
+LOCAL=/mnt/c/Users/p0948315/Downloads
+REMOTE=/home/$USERNAME
+
+rsync --progress $LOCAL/SraAccList.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
+rsync --progress $LOCAL/SraRunInfo.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
 
 ```
 
 ### Code to create a small HybSeq test dataset
 
-The code below fetches Illumina read files for 7 accessions used in Tiley et al. (2024), including two allotetraploids involving some of the other species:
-
+Le code ci-dessous va chercher les données Illumina pour 7 échantillons utilisés dans Tiley et al. (2024), 
+incluant deux allotétraploïdes et cinq diploïdes:  
 ```bash
-SRA_SRC=/project/def-bourret/shared/progs/sratoolkit.3.1.0-ubuntu64/bin
-WD=/home/bourret/projects/def-bourret/shared/test/HybSeqTest
-SCRATCH=/home/$USER/scratch
+SRC_SRA=/opt/sratoolkit.3.1.0-ubuntu64/bin
+WD=/data/$USER/HybSeqTest
+SCRATCH=/scratch/$USER
+ACCLIST_PATH=/home/$USER
 
-cd $WD
+mkdir -p $WD/reads
+mkdir -p $SCRATCH
+cd $WD/reads
 
-mkdir -p reads
+ln -s $ACCLIST_PATH/SraRunInfo.csv
+ln -s $ACCLIST_PATH/SraAccList.csv
 
-TARGETS=("Dryopteris campyloptera" "Dryopteris celsa" "Dryopteris expansa" "Dryopteris goldieana" "Dryopteris intermedia" "Dryopteris ludoviciana" "Polystichum munitum")
-rm AccList.test
-touch AccList.test
+## Sélectionner seulement 1 échantillon par espèce pour seulement les espèces ci-dessous:
+## Si vous vouliez télécharger les données de tous les échantillons dans SraAccList.csv,
+## alors il ne faut pas rouler les lignes de code ci-dessous (jusqu'au prochain commentaire)
+TARGETS=("Dryopteris campyloptera" "Dryopteris celsa" "Dryopteris expansa" "Dryopteris goldieana" \
+  "Dryopteris intermedia" "Dryopteris ludoviciana" "Polystichum munitum")
+rm SraAccList.csv
+touch SraAccList.csv
 for i in "${TARGETS[@]}"
   do
      echo "Getting reads for $i"
@@ -51,14 +67,15 @@ for i in "${TARGETS[@]}"
        grep -o '^SRR[0-9]*' | 
        head -1)
      echo "$Acc_i"
-     echo $Acc_i >> AccList.test
+     echo $Acc_i >> SraAccList.csv
   done
 
-## prefetch the data
-nohup $SRA_SRC/prefetch --option-file AccList.test > prefetch.log &
-
-## wait until done
-
+## 
+## Télécharger les
+echo "$SRC_SRA/prefetch --option-file AccList.test > prefetch.log
+  $SRA_SRC/fasterq-dump -t $SCRATCH --split-files SRR* > fasterq-dump.log
+  
+  
 ## when done, dump to fastq files
 nohup $SRA_SRC/fasterq-dump -t $SCRATCH --split-files SRR* > fasterq-dump.log &
 
