@@ -18,8 +18,9 @@ sudo rm ./Miniconda3-latest-Linux-x86_64.sh
 
 ```
 
-Making sure that conda initializes at startup requires a `~/.profile` file that will source `~/.bashrc` at 
-startup. For some reason, it was not there on the server initially. Create it like this:  
+S'assurer que conda s'initialise au démarrage nécessite un fichier `~/.profile` qui sourcera 
+`~/.bashrc` à démarrer. Pour une raison quelconque, il n'était pas initialement présent sur le serveur. 
+Le créer comme ceci :  
 ```bash
 echo 'if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
@@ -30,7 +31,7 @@ fi' >> /home/$USER/.profile
 
 ```
 
-Then, install some basic python programs in the base environment:
+Ensuite, activer les canaux de base pour l'installation de paquets python:  
 ```bash
 source $HOME/.bashrc
 conda activate base
@@ -40,7 +41,7 @@ conda config --add channels conda-forge
 
 ```
 
-## Installing conda environments and programs
+## Créer des environnements conda
 
 Creating environments and installing software inside those environments:  
 ```bash
@@ -50,7 +51,10 @@ sudo /opt/miniconda/bin/conda create -y -n newick_utils -c bioconda newick_utils
 ## hybpiper
 sudo /opt/miniconda/bin/conda create -y -n hybpiper -c bioconda -c conda-forge -c chrisjackson-pellicle \
   hybpiper
-  
+
+## biopython
+sudo /opt/miniconda/bin/conda create -y -n bio -c conda-forge biopython
+
 ```
 
 !!! code below is not run AND NEEDS TO BE ADJUSTED TO THIS SERVER !!!
@@ -60,9 +64,6 @@ sudo /opt/miniconda/bin/conda create -y -n hybpiper -c bioconda -c conda-forge -
 $SRC/conda create -n getOrganelle -c bioconda getorganelle
 conda activate getOrganelle
 get_organelle_config.py --config-dir $WD/getOrganelle --add embplant_pt,embplant_mt,embplant_nr
-
-## HTStream
-$SRC/conda create -n htstream -c bioconda htstream
 
 ## RagTag
 $SRC/conda create -n ragtag -c bioconda ragtag

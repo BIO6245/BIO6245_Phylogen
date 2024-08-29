@@ -17,7 +17,7 @@ que leur numéro d'étude SRA est dans le tableau S1 du matériel supplémentair
 
 Il faut ensuite transférer les fichiers `SraRunInfo.csv` et `SraAccList.csv` sur le serveur. Pour ce faire, 
 vous pouvez utiliser plusieurs approches. L'approche que je préconise est d'envoyer les fichiers avec la 
-commande `rsync`, qui doit être **utilisée à partir de votre machine locale, non pas du serveur**. 
+commande `rsync`, qui doit être **executée à partir de votre machine locale, non pas du serveur**. 
 En d'autres mots, il faut ouvrir un terminal Unix à partir de votre ordinateur, ne pas vous connecter au 
 serveur. À partir de votre ordinateur, tapez les lignes ci-dessous, en modifiant de façon appropriée les 
 variables qui indiquent le chemin vers les fichiers enregistrés sur votre ordinateur et le chemin d'arrivée 
@@ -25,10 +25,11 @@ sur le serveur de calcul:
 ```bash
 ## Rouler le code ci-dessous à partir de votre machine locale
 
-## Modifier les variables ci-dessous de façon appropriée
+## Ajuster les variables ci-dessous de façon appropriée
 USERNAME=elbourret
 LOCAL=/mnt/c/Users/p0948315/Downloads
 REMOTE=/home/$USERNAME
+
 
 rsync --progress $LOCAL/SraAccList.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
 rsync --progress $LOCAL/SraRunInfo.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
@@ -38,28 +39,31 @@ rsync --progress $LOCAL/SraRunInfo.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REM
 ## Télécharger des données depuis le SRA
 
 Le code ci-dessous va chercher les données Illumina pour 7 échantillons utilisés dans Tiley et al. (2024), 
-incluant deux allotétraploïdes et cinq diploïdes:  
+incluant deux allotétraploïdes et cinq diploïdes. Les commandes ci-dessous doivent être roulées sur le 
+serveur de calcul, cette fois:  
 ```bash
+## Ajuster les variables ci-dessous de façon appropriée
 SRC_SRA=/opt/sratoolkit.3.1.1-ubuntu64/bin
 WD=/data/$USER/HybSeqTest
 SCRATCH=/scratch/$USER
 ACCLIST_PATH=/home/$USER
 
+
 mkdir -p $WD/reads
 mkdir -p $SCRATCH
 cd $WD/reads
 
-ln -s $ACCLIST_PATH/SraRunInfo.csv
-ln -s $ACCLIST_PATH/SraAccList.csv
+cp $ACCLIST_PATH/SraRunInfo.csv .
+cp $ACCLIST_PATH/SraAccList.csv .
 
-## Sélectionner seulement 1 échantillon par espèce pour seulement les espèces ci-dessous:
+## Sélectionner seulement 1 échantillon par espèce pour gérer moins de données à la fois:
 ## Si vous vouliez télécharger les données de tous les échantillons dans SraAccList.csv,
 ## alors il ne faut pas rouler les lignes de code ci-dessous (jusqu'au prochain commentaire)
-TARGETS=("Dryopteris campyloptera" "Dryopteris celsa" "Dryopteris expansa" "Dryopteris goldieana" \
-  "Dryopteris intermedia" "Dryopteris ludoviciana" "Polystichum munitum")
+SELECTED_ACCESSIONS=("SRR14320989" "SRR14320984" "SRR14321005" "SRR14321002" \
+  "SRR14320992" "SRR14320997" "SRR14320998")
 rm SraAccList.csv
 touch SraAccList.csv
-for i in "${TARGETS[@]}"
+for i in "${SELECTED_ACCESSIONS[@]}"
   do
      echo "Getting reads for $i"
      Acc_i=$(grep "$i" SraRunInfo.csv | 
@@ -73,8 +77,9 @@ for i in "${TARGETS[@]}"
 
 
 
+
 ## Shell script pour télécharger les données depuis SRA
-echo "$SRC_SRA/prefetch --option-file SraAccList.csv
+echo "$SRC_SRA/prefetch --verify no --option-file SraAccList.csv
 $SRC_SRA/fasterq-dump -t $SCRATCH --split-files *RR*
 gzip *.fastq
 rm -r *RR*/
@@ -101,8 +106,13 @@ suivi avec tail -f, il faut taper Ctrl+C.
 Lorsque le téléchargement est terminé, vérifier combien de fichiers et quelle est leur taille à l'aide de 
 la commande `ls -sh`.
 
-**Question:** Pourquoi y a-t-il plus de fichiers téléchargés que de nombre d'échantillons?
+- **Question:** Pourquoi y a-t-il plus de fichiers téléchargés que de nombre d'échantillons?
 
-**Questions:** Quels échantillons ont une meilleure couverture de séquençage? Quels ont une moins bonne 
+- **Questions:** Quels échantillons ont une meilleure couverture de séquençage? Quels ont une moins bonne 
 couverture? Quelles sont les conséquences attendues d'une moins bonne couverture?
+
+
+Regarder aussi le contenu de quelques fichiers à l'aide de la commande `zcat *.fastq.gz | more`.
+
+- **Question:** Que signifient chacune des 4 lignes associées à chaque lecture Illumina?
 
