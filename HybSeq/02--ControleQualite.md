@@ -41,11 +41,11 @@ Pour télécharger les données sur votre machine locale, **exécutez la command
 ## Rouler le code ci-dessous à partir de votre machine locale
 
 ## Ajuster les variables ci-dessous de façon appropriée
-USERNAME=elbourret
+CLUSTER_USERNAME=elbourret
 LOCAL=/mnt/c/Users/p0948315/Downloads
-REMOTE=/scratch/$USERNAME/HybSeqTest/reads/qc_before
+REMOTE=/scratch/$CLUSTER_USERNAME/HybSeqTest/reads/qc_before
 
-rsync --progress --recursive $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE $LOCAL/
+rsync --progress --recursive $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE $LOCAL/
 
 ```
 

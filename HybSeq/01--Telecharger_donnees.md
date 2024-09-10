@@ -26,13 +26,13 @@ sur le serveur de calcul:
 ## Rouler le code ci-dessous à partir de votre machine locale
 
 ## Ajuster les variables ci-dessous de façon appropriée
-USERNAME=elbourret
+CLUSTER_USERNAME=elbourret
 LOCAL=/mnt/c/Users/p0948315/Downloads
-REMOTE=/home/$USERNAME
+REMOTE=/home/$CLUSTER_USERNAME
 
 
-rsync --progress $LOCAL/SraAccList.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
-rsync --progress $LOCAL/SraRunInfo.csv $USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
+rsync --progress $LOCAL/SraAccList.csv $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
+rsync --progress $LOCAL/SraRunInfo.csv $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
 
 ```
 
