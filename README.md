@@ -39,8 +39,10 @@ Les travaux sont organisés par thème dans des dossiers:
 ## T.P. 1: Télécharger, assembler et aligner des séquences
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
-1. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)
-2. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)
-3. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)
-4. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)
+1. [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)
+2. [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)
+3. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)
+4. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)
+5. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)
+6. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)
 
