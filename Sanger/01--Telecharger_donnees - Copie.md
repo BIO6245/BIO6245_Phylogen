@@ -29,7 +29,7 @@ fougères *Dryopteris*, ainsi qu'un hors-groupe du genre *Polystichum*.
 
 Dans votre dossier de Téléchargements, vous devriez avoir un fichier nommé "sequence.fasta" qui contient 
 l'ensemble des séquences que vous venez de télécharger de Genbank. Ouvrez ce fichier à l'aide d'un éditeur 
-de texte, comme par exemple Notepad, Notepad++, TextWrangler, SublimeText, etc. **N'ouvrez pas le fichier **
+de texte, comme par exemple Notepad, Notepad++, TextWrangler, SublimeText, etc. **N'ouvrez pas le fichier** 
 **dans Word**, car cela risque de créer des problèmes de formattage à la sauvegarde.
 
 Examinez le format du fichier. Vous pouvez télécharger les mêmes séquences en format Genbank et l'ouvrir de 
