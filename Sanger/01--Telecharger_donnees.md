@@ -13,7 +13,7 @@ Vous allez monter une matrice de séquences du gène plastidique matK pour quelq
 fougères *Dryopteris*, ainsi qu'un hors-groupe du genre *Polystichum*.  
 
 1. Dans le menu déroulant à côté de "Search", sélectionnez "Nucleotide".  
-2. Tapez dans la boite de recherche "Dryopteris Polystichum matK".  
+2. Tapez dans la boite de recherche "(Dryopteris OR Polystichum) AND matK".  
 3. Cochez une seule séquence pour chacune des espèces suivantes:  
   - *Dryopteris campyloptera*;  
   - *Dryopteris celsa*;  
