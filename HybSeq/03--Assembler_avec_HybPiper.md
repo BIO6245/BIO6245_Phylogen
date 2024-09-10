@@ -47,9 +47,8 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES hybpiper.sbatch
 
 ```
 
-
-!!! Check everything is fine and continue from here !!!
-
+Pendant que vous attendez les résultats de cette analyse, lisez le wiki de HybPiper pour mieux comprendre
+les étapes de cette analyse.
 
 ### Contrôle qualité de l'assemblage HybPiper
 
@@ -107,6 +106,8 @@ quelques échantillons? Trouver au moins deux raisons techniques, et deux raison
 
 
 
+
+!!!! Ignorer le code ci-dessous !!!!
 
 !!!! Code ci-dessous pas encore roulé et ajusté pour le cours !!!!
 

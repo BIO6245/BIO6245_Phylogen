@@ -74,10 +74,6 @@ for i in "${SELECTED_ACCESSIONS[@]}"
      echo $Acc_i >> SraAccList.csv
   done
 
-
-
-
-
 ## Shell script pour télécharger les données depuis SRA
 echo "$SRC_SRA/prefetch --verify no --option-file SraAccList.csv
 $SRC_SRA/fasterq-dump -t $SCRATCH --split-files *RR*
@@ -111,8 +107,6 @@ la commande `ls -sh`.
 - **Questions:** Quels échantillons ont une meilleure couverture de séquençage? Quels ont une moins bonne 
 couverture? Quelles sont les conséquences attendues d'une moins bonne couverture?
 
-
 Regarder aussi le contenu de quelques fichiers à l'aide de la commande `zcat *.fastq.gz | more`.
 
 - **Question:** Que signifient chacune des 4 lignes associées à chaque lecture Illumina?
-

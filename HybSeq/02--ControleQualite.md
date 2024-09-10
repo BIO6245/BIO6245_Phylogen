@@ -6,7 +6,7 @@ Les étapes suivantes se feront toutes sur l'espace `/scratch` étant donné qu'
 (qui doivent être entreposées sur `/data`), mais d'analyses de données qui doivent se faire sur le 
 `/scratch`. Pour ne pas avoir à faire des copies des données Illumina, nous allons faire un "lien" 
 vers ces données avec la commande `ln -s`. Nous allons ensuite effectuer un premier contrôle qualité 
-à l'aide de FastQC.  
+à l'aide de [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
@@ -29,9 +29,11 @@ tail -f ./qc_before/fastqc.log
 
 ```
 
+Pendant que l'analyse FastQC progresse, vous pouvez lire la documentation sur le site web de FastQC 
+vous aider à interpréter les résultats de cette analyse.
 
-Ensuite, il faut télécharger les fichiers sortis de FastQC et les visualer sur son ordinateur local 
-pour évaluer la qualité des données brutes.
+Ensuite, lorsque FastQC a terminé d'analyser chaque échantillon, il faut télécharger les fichiers sortis 
+de FastQC et les visualer sur son ordinateur local pour évaluer la qualité des données brutes.
 
 Pour télécharger les données sur votre machine locale, **exécutez la commande ci-dessous à partir de** 
 **votre machine locale, et non pas du serveur.** N'oubliez pas d'ajuster les chemins vers les fichiers.  
@@ -55,7 +57,27 @@ par un. À l'intérieur de chaque rapport, regardez chacune des sections. **Vous
 
 ## Dédupliquer, rogner et filtrer les données Illumina
 
+Les séquences Illumina (ci-après nommées "lectures", traduction de "reads") contiennent des erreurs 
+qu'il faut éliminer pour éviter d'introduire ces erreurs dans les données finales que nous analyseront 
+dans ce cours.
 
+Pour préparer les échantillons pour le séquençage Illumina, on utilise généralement de nombreux cycles 
+d'amplification PCR. Cela mène à des lectures exactement identiques, qu'on nomme "duplicats", qui 
+n'apportent pas d'information supplémentaire et peuvent causer certains biais lors de l'analyse. Ces
+duplicats PCR seront retirés, par un processus qu'on nomme la "déduplication", à l'aide du programme 
+[htStream_SuperDeduper](https://s4hts.github.io/HTStream/).
+
+On doit ensuite retirer les nucléotides de faible qualité dans les lectures restantes, ce qu'on nomme 
+le "rognage". Le processus utilise les scores de qualité de séquence offerts par Illumina pour éliminer 
+les bases qui ont une plus faible qualité. On obtient alors des lectures qui sont plus courtes, mais de
+meilleure qualité en moyenne. Toutefois, si certaines lectures sont de très mauvaises qualité, le rognage 
+réduira tellement la longueur de la lecture qu'elle ne sera plus d'aucune utilité. Par exemple, si une 
+lecture ne fait que 3-4pb de longueur, ce ne sera pas utilisable car impossible à aligner étant donné que
+c'est trop court. Il faut alors "filtrer" les lectures qui sont trop courtes après le rognage. Nous 
+utiliserons le très populaire programme [trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) pour 
+le rognage et la filtration des lectures Illumina.
+
+Voici le code pour effectuer toutes ces étapes (déduplication, rognage, filtration) sur tous les échantillons:
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
@@ -118,5 +140,10 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES QCnTrim.sbatch
 ```
 
 Une fois cela fait, rouler encore une fois FastQC sur les fichiers dédupliqués (dans le dossier `./dedup/`) 
-et sur les fichiers finaux qui sont aussi rognés (dans le dossier `./trim/`). Quelles sont les différences 
-à chaque étape?
+et sur les fichiers finaux qui sont aussi rognés (dans le dossier `./trim/`). 
+
+- **Question:** Quelles sont les différences entre les données brutes, les données dédupliquées, et les 
+données finales qui sont dédupliquées, rognées et filtrées?
+
+- **Question:** Était-ce utile de dédupliquer, rogner et filtrer les données? Pourquoi?
+

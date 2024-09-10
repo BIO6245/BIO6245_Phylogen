@@ -20,15 +20,32 @@ sudo rm ./Miniconda3-latest-Linux-x86_64.sh
 
 S'assurer que conda s'initialise au démarrage nécessite un fichier `~/.profile` qui sourcera 
 `~/.bashrc` à démarrer. Pour une raison quelconque, il n'était pas initialement présent sur le serveur. 
-Le créer comme ceci :  
+Le créer comme ceci (en tant que root) :  
 ```bash
-echo 'if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
+## for each user
+for u in /home/*/;
+  do
+  
+    ## get username from home path
+    CURRENT_USER=$(basename $u)
+	echo $CURRENT_USER
+	## create a .profile file
+    echo 'if [ -n "$BASH_VERSION" ]; then
+      # include .bashrc if it exists
+      if [ -f "$HOME/.bashrc" ]; then
         . "$HOME/.bashrc"
-    fi
-fi' >> /home/$USER/.profile
-
+      fi
+    fi' > $u/.profile
+	
+	## copy the .bashrc file from elbourret
+	cp -f /home/elbourret/.bashrc $u/.bashrc
+	
+	## change ownership of the newly created files
+    chown $CURRENT_USER: $u/.profile
+	chown $CURRENT_USER: $u/.bashrc
+	
+  done
+  
 ```
 
 Ensuite, activer les canaux de base pour l'installation de paquets python:  

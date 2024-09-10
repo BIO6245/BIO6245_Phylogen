@@ -35,3 +35,12 @@ Les travaux sont organisés par thème dans des dossiers:
 - Sanger: assemblage et analyse phylogénétique de données issues de séquençage Sanger
 
 À l'intérieur de chaque dossier, un tutoriel vous guidera à travers les étapes d'analyse sur le serveur.
+
+## T.P. 1: Télécharger, assembler et aligner des séquences
+
+Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
+1. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)
+2. HybSeq/02--ControleQualite.md
+3. HybSeq/03--Assembler_avec_HybPiper.md
+4. HybSeq/04--Alignement.md
+
