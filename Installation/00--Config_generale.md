@@ -1,4 +1,4 @@
-# Configuration générale du serveur
+sudo res# Configuration générale du serveur
 
 ## Permissions pour dossiers partagés
 
@@ -33,10 +33,20 @@ getfacl /data/hybseqRefs
 
 Voici une liste des paquets installés
 ```bash
+## Java
 sudo apt-get install default-jre default-jdk
+
+## CMake to help compile stuff
 sudo apt-get install cmake
+
+## Boost libraries
 sudo apt-get install libboost-dev libboost-system-dev libboost-program-options-dev libboost-iostreams-dev \
   libboost-filesystem-dev
+
+## Julia
+sudo apt-get install snapd
+sudo snap install julia --classic
+
 
 ```
 

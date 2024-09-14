@@ -47,6 +47,8 @@ SRC_SRA=/opt/sratoolkit.3.1.1-ubuntu64/bin
 WD=/data/$USER/HybSeqTest
 SCRATCH=/scratch/$USER
 ACCLIST_PATH=/home/$USER
+EMAIL=votre.courriel@umontreal.ca
+TIME=6:00:00
 
 
 mkdir -p $WD/reads
@@ -65,7 +67,7 @@ rm SraAccList.csv
 touch SraAccList.csv
 for i in "${SELECTED_ACCESSIONS[@]}"
   do
-     echo "Getting reads for $i"
+     echo "Selecting accession $i"
      Acc_i=$(grep "$i" SraRunInfo.csv | 
        head -1 | 
        grep -o '^SRR[0-9]*' | 
@@ -74,22 +76,47 @@ for i in "${SELECTED_ACCESSIONS[@]}"
      echo $Acc_i >> SraAccList.csv
   done
 
-## Shell script pour télécharger les données depuis SRA
-echo "$SRC_SRA/prefetch --verify no --option-file SraAccList.csv
-$SRC_SRA/fasterq-dump -t $SCRATCH --split-files *RR*
-gzip *.fastq
-rm -r *RR*/
-for i in *_1.fastq.gz
-do
-  NAME=\$(basename \$i _1.fastq.gz)
-  SP=\$(grep "\$NAME" SraRunInfo.csv | cut -d',' -f29 | sed 's/ /_/g')
-  mv \${NAME}_1.fastq.gz \${SP}_\${NAME}_1.fastq.gz
-  mv \${NAME}_2.fastq.gz \${SP}_\${NAME}_2.fastq.gz
-done" > dataFetch.sh
 
-## Rouler le shell script
-chmod +x ./dataFetch.sh
-nohup ./dataFetch.sh > dataFetch.log &
+
+
+## Créer une batch file pour télécharger les données depuis SRA
+echo '#!/bin/bash' > download_sra.sbatch
+echo "#SBATCH --job-name=download_sra
+#SBATCH --output=download_sra-%a.out
+#SBATCH --mail-type=end
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=4G
+#SBATCH --time=$TIME
+
+## select one accession to download
+CURRENT_ACC=\$(head -n \$SLURM_ARRAY_TASK_ID SraAccList.csv | tail -1)
+
+## prepare the download
+$SRC_SRA/prefetch --verify no \$CURRENT_ACC
+
+## download the data
+$SRC_SRA/fasterq-dump -t $SCRATCH --split-files \$CURRENT_ACC
+
+## compress the file to save space
+gzip \${CURRENT_ACC}*.fastq
+
+## remove temporary folders for this accession
+rm -r \$CURRENT_ACC/
+
+## get the species name for the current accession number
+SP=\$(grep \$CURRENT_ACC SraRunInfo.csv | cut -d',' -f29 | sed 's/ /_/g')
+
+## change the name of the read files to include the species name
+mv \${CURRENT_ACC}_1.fastq.gz \${SP}_\${CURRENT_ACC}_1.fastq.gz
+mv \${CURRENT_ACC}_2.fastq.gz \${SP}_\${CURRENT_ACC}_2.fastq.gz
+" >> download_sra.sbatch
+
+## Déterminer le nombre d'échantillons à analyser
+NFILES=$(wc -l < SraAccList.csv)
+
+## envoyer la tâche de téléchargement à SLURM
+sbatch --mail-user=$EMAIL  --array=1-$NFILES download_sra.sbatch
 
 ```
 

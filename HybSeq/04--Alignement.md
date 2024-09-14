@@ -4,7 +4,7 @@
 
 ### Récupérer les séquences assemblées par HybPiper
 
-Récupérons d'abord les séquences d'exons, d'introns et de supercontigs avec HybPiper afin de pouvoir les 
+Récupérons les séquences d'exons avec HybPiper afin de pouvoir les 
 aligner ultérieurement :
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
@@ -22,39 +22,17 @@ nohup hybpiper retrieve_sequences \
   --hybpiper_dir $WD \
   dna > retrieve_seqs.log &
 
-## Aller chercher les séquences des supercontigs de chaque échantillon
-mkdir -p $WD/seqs/supercontig
-cd $WD/seqs/supercontig
-conda activate hybpiper
-nohup hybpiper retrieve_sequences \
-  -t_aa $TARGETS \
-  --sample_names $WD/samplelist.txt \
-  --fasta_dir . \
-  --hybpiper_dir $WD \
-  supercontig > retrieve_seqs.log &
-
-## Aller chercher les séquences des introns de chaque échantillon
-mkdir -p $WD/seqs/intron
-cd $WD/seqs/intron
-conda activate hybpiper
-nohup hybpiper retrieve_sequences \
-  -t_aa $TARGETS \
-  --sample_names $WD/samplelist.txt \
-  --fasta_dir . \
-  --hybpiper_dir $WD \
-  intron > retrieve_seqs.log &
-
 ```
 
-Une fois que les séquences ont été récupérées avec HybPiper, retirer les loci représentés par <4 
-échantillons puisque ces loci ne contiennent pas d'information phylogénétique importante:  
+Une fois que les séquences ont été récupérées avec HybPiper, retirer les loci représentés 
+par <4 échantillons puisque ces loci ne contiennent pas d'information phylogénétique importante:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
 
 ## Trouver les loci avec <4 échantillons et les supprimer
 cd $WD/seqs
-for i in $(ls ./*/*.fasta ./*/*.FNA)
+for i in $(ls ./exon/*.FNA)
   do
     NSAMPLES=$(grep '>' $i | wc -l)
     if [ $NSAMPLES -lt 4 ]
@@ -71,22 +49,21 @@ for i in $(ls ./*/*.fasta ./*/*.FNA)
 Une fois l'étape précédente terminée, examiner le résultat de ce filtrage en exécutant 
 `more filter_min4.log`.
 
-- **Question:** Pourquoi est-ce que ça prend au minimum 4 échantillons dans un alignement pour pouvoir 
-estimer un arbre de relations phylogénétiques?
+Vous pouvez aussi examiner spécifiquement les lignes où on a filtré des gènes en exécutant 
+`grep 'removed' filter_min4.log`.
 
-- **Question:** Est-ce que la majorité des données sont exoniques ou introniques? Pourquoi?
+- **Question:** Pourquoi est-ce que ça prend au minimum 4 échantillons dans un alignement pour 
+pouvoir estimer un arbre de relations phylogénétiques?
 
 
 ## Alignement des séquences
 
-Puisque très peu de données introniques ont été récupérées, ce n'est pas très utile d'aligner ces données 
-ou celles des supercontigs. Nous allons donc continuer le travail uniquement avec les données exoniques.
-
 Aligner tous les loci restants après le filtrage précédent avec 
-[MAFFT](https://mafft.cbrc.jp/alignment/software/algorithms/algorithms.html), un programme qui utilise 
-des algorithmes d'alignement efficaces et assez précis. En même temps, il nous est possible d'estimer 
-des arbres phylogénétiques rapidement avec [FastTree](http://www.microbesonline.org/fasttree/), tout en 
-gardant en tête que ces arbres ne sont pas très précis.
+[MAFFT](https://mafft.cbrc.jp/alignment/software/algorithms/algorithms.html), un programme qui 
+utilise des algorithmes d'alignement efficaces et assez précis. En même temps, il nous est possible 
+d'estimer des arbres phylogénétiques rapidement avec 
+[FastTree](http://www.microbesonline.org/fasttree/), tout en gardant en tête que ces arbres ne sont 
+pas très précis.
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
@@ -131,10 +108,10 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES mafft-fasttree.sbatch
 
 ### Corriger les noms des échantillons dans les alignements
 
-Les noms de séquence dans les alignements contiennent un commentaire lié au nombre de contigs qui ont été 
-cousus pour créer la séquence finale. Ceux-ci doivent être supprimés, sinon le même échantillon porte un 
-nom différent dans chaque locus, en fonction du nombre de contigs qui ont été assemblés pour créer la 
-séquence finale de chaque locus.  
+Les noms de séquence dans les alignements contiennent un commentaire lié au nombre de contigs qui 
+ont été combinés pour créer la séquence finale. Ceux-ci doivent être supprimés, sinon le même 
+échantillon porte un nom différent dans chaque locus, en fonction du nombre de contigs qui ont 
+été assemblés pour créer la séquence finale de chaque locus.  
 ```
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
@@ -155,17 +132,18 @@ sed -i 's/ single_.*/ /g' *.fasta
 
 ```
 
-Une fois tout ça fait, télécharger quelques alignements (fichiers `.fasta`) et les examiner à l'oeil sur 
-votre propre ordinateur avec MEGA. 
+Une fois tout ça fait, télécharger quelques alignements (fichiers `.fasta`) et les examiner à 
+l'oeil sur votre propre ordinateur avec MEGA. 
 
 - **Question:** Est-ce qu'il semble y avoir des erreurs? 
 
 - **Question:** Si oui, qu'est-ce qui pourrait en être la cause, et comment les corriger?
 
-Ensuite, télécharger quelques arbres (fichiers `.tre`) et les examiner sur votre propre ordinateur avec 
-le programme [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
+Ensuite, télécharger quelques arbres (fichiers `.tre`) et les examiner sur votre propre ordinateur 
+avec le programme [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
 
 - **Question:** Est-ce que tous les arbres de gènes ont la même topologie?
 
-- **Question:** S'il y a des différences, qu'est-ce qui pourrait être en cause? Trouvez au moins un exemple
-de processus biologique et un exemple d'erreur analytique qui pourrait causer des différences de topologie.
+- **Question:** S'il y a des différences, qu'est-ce qui pourrait être en cause? Trouvez au moins 
+un exemplede processus biologique et un exemple d'erreur analytique qui pourrait causer des 
+différences de topologie.

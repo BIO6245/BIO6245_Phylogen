@@ -141,3 +141,19 @@ apptainer remote use SylabsCloud
 apptainer pull --arch amd64 library://vranwez/default/omm_macse:v12.01
 
 ```
+
+
+## Filtrage des alignements
+
+
+TAPER
+```bash
+cd /opt
+sudo wget https://github.com/chaoszhang/TAPER/archive/refs/tags/v1.0.0.tar.gz
+sudo tar -vxzf v1.0.0.tar.gz
+sudo rm v1.0.0.tar.gz
+
+## test installation
+julia /opt/TAPER-1.0.0/correction_multi.jl -h
+
+```
