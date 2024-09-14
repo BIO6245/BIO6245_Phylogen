@@ -1,8 +1,7 @@
 # BIO6245 Analyses phylogénétiques
 
 Ce dépôt Github contient les tutoriels des travaux pratiques (T.P.) du cours BIO6245 Analyses 
-phylogénétiques offert par le professeur [Étienne Léveillé-Bourret]
-(https://irbv.umontreal.ca/le-personnel/etienne-leveille/) du département de sciences biologiques 
+phylogénétiques offert par le professeur [Étienne Léveillé-Bourret](https://irbv.umontreal.ca/le-personnel/etienne-leveille/) du département de sciences biologiques 
 de l'Université de Montréal.
 
 

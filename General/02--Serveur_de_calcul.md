@@ -1,11 +1,11 @@
-# Connexion et Utilisation d'un Serveur de Calcul via SSH
+# Connexion et utilisation d'un serveur de calcul via ssh
 
 Ce tutoriel vous guidera à travers la connexion au serveur de calcul utilisé pour les travaux 
 pratiques (T.P.) du cours **BIO6245 Analyses phylogénétiques**. Nous verrons comment se connecter 
 via SSH, naviguer sur le serveur, et réaliser quelques exercices pour mieux comprendre son 
 fonctionnement.
 
-## 1. Qu'est-ce que SSH ?
+## 1. Qu'est-ce que ssh ?
 
 **SSH (Secure Shell)** est un protocole permettant d'établir une connexion sécurisée à distance 
 entre un ordinateur local et un serveur. Cela vous permet d'interagir avec le serveur via une 
@@ -14,7 +14,7 @@ fichiers.
 
 ---
 
-## 2. Connexion au Serveur de Calcul
+## 2. Connexion au serveur de calcul
 
 Le serveur de calcul du cours est accessible à l'adresse suivante : **aphidzen.irbv.umontreal.ca**. Pour vous y connecter, vous aurez besoin de l'outil SSH, disponible sur la plupart des systèmes d'exploitation.
 
@@ -38,7 +38,7 @@ ssh UTILISATEUR@aphidzen.irbv.umontreal.ca
 
 ---
 
-## 3. Structure du Serveur de Calcul
+## 3. Structure du serveur de calcul
 
 Le serveur est organisé en plusieurs partitions, chacune avec une fonction spécifique:  
 - `/home` : Espace personnel de 3 To pour chaque utilisateur. Vous y avez accès via `/home/$USER`, 
@@ -50,19 +50,9 @@ régulièrement supprimés, donc pensez à sauvegarder vos résultats ailleurs.
 
 ---
 
-## 4. Organisation des Travaux Pratiques
+## 4. Exercices pratiques sur le serveur
 
-Les T.P. sont organisés par thèmes dans des dossiers spécifiques:  
-- **HybSeq** : Assemblage et analyse phylogénétique des données HybSeq.  
-- **RADseq** : Assemblage et analyse des données RADseq.  
-- **Reseq** : Assemblage et analyse des données de reséquençage de génome complet.  
-- **Sanger** : Analyse des données issues du séquençage Sanger.  
-
----
-
-## 5. Exercices Pratiques sur le Serveur
-
-### Exercice 1 : Explorer les Différentes Partitions
+### Exercice 1 : Explorer les différentes partitions
 
 1. **Accédez à votre espace personnel** dans `/home`:  
    ```bash
@@ -86,14 +76,14 @@ Les T.P. sont organisés par thèmes dans des dossiers spécifiques:
    ls
    ```
 
-### Exercice 2 : Vérifier l’Espace Disque Disponible
+### Exercice 2 : Vérifier l’espace disque disponible
 
 Utilisez la commande suivante pour afficher l’utilisation de l’espace disque:  
 ```bash
 df -h
 ```
 
-### Exercice 3 : Surveiller les Processus avec `htop` et `btop`
+### Exercice 3 : Surveiller les processus avec `htop` et `btop`
 
 1. **Lancer `htop`** pour observer l’utilisation du CPU, de la RAM, et des processus:  
    ```bash
@@ -108,7 +98,7 @@ df -h
 
    (Appuyez sur `q` pour quitter.)
 
-### Exercice 4 : Créer et Éditer un Fichier
+### Exercice 4 : Créer et éditer un fichier
 
 1. **Allez dans votre répertoire personnel**:  
    ```bash
@@ -132,7 +122,7 @@ df -h
    ls
    ```
 
-### Exercice 5 : Observer l’Utilisation de la Mémoire
+### Exercice 5 : Observer l’utilisation de la mémoire
 
 Utilisez `free -h` pour voir la mémoire utilisée et disponible ainsi que la mémoire **swap**:  
 ```bash

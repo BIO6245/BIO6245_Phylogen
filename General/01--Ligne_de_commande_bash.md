@@ -40,8 +40,7 @@ compatible avec Linux de plusieurs manières:
    - Suivez les instructions et choisissez la distribution Linux que vous souhaitez utiliser 
    (par exemple Ubuntu).
 
-   Plus de détails : [Guide d'installation de WSL par Microsoft]
-   (https://learn.microsoft.com/fr-fr/windows/wsl/install)
+   Plus de détails : [Guide d'installation de WSL par Microsoft](https://learn.microsoft.com/fr-fr/windows/wsl/install)
 
 2. **Git Bash**  
    Git Bash est une interface qui permet d'exécuter des commandes Bash sous Windows. Toutefois, 
@@ -326,12 +325,9 @@ ainsi de suite.
 
 ## Ressources supplémentaires
 
-- **Linux Command Line Basics** (Tutoriel vidéo) : [Learn Linux Command Line - Full Course]
-(https://www.youtube.com/watch?v=ZtqBQ68cfJc)
-- **The Linux Command Line** (Livre) : [The Linux Command Line - PDF gratuit]
-(https://linuxcommand.org/tlcl.php)
-- **Documentations Bash** : [Bash Reference Manual]
-(https://www.gnu.org/software/bash/manual/)
+- **Linux Command Line Basics** (Tutoriel vidéo) : [Learn Linux Command Line - Full Course](https://www.youtube.com/watch?v=ZtqBQ68cfJc)
+- **The Linux Command Line** (Livre) : [The Linux Command Line - PDF gratuit](https://linuxcommand.org/tlcl.php)
+- **Documentations Bash** : [Bash Reference Manual](https://www.gnu.org/software/bash/manual/)
 
 En pratiquant ces commandes de base, vous vous familiariserez rapidement avec la ligne de 
 commande et serez prêt à explorer des tâches plus complexes.

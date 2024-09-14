@@ -56,11 +56,22 @@ pour les listes ordonnées.
 graves pour des blocs de code.
 
   ````markdown
-  `Code en ligne`
-
+  
+  ```bash
+  ## Bloc de code bash
+  Commandes bash...
   ```
-  Bloc de code
+  
+  ```R
+  ## Bloc de code R
+  Commandes R...
   ```
+  
+  ```python
+  ## Bloc de code python
+  Commandes python...
+  ```
+  
   ````
 
 ## Créer un Journal de Bord en Markdown
