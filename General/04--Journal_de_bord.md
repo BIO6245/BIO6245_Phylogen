@@ -1,9 +1,4 @@
-Voici la version mise à jour du tutoriel avec des instructions pour sauvegarder les fichiers sur 
-l'ordinateur personnel et des recommandations d'éditeurs de texte :
-
----
-
-# Tutoriel : Tenir un Journal de Bord en Utilisant Markdown
+# Tenir un journal de bord en utilisant Markdown
 
 ## Introduction
 
