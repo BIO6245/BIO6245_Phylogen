@@ -2,8 +2,9 @@
 
 Ce tutoriel vous guidera à travers la connexion au serveur de calcul utilisé pour les travaux 
 pratiques (T.P.) du cours **BIO6245 Analyses phylogénétiques**. Nous verrons comment se connecter 
-via SSH, naviguer sur le serveur, et réaliser quelques exercices pour mieux comprendre son 
-fonctionnement.
+via SSH, naviguer sur le serveur, transférer des fichiers entre votre ordinateur personnel et le 
+serveur à l’aide de `rsync`, et réaliser quelques exercices pour mieux comprendre son fonctionnement.
+
 
 ## 1. Qu'est-ce que ssh ?
 
@@ -50,7 +51,33 @@ régulièrement supprimés, donc pensez à sauvegarder vos résultats ailleurs.
 
 ---
 
-## 4. Exercices pratiques sur le serveur
+## 4. Transfert de fichiers entre votre ordinateur et le serveur
+
+### Utilisation de `rsync`
+
+`rsync` est un outil efficace pour synchroniser des fichiers entre votre ordinateur local et un 
+serveur distant via SSH. Il est particulièrement utile lorsque vous avez besoin de transférer de 
+gros fichiers ou de nombreux fichiers en même temps.
+
+#### Télécharger des fichiers depuis le serveur
+
+Si vous souhaitez télécharger un fichier ou un dossier depuis le serveur vers votre ordinateur, 
+utilisez la commande suivante:  
+```bash
+rsync -avz UTILISATEUR@aphidzen.irbv.umontreal.ca:/chemin/vers/dossier_serveur/fichier /chemin/vers/dossier_local/
+```
+
+#### Téléverser des fichiers vers le serveur
+
+Pour téléverser des fichiers ou dossiers depuis votre ordinateur local vers le serveur, utilisez 
+cette commande:  
+```bash
+rsync -avz /chemin/vers/dossier_local/fichier UTILISATEUR@aphidzen.irbv.umontreal.ca:/chemin/vers/dossier_serveur/
+```
+
+---
+
+## 5. Exercices pratiques sur le serveur
 
 ### Exercice 1 : Explorer les différentes partitions
 
@@ -128,6 +155,26 @@ Utilisez `free -h` pour voir la mémoire utilisée et disponible ainsi que la m�
 ```bash
 free -h
 ```
+
+### Exercice 6 : Téléverser et télécharger des fichiers entre votre ordinateur et le serveur
+
+
+1. **Téléchargez un fichier** depuis le serveur vers votre ordinateur local.  
+   Pendant que vous êtes connecté au serveur, créer un fichier:  
+   ```bash
+   cd ~
+   touch fichier_test
+   exit
+   ```
+   Maitenant, à partir de votre ordinateur personnel, téléchargez ce fichier:  
+   ```bash
+   CLUSTER_USERNAME=Votre_nom_utilisateur_sur_le_serveur
+   rsync -avz $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:/home/$CLUSTER_USERNAME/fichier_test .
+   ```
+
+2. **Téléversez un fichier** vers le serveur. Essayez de le faire par vous-même. Demandez de l'aide 
+au professeur au besoin.
+ 
 
 ---
 
