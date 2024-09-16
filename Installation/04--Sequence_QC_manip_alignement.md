@@ -146,7 +146,7 @@ apptainer pull --arch amd64 library://vranwez/default/omm_macse:v12.01
 ## Filtrage des alignements
 
 
-TAPER
+TAPER:  
 ```bash
 cd /opt
 sudo wget https://github.com/chaoszhang/TAPER/archive/refs/tags/v1.0.0.tar.gz
@@ -155,5 +155,18 @@ sudo rm v1.0.0.tar.gz
 
 ## test installation
 julia /opt/TAPER-1.0.0/correction_multi.jl -h
+
+```
+
+TrimAL:  
+```
+cd /opt
+sudo wget https://github.com/inab/trimal/releases/download/v1.5.0/trimAl_Linux_x86-64.zip
+sudo unzip trimAl_Linux_x86-64.zip
+sudo mv trimAl_Linux_x86-64 trimAl_1.5.0
+sudo rm ../trimAl_Linux_x86-64.zip
+
+## test installation
+/opt/trimAl_1.5.0/trimal -h
 
 ```

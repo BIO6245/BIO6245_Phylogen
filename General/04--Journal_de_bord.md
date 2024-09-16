@@ -153,28 +153,23 @@ personnelles sur les résultats.
 propre ordinateur, pas sur le serveur. Cela garantit que vous ne perdez pas vos données en cas de 
 problème avec le serveur.
 
-## Recommandations d'Éditeurs de Texte
+## Recommandations d'éditeurs de Texte
 
 Pour une meilleure expérience de rédaction et de gestion de vos fichiers Markdown, vous pouvez 
-utiliser des éditeurs de texte puissants tels que :
-
-- **[Notepad++](https://notepad-plus-plus.org/)** : Un éditeur de texte open-source avec support 
-pour Markdown et divers autres langages de programmation.
-- **[Visual Studio Code](https://code.visualstudio.com/)** : Un éditeur de code puissant avec une 
-bonne prise en charge de Markdown et des fonctionnalités de versionnage.
+utiliser des éditeurs de texte puissants tels que **[Notepad++](https://notepad-plus-plus.org/)**.
 
 ## Exercices
 
-1. **Créer un Journal de Bord** : Créez un fichier Markdown pour un jour de travail. Incluez au 
+1. **Créer un journal de bord** : Créez un fichier Markdown pour un jour de travail. Incluez au 
 moins trois commandes exécutées, leurs résultats, et vos observations.
 
-2. **Ajouter des Notes** : Ajoutez des sections pour les problèmes rencontrés et les ajustements 
+2. **Ajouter des notes** : Ajoutez des sections pour les problèmes rencontrés et les ajustements 
 apportés.
 
-3. **Documenter un Job SLURM** : Soumettez un job SLURM et documentez le processus en utilisant 
+3. **Documenter un job SLURM** : Soumettez un job SLURM et documentez le processus en utilisant 
 Markdown. Assurez-vous d'inclure les commandes, les résultats, et toute erreur éventuelle.
 
-4. **Utiliser des Images et Liens** : Si vous avez des graphiques ou des résultats pertinents sous 
+4. **Utiliser des images et liens** : Si vous avez des graphiques ou des résultats pertinents sous 
 forme d'images, ajoutez-les à votre fichier Markdown. Incluez également des liens vers des ressources ou des documentations utiles.
 
 Ce tutoriel vous aide à créer un journal de bord organisé et informatif en utilisant Markdown. 

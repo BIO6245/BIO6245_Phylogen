@@ -360,7 +360,7 @@ ainsi de suite.
 
 ### 5. **Gestion des tâches**
 
-- `top`/`htop` : Surveiller les processus du système.
+- `top`/`htop`/`btop` : Surveiller les processus du système.
 - `ps` : Lister les processus actifs.
 - `kill` : Terminer un processus via son PID.
 - `nohup` : Exécuter une commande sans interruption.
