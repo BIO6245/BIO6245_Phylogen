@@ -243,7 +243,7 @@ done
 
 Cela produit un résultat identique à celui de l'exemple précédent.
 
-## 11. Boucle `while`
+### 11. Boucle `while`
 
 La boucle `while` exécute les instructions tant qu'une condition est vraie.
 
@@ -263,7 +263,7 @@ d'exécuter les instructions. Le `-le` à l'intérieur des crochets suivant le `
 or equal (>=)", `-eq` pour "equal (=)", `-ne` pour "not equal (!=)", etc.
 
 
-## 12. Boucle à l'intérieur d'un fichier exécutable
+### 12. Boucle à l'intérieur d'un fichier exécutable
 
 Un script, c'est quand on écrit des commandes dans un fichier texte, qu'on peut ensuite exécuter 
 comme un programme. Il est possible de mettre une boucle dans un script Bash et d'exécuter ce 
@@ -302,7 +302,7 @@ fichier comme un programme.
 
 Le script affichera "Ligne 1", "Ligne 2", jusqu'à "Ligne 5".
 
-## 13. Boucle imbriquée
+### 13. Boucle imbriquée
 
 Vous pouvez aussi imbriquer des boucles, c'est-à-dire utiliser une boucle à l'intérieur d'une 
 autre boucle.
@@ -320,6 +320,59 @@ done
 
 Cela affichera toutes les combinaisons de `i` et `j`, par exemple `i=1, j=1`, `i=1, j=2`, et 
 ainsi de suite.
+
+---
+
+## Liste de commandes très utiles pour le cours
+
+### 1. **Gestion des fichiers et répertoires**
+
+- `ls` : Lister les fichiers dans un répertoire.
+- `cd` : Changer de répertoire.
+- `mkdir` : Créer un nouveau répertoire.
+- `cp` : Copier des fichiers ou des répertoires.
+- `mv` : Déplacer ou renommer des fichiers.
+- `rm` : Supprimer des fichiers ou des répertoires.
+- `cat` : Afficher le contenu d'un fichier.
+- `less` : Voir un fichier page par page.
+- `head`/`tail` : Montrer les premières/dernières lignes d’un fichier.
+
+### 2. **Manipulation de données**
+
+- `cut` : Extraire des colonnes spécifiques d’un fichier.
+- `sort` : Trier les lignes d’un fichier.
+- `uniq` : Enlever les doublons dans un fichier trié.
+- `wc` : Compter les lignes, mots et caractères.
+- `awk` : Rechercher et traiter des motifs dans un fichier.
+- `sed` : Modifier le texte en flux de données.
+
+### 3. **Compression**
+
+- `tar` : Archiver des fichiers dans des tarballs.
+- `gzip`/`gunzip` : Compresser ou décompresser des fichiers.
+- `zcat` : Voir des fichiers compressés sans les extraire.
+
+### 4. **Réseau**
+
+- `scp` : Copier des fichiers de manière sécurisée entre ordinateurs.
+- `rsync` : Synchroniser des fichiers entre systèmes.
+- `wget`/`curl` : Télécharger des fichiers depuis une URL.
+
+### 5. **Gestion des tâches**
+
+- `top`/`htop` : Surveiller les processus du système.
+- `ps` : Lister les processus actifs.
+- `kill` : Terminer un processus via son PID.
+- `nohup` : Exécuter une commande sans interruption.
+
+## 6. **Scripts & Divers**
+
+- `bash` : Exécuter un script Bash.
+- `chmod` : Modifier les permissions des fichiers.
+- `echo` : Afficher du texte ou des variables.
+- `date` : Afficher la date et l'heure actuelles.
+- `time` : Mesurer le temps d'exécution d'une commande.
+- `history` : Afficher l'historique des commandes.
 
 ---
 
