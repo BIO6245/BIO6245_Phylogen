@@ -25,6 +25,18 @@ REMOTE=/home/$CLUSTER_USERNAME
 rsync --progress $LOCAL $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
 ```
 
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
+des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
+notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
+terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
+vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
+chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Par exemple:  
+- Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
+
+
 ---
 
 ## Chargement du fichier d'alignement Nexus dans PAUP*
@@ -129,7 +141,7 @@ bandb;
 Tentez maintenant une recherche avec 18 taxa:
 ```
 exclude all;
-include 1-18;
+restore 1-18;
 
 bandb;
 
