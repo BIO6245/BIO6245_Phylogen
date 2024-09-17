@@ -33,6 +33,7 @@ sudo apt-get install samtools
 
 ```
 
+
 ## Contrôle qualité
 
 FastQC:
@@ -91,6 +92,15 @@ sudo apt-get update
 sudo apt-get install bwa
 
 ```
+
+clustalw:  
+```bash
+sudo apt-get update
+sudo apt-get install clustalw
+
+```
+
+## Identification des SNPs
 
 gatk:  
 ```bash

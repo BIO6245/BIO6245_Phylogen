@@ -41,6 +41,7 @@ de 15,00 à 100. Sauvegardez ce nouvel alignment en format NEXUS sous le nom de 
 - **Question:** Comparez visuellement le résultat à celui de l'alignement précédent. Y a-t-il des différences 
 notables? Si oui, lesquelles, et pourquoi?
 
+---
 
 ## Vérifier les résultats de l'alignement par l'analyse phylogénétique
 
@@ -58,3 +59,56 @@ en utilisant les mêmes algorithmes.
 
 - **Question:** Est-ce que les résultats sont différents de ceux du premier alignement?
 
+---
+
+## Alignement des indels
+
+Les logiciels d'alignement de séquence automatisés, comme **MAFFT**, **ClustalW**, ou **MUSCLE**, 
+sont des outils puissants mais peuvent parfois commettre des erreurs dans l'alignement de 
+séquences. Ces erreurs se produisent principalement pour deux raisons:  
+
+1. **Complexité des indels (insertions/délétions)**: Les régions où des indels sont présents sont 
+souvent difficiles à aligner correctement. Les logiciels essaient de minimiser le nombre de gaps 
+dans l'alignement, mais peuvent mal interpréter la position ou l'ampleur des indels, entraînant 
+des erreurs d'alignement.
+  
+2. **Séquences divergentes** : Lorsque les séquences sont très différentes (éloignées 
+évolutivement), les logiciels ont du mal à identifier des homologies exactes entre les résidus, ce 
+qui peut mener à des alignements incorrects ou non optimaux.
+
+---
+
+### Utilisation du score de parcimonie pour ajuster les alignements
+
+Le **score de parcimonie** est un critère objectif qui peut être utilisé pour ajuster les 
+alignements manuellement et améliorer leur qualité. Ce principe repose sur l'idée que l'alignement 
+le plus simple (c'est-à-dire celui qui postule le moins de changements évolutifs) est souvent le 
+plus probable.
+
+Voici comment ce critère peut aider à ajuster un alignement:  
+
+1. **Correction des indels** : Les indels (gaps) peuvent être réajustés en maximisant la 
+parcimonie, c'est-à-dire en plaçant les indels de manière à réduire le nombre d'événements 
+d'insertion et de délétion nécessaires. Cela se fait en essayant de regrouper les indels en un 
+seul événement évolutif au lieu de multiples petites modifications.
+
+2. **Simple Gap Coding** : Une méthode courante est de coder les indels comme des caractères 
+binaires (présent = 1, absent = 0) et d’inclure ces informations dans l’analyse. Cela permet de 
+prendre en compte les indels de façon plus rigoureuse et d'améliorer l'alignement.
+
+3. **Recalcul du score de parcimonie** : Après ajustement des indels et réarrangement des 
+séquences, il est possible de recalculer le score de parcimonie. Un score plus bas indique 
+généralement un alignement plus probable du point de vue évolutif.
+
+#### Exercice d'ajustement d'un alignement basé sur le critère de parcimonie
+
+- Téléchargez l'alignement nommé `test.nex` dans le dossier BIO6245_Phylogen/Sanger/fichiers.  
+- Chargez cet alignement dans MEGA et effectuez une analyse de parcimonie. Notez le score (le 
+meilleur arbre trouvé devrait être 8 mutations de long).
+- Ouvrez `test.nex` dans le programme AliView et tentez d'ajuster l'alignement à la main.
+- Sauvegardez le nouvel alignement sous le nom de `test2.nex`.
+- Chargez `test2.nex` dans MEGA, ré-effectuez l'analyse de parcimonie. Est-ce que le score s'est 
+amélioré? Notez qu'un score plus bas est meilleur, car ça signifie qu'un plus petit nombre de 
+mutations sont nécessaires pour expliquer les données.
+- Si le score ne s'est pas amélioré, réessayez d'ajuster l'alignement jusqu'à temps que le score 
+s'améliore.

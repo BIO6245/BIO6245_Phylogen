@@ -47,6 +47,8 @@ sudo apt-get install libboost-dev libboost-system-dev libboost-program-options-d
 sudo apt-get install snapd
 sudo snap install julia --classic
 
+## R
+sudo apt-get install r-base-core
 
 ```
 

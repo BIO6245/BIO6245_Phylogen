@@ -10,6 +10,7 @@ de l'Université de Montréal.
 
 Il faut installer les programmes ci-dessous pour le cours:  
 
+- [AliView](https://ormbunkar.se/aliview/) pour visualiser et réaligner des alignements de données génétiques.
 - [MEGA](https://www.megasoftware.net/) pour visualiser et analyser des petits alignements de données génétiques.  
 - [FigTree](https://github.com/rambaut/figtree/releases) pour visualiser les arbres phylogénétiques.  
 - Un bon éditeur de texte. J'aime particulièrement [Notepad++](https://notepad-plus-plus.org/) sur Windows, 

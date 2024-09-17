@@ -24,6 +24,10 @@ nohup hybpiper retrieve_sequences \
 
 ```
 
+---
+
+### Éliminer les alignements contenant moins de 4 séquences
+
 Une fois que les séquences ont été récupérées avec HybPiper, retirer les loci représentés 
 par <4 échantillons puisque ces loci ne contiennent pas d'information phylogénétique importante:  
 ```bash
@@ -55,6 +59,7 @@ Vous pouvez aussi examiner spécifiquement les lignes où on a filtré des gène
 - **Question:** Pourquoi est-ce que ça prend au minimum 4 échantillons dans un alignement pour 
 pouvoir estimer un arbre de relations phylogénétiques?
 
+---
 
 ## Alignement des séquences
 
@@ -105,6 +110,8 @@ conda activate base
 sbatch --mail-user=$EMAIL --array=1-$NFILES mafft-fasttree.sbatch
 
 ```
+
+---
 
 ### Corriger les noms des échantillons dans les alignements
 
