@@ -102,13 +102,35 @@ Les travaux sont organisés par thème dans des dossiers:
 
 À l'intérieur de chaque dossier, un tutoriel vous guidera à travers les étapes d'analyse sur le serveur.
 
-## T.P. 1: Télécharger, assembler et aligner des séquences
+## T.P. 1: Utiliser une ligne de commande et un serveur de calcul
 
-Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
-1. [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)
-2. [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)
-3. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)
-4. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)
-5. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)
-6. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)
+Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
+1. [General/01--Ligne_de_commande_bash.md](General/01--Ligne_de_commande_bash.md)  
+2. [General/02--Serveur_de_calcul.md](General/02--Serveur_de_calcul.md)  
+3. [General/03--Ordonnanceur_SLURM.md](General/03--Ordonnanceur_SLURM.md)  
+4. [General/04--Journal_de_bord.md](General/04--Journal_de_bord.md)  
 
+## T.P. 2: Télécharger, assembler et aligner des séquences
+
+Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
+
+Avec les données Sanger:  
+1. [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)  
+2. [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)  
+
+Avec les données HybSeq:  
+3. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
+4. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
+5. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
+6. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
+
+## T.P. 3: Analyse de parcimonie
+
+Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
+
+Avec les données Sanger:  
+1. [Sanger/03--Parcimonie.md](Sanger/03--Parcimonie.md)  
+
+Avec les données HybSeq:
+2. [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
+3. [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  

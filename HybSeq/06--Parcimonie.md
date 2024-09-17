@@ -132,6 +132,7 @@ clustalw \
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
 ALIGNMENT=/scratch/testetudiant/HybSeqTest/seqs/exon/align/concat/filtered_concat.nex
+OUTPUT_PREFIX=filtered
 OUTGROUPS="Polystichum_speciosissimum_SRR14320998"
 NREPS_SEARCH=100
 SEARCH_PARAMS="multre=yes nchuck=5 chucklen=1"
@@ -161,11 +162,11 @@ begin paup;
 	filter best=yes permdel=yes;
 	condense collapse=max;
 	descr 1;
-	savetrees file=pars_bests.tre format=nex brlens=yes;
-	contre /majrule=no treefile=pars_strict.tre;
+	savetrees file=$OUTPUT_PREFIX.pars_bests.tre format=nex brlens=yes;
+	contre /majrule=no treefile=$OUTPUT_PREFIX.pars_strict.tre;
 	
-	boots nreps=$NREPS_BOOTSTRAP search=heuristic grpfreq=no treefile=pars_bootfile.tre / addseq=random nreps=3 multre=yes steepest=no nchuck=3 chucklen=1 limitperrep=yes;
-	savetrees from=0 to=1 file=pars_boot.tre format=nex savebootp=nodelab maxdec=0;
+	boots nreps=$NREPS_BOOTSTRAP search=heuristic grpfreq=no treefile=$OUTPUT_PREFIX.pars_bootfile.tre / addseq=random nreps=3 multre=yes steepest=no nchuck=3 chucklen=1 limitperrep=yes;
+	savetrees from=0 to=1 file=$OUTPUT_PREFIX.pars_boot.tre format=nex savebootp=nodelab maxdec=0;
 
 	quit;
 	
@@ -193,3 +194,16 @@ Examiner les résultats avec la commande `more paup.log`.
 aux phylogénies déjà publiées sur *Dryopteris*?  
 - **Question**: Est-ce que les branches sont bien supportées? Qu'est-ce qu'un bon support?    
 - **Question**: Quelle branche a reçu le moins bon support?
+
+---
+
+### Exercices
+
+1. Ré-exécutez l'analyse de parcimonie sur l'alignement concaténé brut, avant le filtrage des 
+données. Assurez-vous de modifier aussi le nom des fichiers de sortie. En quoi les résultats 
+diffèrent-ils de l'analyse sur l'alignement concaténé filtré?
+
+2. Tentez de modifier les paramètres de la recherche heuristique et de l'analyse bootstrap. 
+Qu'est-ce que les modifications ont comme résultats? Qu'est-ce que les différents paramètres 
+veulent dire?
+
