@@ -103,7 +103,7 @@ généralement un alignement plus probable du point de vue évolutif.
 #### Exercice d'ajustement d'un alignement basé sur le critère de parcimonie
 
 - Téléchargez l'alignement nommé `test.nex` dans le dossier 
-[BIO6245_Phylogen/Sanger/fichiers/test.nex](Sanger/fichiers/test.nex).  
+[BIO6245_Phylogen/Sanger/fichiers](Sanger/fichiers).  
 - Chargez cet alignement dans MEGA et effectuez une analyse de parcimonie. Notez le score (le 
 meilleur arbre trouvé devrait être 8 mutations de long).
 - Ouvrez `test.nex` dans le programme AliView et tentez d'ajuster l'alignement à la main.
