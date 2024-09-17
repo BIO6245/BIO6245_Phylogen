@@ -55,6 +55,19 @@ par un. À l'intérieur de chaque rapport, regardez chacune des sections. **Vous
 **ce que signifie chacune des sections. SVP, ne vous gênez pas de poser des questions au professeur pour** 
 **bien comprendre, même si la question a déjà été posée.**
 
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
+des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
+notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
+terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
+vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
+chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Par exemple:  
+- Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
+
+---
+
 ## Dédupliquer, rogner et filtrer les données Illumina
 
 Les séquences Illumina (ci-après nommées "lectures", traduction de "reads") contiennent des erreurs 

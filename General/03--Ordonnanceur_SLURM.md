@@ -55,7 +55,6 @@ une tâche simple :
 #SBATCH --cpus-per-task=4          # Nombre de processeurs par tâche
 #SBATCH --mem=8G                   # Mémoire par CPU (ex. 8 Go par CPU)
 #SBATCH --time=01:00:00            # Temps maximal d'exécution (hh:mm:ss)
-#SBATCH --partition=normal         # Partition à utiliser
 
 # Commencez le travail
 echo "Début du travail à $(date)"
@@ -87,7 +86,6 @@ la mémoire totale (`--mem`) en conséquence si nécessaire.
 #SBATCH --cpus-per-task=4          # Nombre de processeurs par tâche
 #SBATCH --mem-per-cpu=8G           # Mémoire par CPU (8 Go par CPU)
 #SBATCH --time=01:00:00            # Temps maximal d'exécution (hh:mm:ss)
-#SBATCH --partition=normal         # Partition à utiliser
 
 # Commencez le travail
 echo "Début du travail à $(date)"
@@ -118,7 +116,6 @@ Voici un exemple de script SLURM qui soumet un array de tâches :
 #SBATCH --cpus-per-task=1          # Nombre de processeurs par tâche
 #SBATCH --mem-per-cpu=4G           # Mémoire par CPU
 #SBATCH --time=00:30:00            # Temps maximal d'exécution (hh:mm:ss)
-#SBATCH --partition=normal         # Partition à utiliser
 
 # Commencez le travail
 echo "Début du travail à $(date) pour le job ID ${SLURM_ARRAY_JOB_ID}, tâche ${SLURM_ARRAY_TASK_ID}"
@@ -150,7 +147,6 @@ l'array.
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=00:30:00
-#SBATCH --partition=normal
 
 # Liste des fichiers à traiter
 FILES=("file1.txt" "file2.txt" "file3.txt" "file4.txt" "file5.txt")
@@ -207,7 +203,6 @@ Voici un exemple de script SLURM pour traiter différents fichiers en utilisant 
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=01:00:00
-#SBATCH --partition=normal
 
 # Définir le chemin des fichiers
 READS_PATH="/path/to/your/files"

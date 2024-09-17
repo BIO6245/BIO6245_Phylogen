@@ -75,6 +75,17 @@ cette commande:
 rsync -avz /chemin/vers/dossier_local/fichier UTILISATEUR@aphidzen.irbv.umontreal.ca:/chemin/vers/dossier_serveur/
 ```
 
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
+des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
+notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
+terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
+vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
+chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Par exemple:  
+- Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
+
 ---
 
 ## 5. Exercices pratiques sur le serveur
@@ -171,6 +182,17 @@ free -h
    CLUSTER_USERNAME=Votre_nom_utilisateur_sur_le_serveur
    rsync -avz $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:/home/$CLUSTER_USERNAME/fichier_test .
    ```
+   
+   Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
+   des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
+   notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
+   terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
+   vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
+   chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+   Par exemple:  
+   - Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+   - Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+   - Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
 
 2. **Téléversez un fichier** vers le serveur. Essayez de le faire par vous-même. Demandez de l'aide 
 au professeur au besoin.
