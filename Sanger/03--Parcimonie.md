@@ -1,4 +1,4 @@
-# Tutoriel : Analyse de parcimonie avec PAUP*
+# Analyse de parcimonie avec PAUP*
 
 Ce tutoriel vous guidera à travers une analyse de parcimonie à l'aide du logiciel **PAUP***, en 
 commençant par le transfert d'un fichier d'alignement au format Nexus vers un serveur de calcul, 
@@ -119,16 +119,16 @@ où **n** est le nombre de taxa, et **T** est le nombre total d'arbres non racin
 Pour donner une idée de cette croissance:  
 - Avec 5 taxa, il y a **15** arbres possibles.  
 - Avec 10 taxa, il y a **2 027 025** arbres possibles.  
-- Avec 20 taxa, il y a environ **8,200,794,532,637,891,559** arbres.  
+- Avec 20 taxa, il y a environ **8 200 794 532 637 891 559** arbres possibles.  
 
-Ainsi, pour des ensembles de données comportant 20 ou plus de taxa, la méthode 
+Ainsi, pour des ensembles de données comportant 20 taxa ou plus, la méthode 
 **branch-and-bound** peut prendre un temps **astronomique** pour explorer toutes les topologies 
 possibles, et la recherche peut ne jamais finir.
 
 Tentez une recherche branch-and-bound avec les 17 premiers taxa de l'alignement, mais en excluant 
 les autres (pour ne pas trop surcharger le programme):  
 ```
-delete all;
+delete all / clearTrees=yes;
 restore 1-17;
 
 bandb;
@@ -140,7 +140,7 @@ bandb;
 
 Tentez maintenant une recherche avec 18 taxa:
 ```
-exclude all;
+delete all / clearTrees=yes;
 restore 1-18;
 
 bandb;
@@ -168,7 +168,7 @@ Restorez tous les taxa, pour déterminer le meilleur arbre phylogénétique entr
 l'alignement. Vous pouvez répondre oui (Yes) lorsque le programme demande s'il peut supprimer les 
 arbres en mémoire.  
 ```
-restore all;
+restore all / clearTrees=yes;
 
 ```
 
@@ -190,6 +190,27 @@ descr 1;
 
 - **Question**: Examinez un autre arbre parmi les meilleurs. Quelle est la commande pour le faire? 
 En quoi cet autre arbre est différent?  
+
+Si on supprime la moitié des positions dans l'alignement, on a moins de caractères pour informer 
+les relations phylogénétiques entre les espèces. La conséquence de ce manque d'information est 
+qu'il y aura plus d'arbres parcimonieux, étant donné qu'il y a plus d'incertitude sur la position 
+de certains taxa (si vous ne comprenez pas pourquoi, demandez au prof de vous expliquer...).
+
+Essayez de faire une recherche heuristique avec seulement la moitié des données génétiques (10 
+caractères sur les 20 de l'alignement):  
+```
+exclude all;
+include 1-10;
+
+hs addseq=random nreps=100 multre=yes nchuck=5 chucklen=1;
+
+```
+
+- **Question**: Quelle est la conséquence d'avoir diminué la taille de l'alignement sur le nombre 
+d'arbres parcimonieux trouvés?  
+- **Questions**: Quel est le score des meilleurs arbres dans ce cas-ci? Pourquoi le score est plus 
+petit que celui des meilleurs arbres de la matrice complète? Est-ce que ça signifie que c'est 
+préférable d'avoir une plus petite matrice?  
 
 ---
 
@@ -220,6 +241,12 @@ boots nreps=100 search=heuristic grpfreq=no / addseq=random nreps=3 multre=yes s
 
 - **Question**: Quelles sont les branches les mieux supportées? Lesquelles sont les moins bien 
 supportées?
+
+---
+
+## Quitter la ligne de commande de PAUP\*
+
+Si vous voulez quitter PAUP\*, il suffit d'exécuter la commande `quit;`.
 
 ---
 
