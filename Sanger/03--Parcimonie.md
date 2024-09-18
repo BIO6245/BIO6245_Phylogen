@@ -11,7 +11,7 @@ arbres à l'aide du **bootstrap**.
 
 ## Transfert de l'alignement Nexus vers le serveur de calcul
 
-**Transférez le fichier Nexus** depuis votre ordinateur local vers le serveur de calcul à l'aide 
+**Transférez le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis votre ordinateur local vers le serveur de calcul à l'aide 
 de la commande `rsync`. Utilisez cette commande dans un terminal (sur votre ordinateur, pas le 
 serveur):  
 ```bash
@@ -110,9 +110,9 @@ lente et parfois "infinie" pour de grands ensembles de données.
 Le nombre d'arbres phylogénétiques non racinés pour un nombre donné de taxa peut être calculé par 
 la formule suivante:  
 
-\[
+$`
 T = \frac{(2n - 5)!}{(n-3)! \times 2^{n-3}}
-\]
+`$
 
 où **n** est le nombre de taxa, et **T** est le nombre total d'arbres non racinés possibles.
 
@@ -225,8 +225,7 @@ supportées?
 
 ## Exercices
 
-1. **Changer le hors-groupe** et ré-exécuter une recherche branch-and-bound. 
-Comparez les résultats.  
+1. **Changer le hors-groupe** et ré-exécuter une recherche heuristique. Comparez les résultats.  
 2. **Exclure différents taxa** et observer comment cela affecte la topologie de l'arbre.
 3. **Augmenter le nombre de ré-échantillonnages bootstrap** pour améliorer la précision de 
 l'analyse.  
