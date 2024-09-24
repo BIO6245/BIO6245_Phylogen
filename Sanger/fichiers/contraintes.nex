@@ -1,0 +1,4 @@
+Begin trees;
+tree contrainte1 = (Aus_aus,(Aus_bus,Aus_cus,Aus_dus,Aus_eus,Aus_fus),Aus_gus,Aus_hus,Aus_ius,Aus_jus,Aus_kus,Aus_lus,Aus_mus,Aus_nus,Aus_ous,Aus_pus,Aus_qus,Aus_rus,Aus_sus,Aus_tus,Aus_uus,Aus_vus,Aus_wus,Aus_xus,Aus_yus,Aus_zus);
+tree contrainte2 = (Aus_aus,(Aus_bus,Aus_cus,Aus_dus),(Aus_eus,Aus_fus),Aus_gus,Aus_hus,Aus_ius,Aus_jus,Aus_kus,Aus_lus,Aus_mus,Aus_nus,Aus_ous,Aus_pus,Aus_qus,Aus_rus,Aus_sus,Aus_tus,Aus_uus,Aus_vus,Aus_wus,Aus_xus,Aus_yus,Aus_zus);
+End;

@@ -11,9 +11,9 @@ arbres à l'aide du **bootstrap**.
 
 ## Transfert de l'alignement Nexus vers le serveur de calcul
 
-**Transférez le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis votre ordinateur local vers le serveur de calcul à l'aide 
-de la commande `rsync`. Utilisez cette commande dans un terminal (sur votre ordinateur, pas le 
-serveur):  
+**Transférez le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis votre ordinateur local vers 
+le serveur de calcul à l'aide de la commande `rsync`. Utilisez cette commande dans un terminal (sur 
+votre ordinateur, pas le serveur):  
 ```bash
 ## Rouler le code ci-dessous à partir de votre machine locale
 
@@ -214,35 +214,6 @@ préférable d'avoir une plus petite matrice?
 
 ---
 
-## Consensus strict
-
-Étant donné qu'il existe un grand nombre d'arbres avec un même score de parcimonie, il est 
-préférable de calculer un arbre de consensus strict pour regarder quelles branches ont du support 
-avec la méthode de maximum de parcimonie. Voici comment faire:  
-```
-contre /majrule=no;
-
-```
-
-- **Question**: Combien d'arbres ont contribué à la création de ce consensus?
-
----
-
-## Analyse de bootstrap
-
-Le **bootstrap** est une méthode statistique permettant d'évaluer la robustesse des branches dans 
-un arbre phylogénétique.
-
-Effectuer une analyse de bootstrap:  
-```bash
-boots nreps=100 search=heuristic grpfreq=no / addseq=random nreps=3 multre=yes steepest=no nchuck=3 chucklen=1 limitperrep=yes;
-
-```
-
-- **Question**: Quelles sont les branches les mieux supportées? Lesquelles sont les moins bien 
-supportées?
-
----
 
 ## Quitter la ligne de commande de PAUP\*
 
@@ -254,7 +225,5 @@ Si vous voulez quitter PAUP\*, il suffit d'exécuter la commande `quit;`.
 
 1. **Changer le hors-groupe** et ré-exécuter une recherche heuristique. Comparez les résultats.  
 2. **Exclure différents taxa** et observer comment cela affecte la topologie de l'arbre.
-3. **Augmenter le nombre de ré-échantillonnages bootstrap** pour améliorer la précision de 
-l'analyse.  
-4. **Comparez les temps d'exécution** entre les recherches branch-and-bound et heuristiques pour 
+3. **Comparez les temps d'exécution** entre les recherches branch-and-bound et heuristiques pour 
 différents nombres de taxa.  
