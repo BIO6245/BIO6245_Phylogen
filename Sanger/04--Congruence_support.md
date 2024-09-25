@@ -9,27 +9,30 @@ le critère de maximum de vraisemblance sur PAUP\*.
 
 ## Chargement du fichier d'alignement Nexus dans PAUP*
 
-1. **Connectez-vous au serveur**.  
+1. Assurez-vous d'avoir déjà **transféré le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis 
+votre ordinateur local vers le serveur de calcul à l'aide de la commande `rsync`.
 
-2. **Ouvrez le fichier Nexus** dans PAUP*:  
-   ```
+2. **Connectez-vous au serveur**.  
+
+3. **Ouvrez le fichier Nexus** dans PAUP*:  
+   ```bash
    /opt/paup4a168_centos64 test.nex
    
    ```
 
-3. Vérifiez que les données sont bien chargées avec la commande:  
-   ```
+4. Vérifiez que les données sont bien chargées avec la commande:  
+   ```paup
    showmatrix;
    
    ```
-4. Regardez la liste des commandes en exécutant `?` dans PAUP*:
-   ```
+5. Regardez la liste des commandes en exécutant `?` dans PAUP*:
+   ```paup
    ?;
    
    ```
    
-5. Ajuster certains paramètres de base dans PAUP*:  
-   ```
+6. Ajuster certains paramètres de base dans PAUP*:  
+   ```paup
    set autoclose=yes;
    set taxlabels=full;
    set increase=auto autoinc=100 autoclose=yes;
@@ -43,13 +46,13 @@ le critère de maximum de vraisemblance sur PAUP\*.
 
 
 Effectuer une recherche heuristique:  
-```
+```paup
 hs addseq=random nreps=100 multre=yes nchuck=5 chucklen=1;
 
 ```
 
 Examiner un des meilleurs arbres:  
-```
+```paup
 descr 1;
 
 ```
@@ -66,13 +69,13 @@ préférable de calculer un arbre de consensus strict pour regarder quelles bran
 avec la méthode de maximum de parcimonie.
 
 Voici comment calculer un arbre de consensus strict:  
-```
+```paup
 contre / strict=yes majrule=no;
 
 ```
 
 Et pour un arbre de consensus majoritaire:  
-```
+```paup
 contre / strict=no majrule=yes;
 
 ```
@@ -88,7 +91,7 @@ Le **bootstrap** est une méthode statistique permettant d'évaluer la robustess
 un arbre phylogénétique.
 
 Effectuer une analyse de bootstrap:  
-```
+```paup
 boots nreps=100 search=heuristic grpfreq=no / addseq=random nreps=3 multre=yes steepest=no nchuck=3 chucklen=1 limitperrep=yes;
 
 ```
@@ -110,8 +113,7 @@ que le premier gène est 13 nucléotides de long, et le deuxième est 7 nucléot
 voulons tester si le signal phylogénétique des deux gènes est congruent ou non.   
 
 1. Créez les partitions dans votre fichier Nexus ou utilisez la commande:  
-
-   ```
+   ```paup
    charset gene1 = 1-13;
    charset gene2 = 14-20;
    charpartition NomDeMaPartition = partition1: gene1, partition2: gene2;
@@ -119,7 +121,7 @@ voulons tester si le signal phylogénétique des deux gènes est congruent ou no
    ```
 
 2. Faites une analyse phylogénétique basée uniquement sur le 1er gène:   
-   ```
+   ```paup
    exclude all;
    include gene1;
    hs;
@@ -128,7 +130,7 @@ voulons tester si le signal phylogénétique des deux gènes est congruent ou no
    ```
 
 3. Comparez le résultat avec celui d'une analyse phylogénétique basée sur le 2e gène:  
-   ```
+   ```paup
    exclude all;
    include gene2;
    hs;
@@ -141,7 +143,7 @@ voulons tester si le signal phylogénétique des deux gènes est congruent ou no
 2. Maitenant, nous voulons déterminer si le signal phylogénétique des deux gènes est 
 significativement différant, ou si les différences sont juste dû au hasard. Exécuter le test ILD 
 avec la commande suivante:  
-   ```
+   ```paup
    include all;
    hompart partition=NomDeMaPartition nreps=100 search=heuristic / addseq=random nreps=3 multre=yes steepest=no nchuck=3 chucklen=1 limitperrep=yes;;
 
@@ -196,7 +198,7 @@ votre ordinateur local vers le serveur de calcul à l'aide de la commande `rsync
 nouveau terminal de votre ordinateur pour transférer ce fichier sans fermer la ligne de commande PAUP\*.
 
 2. Charger les arbres dans PAUP\* avec cette commande et examinez les, un après l'autre:  
-   ```
+   ```paup
    gettrees file=contraintes.nex;
    descr 1;
    descr 2;
@@ -207,7 +209,7 @@ nouveau terminal de votre ordinateur pour transférer ce fichier sans fermer la 
 topologies qui sont congruentes soit avec le premier arbre ou le deuxième arbre dans le fichier. Cela 
 permet de déterminer quelle est la topologie la mieux supportée, mais qui est congruente avec une de ces 
 deux hypothèses.  
-   ```
+   ```paup
    loadconstr file=contraintes.nex asBackBone=yes;
    hs constraint=contrainte1 enforce=yes;
    savetrees file=meilleurs_arbres_contraints.nex;
@@ -221,7 +223,7 @@ deux hypothèses.
 
 4. Il y a deux arbres de contraintes dans le fichier [`contraintes.nex`](fichiers/contraintes.nex). 
 Déterminer quel serait le meilleur arbre qui suit la 2e contrainte:  
-   ```
+   ```paup
    loadconstr file=contraintes.nex;
    hs constraint=contrainte2 enforce=yes;
    savetrees file=meilleurs_arbres_contraints.nex append=yes;
@@ -237,7 +239,7 @@ Déterminer quel serait le meilleur arbre qui suit la 2e contrainte:
 5. Faire une analyse sans la contrainte, et ajouter cet arbre au fichier 
 `meilleurs_arbres_contraints.nex` qui contient les meilleurs arbres des recherches précédantes faites 
 sous contrainte:  
-   ```
+   ```paup
    hs enforce=no;
    savetrees file=meilleurs_arbres_contraints.nex append=yes;
    
@@ -249,7 +251,7 @@ sous contrainte:
 dans le fichier `meilleurs_arbres_contraints.nex`, calculer score en parcimonie de ces arbres, et 
 déterminer s'il y a une différence significative entre certains de ces arbres et les meilleurs arbres 
 (valeur p).  
-   ```
+   ```paup
    gettrees file=meilleurs_arbres_contraints.nex allBlocks=yes;
    pscore / khtest=yes;
    

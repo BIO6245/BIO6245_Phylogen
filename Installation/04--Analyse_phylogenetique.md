@@ -46,3 +46,15 @@ sudo make -f Makefile.SSE3.PTHREADS.gcc
 
 ```
 
+IQ-Tree:  
+```bash
+cd /opt
+sudo wget https://github.com/iqtree/iqtree2/releases/download/v2.3.6/iqtree-2.3.6-Linux-intel.tar.gz
+sudo tar -xzvf iqtree-2.3.6-Linux-intel.tar.gz
+sudo rm iqtree-2.3.6-Linux-intel.tar.gz
+
+## test installation
+SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
+$SRC_IQ/iqtree2 --help
+
+```

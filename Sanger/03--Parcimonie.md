@@ -196,11 +196,11 @@ les relations phylogénétiques entre les espèces. La conséquence de ce manque
 qu'il y aura plus d'arbres parcimonieux, étant donné qu'il y a plus d'incertitude sur la position 
 de certains taxa (si vous ne comprenez pas pourquoi, demandez au prof de vous expliquer...).
 
-Essayez de faire une recherche heuristique avec seulement la moitié des données génétiques (10 
+Essayez de faire une recherche heuristique avec seulement la moitié des données génétiques (13 
 caractères sur les 20 de l'alignement):  
 ```
 exclude all;
-include 1-10;
+include 1-13;
 
 hs addseq=random nreps=100 multre=yes nchuck=5 chucklen=1;
 
