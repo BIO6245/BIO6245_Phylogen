@@ -128,3 +128,4 @@ Avec les données Sanger:
 
 Avec les données HybSeq:  
   1. [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
+  2. [HybSeq/08--Distance.md](HybSeq/08--Distance.md)
