@@ -145,6 +145,9 @@ sed -i "s/\.fasta//g" filtered_concat.partitions
 
 ### Analyse de parcimonie
 
+Lancez le code ci-dessous pour faire une analyse de parcimonie avec PAUP\* en créer un fichier 
+contenant toutes les commandes à envoyer à PAUP\*, puis en soumettant ce fichier dans une tâche 
+sur SLURM:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest

@@ -96,10 +96,10 @@ Avec les données Sanger:
   2. [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)  
 
 Avec les données HybSeq:  
-  3. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
-  4. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
-  5. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
-  6. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
+  1. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
+  2. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
+  3. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
+  4. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
 
 ## T.P. 3: Analyse de parcimonie
 
@@ -109,8 +109,8 @@ Avec les données Sanger:
   1. [Sanger/03--Parcimonie.md](Sanger/03--Parcimonie.md)  
 
 Avec les données HybSeq:  
-  2. [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
-  3. [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
+  1. [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
+  2. [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
   
 ## T.P. 4: Analyse de parcimonie
 
@@ -123,8 +123,8 @@ Avec les données Sanger:
 
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
-Avec les données Sanger:
+Avec les données Sanger:  
   1. [Sanger/05--Selection_modele_distance.md](Sanger/05--Selection_modele_distance.md)
 
-Avec les données HybSeq:
+Avec les données HybSeq:  
   1. [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
