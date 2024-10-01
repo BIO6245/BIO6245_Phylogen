@@ -2,8 +2,8 @@
 
 ## Mapper, identifier les variants et les filtrer dans chaque échantillon
 
-Mappage des lectures Illumina sur les exons assemblés par HybPiper avec bwa, suivi de l'identification des 
-variants alléliques et filtration de ces variants en utilisant GATK:    
+Mappage des lectures Illumina sur les exons assemblés par HybPiper avec bwa, suivi de 
+l'identification des variants alléliques et filtration de ces variants en utilisant GATK:    
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
@@ -113,15 +113,15 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES bwa-gatk.sbatch
 
 ```
 
-Le résultat est un dossier dans lequel chaque échantillon contient un fichier nommé `nom.hetero.fasta` qui 
-contient la séquence de tous les gènes assemblés par HybPiper, mais avec les positions hétérozygotes codées 
-avec les codes d'ambiguïté IUPAC.
+Le résultat est un dossier dans lequel chaque échantillon contient un fichier nommé 
+`nom.hetero.fasta` qui contient la séquence de tous les gènes assemblés par HybPiper, mais avec 
+les positions hétérozygotes codées avec les codes d'ambiguïté IUPAC.
 
 
 ## Créer des listes de séquences avec hétérozygotes par gène
 
-Code pour concaténer toutes les séquences avec hétérozygotes IUPAC générés dans la section précédente dans 
-un seul fichier `.fasta` par locus:  
+Code pour concaténer toutes les séquences avec hétérozygotes IUPAC générés dans la section 
+précédente dans un seul fichier `.fasta` par locus:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
@@ -177,8 +177,8 @@ for i in $(ls ./*.fasta)
 
 ## Alignement des loci avec hétérozygotes IUPAC
 
-Aligner tous les loci restants après le filtrage précédent avec MAFFT et effectuer des estimations rapides 
-de l'arbre phylogénétique avec FastTree:  
+Aligner tous les loci restants après le filtrage précédent avec MAFFT et effectuer des estimations 
+rapides de l'arbre phylogénétique avec FastTree:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest

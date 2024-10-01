@@ -124,6 +124,23 @@ clustalw \
 
 ```
 
+Attendre que les tâches précédentes aient toutes terminées. Une fois cela fait, corriger les noms 
+des gènes dans les fichiers d'alignement (par défaut, ils incluent le chemin vers l'alignement  
+.fasta de chaque gène). Exécuter ces commandes:  
+```bash
+## Ajuster les variables ci-dessous de façon appropriée
+SRC=/opt
+WD=/scratch/$USER/HybSeqTest
+
+## ajuster les noms des gènes dans les fichiers de partition
+cd $WD/seqs/exon/align/concat
+sed -i "s/^.*\//DNA, /g" raw_concat.partitions
+sed -i "s/\.fasta//g" raw_concat.partitions
+sed -i "s/^.*\//DNA, /g" filtered_concat.partitions
+sed -i "s/\.fasta//g" filtered_concat.partitions
+
+```
+
 ---
 
 ### Analyse de parcimonie
@@ -131,7 +148,7 @@ clustalw \
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
-ALIGNMENT=/scratch/testetudiant/HybSeqTest/seqs/exon/align/concat/filtered_concat.nex
+ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.nex
 OUTPUT_PREFIX=filtered
 OUTGROUPS="Polystichum_speciosissimum_SRR14320998"
 NREPS_SEARCH=100

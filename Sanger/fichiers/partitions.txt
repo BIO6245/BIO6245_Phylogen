@@ -1,0 +1,6 @@
+DNA, gene1_codon1 = 1-13\3
+DNA, gene1_codon2 = 2-13\3
+DNA, gene1_codon3 = 3-13\3
+DNA, gene2_codon1 = 14-20\3
+DNA, gene2_codon2 = 15-20\3
+DNA, gene2_codon3 = 16-20\3
