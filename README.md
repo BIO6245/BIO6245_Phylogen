@@ -118,3 +118,13 @@ Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
 
 Avec les données Sanger:  
   1. [Sanger/04--Congruence_support.md](Sanger/04--Congruence_support.md)  
+
+## T.P. 5: Distances et modèles de substitution
+
+Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
+
+Avec les données Sanger:
+  1. [Sanger/05--Selection_modele_distance.md](Sanger/05--Selection_modele_distance.md)
+
+Avec les données HybSeq:
+  1. [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
