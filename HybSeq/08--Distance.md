@@ -26,7 +26,7 @@ EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
 
 ###
-## Analyse de parcimonie
+## Analyse de distance
 ###
 
 mkdir -p $WD/trees/exon/concat/distance

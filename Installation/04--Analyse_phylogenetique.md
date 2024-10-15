@@ -44,6 +44,10 @@ sudo mv standard-RAxML RAxML-8.2.12
 cd RAxML-8.2.12
 sudo make -f Makefile.SSE3.PTHREADS.gcc
 
+## test installation
+SRC_RAXML=/opt/RAxML-8.2.12
+$SRC_RAXML/raxmlHPC-PTHREADS-SSE3 -h
+
 ```
 
 IQ-Tree:  
