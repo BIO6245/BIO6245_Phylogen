@@ -253,27 +253,6 @@ sbatch \
 
 6. **`raxml.log`** : Fichier journal qui enregistre toutes les étapes du calcul et toute erreur éventuelle pendant l'exécution.
 
-### Questions/Exercices pour les étudiants
-
-1. **Interprétation des fichiers d'entrée** :
-   - Ouvrez les fichiers `filtered_concat.phy` et `filtered_concat.partitions.best_scheme` avec la commande `more`. Expliquez leur rôle dans l'analyse et comment ils sont formatés.
-
-2. **Modèles de substitution** :
-   - Pourquoi utilise-t-on le modèle **GTRCAT** dans cette analyse ? Quelles sont les différences entre les modèles GTRCAT et GTRGAMMA ?
-   - Si vous deviez utiliser un autre modèle de substitution, comment pourriez-vous modifier le script ?
-
-3. **Bootstrap** :
-   - Qu'est-ce qu'un réplicat bootstrap, et pourquoi est-il important dans une analyse phylogénétique ?
-   - Que signifient des valeurs bootstrap élevées dans un arbre phylogénétique ?
-
-4. **Parallélisation** :
-   - Pourquoi utiliser plusieurs threads (`-T 4`) dans cette analyse ? Comment cela affecte-t-il le temps d'exécution ?
-
-5. **Pratique** :
-   - Modifiez le script pour exécuter 500 réplicats bootstrap au lieu de 100. Quelle différence observez-vous dans le fichier de sortie en termes de valeurs de support bootstrap ?
-   - Analysez le fichier `RAxML_info.Dryopteris`. Quels paramètres de l'analyse y sont répertoriés et pourquoi sont-ils importants pour comprendre les résultats ?
-
-
 ---
 
 ## Questions et exercices
@@ -308,10 +287,3 @@ sbatch \
    - Utilisez les fichiers de sortie `*.log` pour vérifier si l'analyse s'est terminée avec succès. 
    Quels indicateurs vous permettent de confirmer cela ?
    
-   
-## !!! Ignorer le code ci-dessous !!!   
-
-!!! Écrire analyse avec RAxML !!!
-
-6. **Comparaison des logiciels** :
-   - Comparez l'approche de IQ-TREE avec celle de RAxML. Quels sont les avantages et inconvénients de chaque logiciel pour une analyse de maximum de vraisemblance ?
