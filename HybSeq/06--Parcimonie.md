@@ -65,14 +65,15 @@ sbatch \
   --fasta \
   --concatenate $ALIGN_PATH/*.fasta \
   1> raw_concat.fasta \
-  2> /dev/null"
-
-## Créer un alignement concaténé en format nexus avec clustalW
-clustalw \
+  2> /dev/null
+  
+  wait
+  
+  clustalw \
   -convert \
   -infile=raw_concat.fasta \
   -output=nexus \
-  -outfile=raw_concat.nex
+  -outfile=raw_concat.nex"
 
 ###
 ## Concaténer les alignements après filtrage
@@ -99,6 +100,7 @@ sbatch \
   2> filtered_concat.partitions"
 
 ## Créer un alignement concaténé en format fasta avec catfasta2phyml
+## Puis créer un alignement concaténé en format nexus avec clustalW
 EMAIL=etienne.leveille-bourret@umontreal.ca
 TIME="0-3:00:00"
 sbatch \
@@ -113,14 +115,18 @@ sbatch \
   --fasta \
   --concatenate $ALIGN_PATH/*.fasta \
   1> filtered_concat.fasta \
-  2> /dev/null"
-
-## Créer un alignement concaténé en format nexus avec clustalW
-clustalw \
+  2> /dev/null
+  
+  wait
+  
+  clustalw \
   -convert \
   -infile=filtered_concat.fasta \
   -output=nexus \
-  -outfile=filtered_concat.nex
+  -outfile=filtered_concat.nex"
+
+
+
 
 ```
 

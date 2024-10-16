@@ -119,7 +119,7 @@ Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
 Avec les données Sanger:  
   1. [Sanger/04--Congruence_support.md](Sanger/04--Congruence_support.md)  
 
-## T.P. 5: Distances et modèles de substitution
+## T.P. 5: Distance et modèles de substitution
 
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
@@ -129,3 +129,13 @@ Avec les données Sanger:
 Avec les données HybSeq:  
   1. [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
   2. [HybSeq/08--Distance.md](HybSeq/08--Distance.md)
+  
+## T.P. 6: Maximum de vraisemblance
+
+Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
+
+Avec les données Sanger:  
+  1. !!! À faire !!!
+
+Avec les données HybSeq:  
+  1. [HybSeq/09--Vraisemblance.md](HybSeq/09--Vraisemblance.md)
