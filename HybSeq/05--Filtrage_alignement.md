@@ -197,7 +197,7 @@ pour certains loci. Nous devons donc à nouveau supprimer les loci qui contienne
 WD=/scratch/$USER/HybSeqTest
 
 ## find loci with data for <4 samples, and remove them (they cannot be used to estimate a tree)
-cd $WD/seqs/align/trimal
+cd $WD/seqs/exon/align/trimal
 for i in $(ls *.fasta)
   do
     NSAMPLES=$(grep '>' $i | wc -l)
