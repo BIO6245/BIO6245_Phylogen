@@ -7,8 +7,8 @@ Ce tutoriel vous montrera à aligner des séquences Sanger à l'aide de ces prog
   fiable que les algorithmes précédents, mais  qui n'est pas disponible en interface graphique sur 
   MEGA (on doit passer par la ligne de commandes);  
   - [OMM_MACSE](https://github.com/ranwez/MACSE_V2_PIPELINES), qui est de loin l'approche la plus 
-  précise pour l'alignement des nucléotides provenant de gènes (codants ou pseudogénisés), mais qui 
-  est plus lente que MAFFT.
+  précise pour l'alignement des nucléotides provenant de gènes (codants ou pseudogénisés), mais 
+  qui est plus lente que MAFFT.
 
 ---
 
@@ -16,7 +16,8 @@ Ce tutoriel vous montrera à aligner des séquences Sanger à l'aide de ces prog
 
 Le programme [MEGA](https://www.megasoftware.net/) offre gratuitement l'accès à plusieurs 
 algorithmes importants d'alignement et d'analyse phylogénétique, le tout organisé dans une 
-interface graphique intuitive. Nous allons donc utiliser ce programme pour tester l'effet de différents algorithmes automatisés d'alignement des séquences.
+interface graphique intuitive. Nous allons donc utiliser ce programme pour tester l'effet de 
+différents algorithmes automatisés d'alignement des séquences.
 
 Ouvrez le fichier `sequence.fasta` dans MEGA et sélectionnez l'option "Align" (plutôt que 
 "Analyze"). Les séquences téléchargez de Genbank ne sont pas alignées. Vous devriez remarquer 
@@ -37,21 +38,22 @@ décaler la séquence au complet ou une partie de la séquence vers la droite. E
 l'alignement manuellement en faisant cela. On peut aussi redécaler vers la gauche avec la touche 
 backspace (<-).
 
-L'alignement manuel est plutôt long et pénible. Essayez alors un algorithme d'alignement automatique.
+L'alignement manuel est plutôt long et pénible. Essayez alors un algorithme d'alignement 
+automatique.
 
 Dans l'onglet "Alignment", sélectionnez "Align By ClustalW", puis pesez sur OK.
 
 - **Question:** Regardez le résultat aligné. Est-ce que le nombre de positions qui diffèrent du 
 consensus a changé?
 
-Sauvegardez l'alignement en sélectionnant "Data" ->  "Export Alignment" -> "Nexus/PAUP Format", puis 
-changez le nom du fichier pour "alignment1.nex".
+Sauvegardez l'alignement en sélectionnant "Data" ->  "Export Alignment" -> "Nexus/PAUP Format", 
+puis changez le nom du fichier pour "alignment1.nex".
 
 Ensuite, réalignez vos séquences en utilisant un nouvel algorithme ou des nouveaux paramètres. Par 
-exemple, vous pourriez sélectionner "Alignment" -> "Align by MUSCLE et conserver les paramètres par 
-défaut, ou bien vous pourriez sélectionner encore "Alignment" -> "Align by ClustalW", mais changer 
-le Gap Opening Penalty de 15,00 à 100. Sauvegardez ce nouvel alignment en format NEXUS sous le nom 
-de "alignment2.nex".
+exemple, vous pourriez sélectionner "Alignment" -> "Align by MUSCLE et conserver les paramètres 
+par défaut, ou bien vous pourriez sélectionner encore "Alignment" -> "Align by ClustalW", mais 
+changer le Gap Opening Penalty de 15,00 à 100. Sauvegardez ce nouvel alignment en format NEXUS 
+sous le nom de "alignment2.nex".
 
 - **Question:** Comparez visuellement le résultat à celui de l'alignement précédent. Y a-t-il des 
 différences notables? Si oui, lesquelles, et pourquoi?
@@ -62,10 +64,10 @@ différences notables? Si oui, lesquelles, et pourquoi?
 
 Fermez les fenêtres ouvertes de MEGA, puis ouvrez une nouvelle fenêtre de MEGA. Ouvrez le fichier 
 `alignment1.nex` dans MEGA. Faites des arbres phylogénétiques en utilisant le bouton "PHYLOGENY" 
-et en sélectionnant les algorithmes "Neighbor-Joining", puis "Maximum Parsimony", en conservant les 
-paramètres par défaut pour chacun. Pour chaque arbre, enracinez sur l'échantillon de *Polystichum* 
-en cliquant-droit sur la branche juste en-dessous de l'étiquette *Polystichum*, et en sélectionnant 
-"Root Tree".
+et en sélectionnant les algorithmes "Neighbor-Joining", puis "Maximum Parsimony", en conservant 
+les paramètres par défaut pour chacun. Pour chaque arbre, enracinez sur l'échantillon de 
+*Polystichum* en cliquant-droit sur la branche juste en-dessous de l'étiquette *Polystichum*, et 
+en sélectionnant "Root Tree".
 
 - **Question:** Est-ce que les résults diffèrent entre les deux algorithmes utilisés pour estimer 
 la phylogénie? Si oui, avez-vous une idée pourquoi?
@@ -133,6 +135,25 @@ s'améliore.
 ---
 
 ## Aligner avec MAFFT
+
+**MAFFT**, **CLUSTALW** et **MUSCLE** sont tous des outils populaires pour l'alignement de 
+séquences multiples, mais **MAFFT** présente plusieurs avantages par rapport aux deux autres:  
+
+1. **Vitesse et efficacité** : **MAFFT** est généralement plus rapide que CLUSTALW et MUSCLE, 
+surtout pour les grands ensembles de données. Il utilise des méthodes d'alignement basées sur la 
+FFT (Fast Fourier Transform), ce qui accélère le calcul tout en maintenant une bonne précision.
+
+2. **Gestion de grandes séquences** : **MAFFT** est mieux adapté pour aligner des milliers de 
+séquences longues, là où CLUSTALW et MUSCLE peuvent devenir très lents ou même incapables de 
+traiter de grands jeux de données efficacement.
+
+3. **Algorithmes plus avancés** : **MAFFT** propose plusieurs algorithmes différents, adaptés à 
+différents types de jeux de données (par exemple, alignements globaux et locaux, alignement 
+progressif et itératif), offrant ainsi plus de flexibilité que CLUSTALW et MUSCLE.
+
+4. **Précision améliorée** : **MAFFT** tend à fournir des alignements plus précis pour des séquences 
+divergentes ou complexes. Il est souvent utilisé pour l'alignement de séquences plus hétérogènes, 
+où CLUSTALW et MUSCLE peuvent manquer de précision.
 
 ### Transférer le fichier .fasta
 
@@ -217,5 +238,53 @@ semble être le plus fiable?
 
 ## Aligner avec OMM_MACSE
 
-!!! Continuer ici !!!
+**OMM_MACSE** est spécialisé dans l'alignement des séquences codantes tout en respectant les 
+cadres de lecture, ce qui le rend particulièrement adapté aux études évolutives nécessitant une 
+gestion précise des insertions, délétions et mutations dans les gènes. Cependant, cette précision 
+le rend plus lent, surtout pour les grands ensembles de séquences, comparé à des outils plus 
+généralistes comme MAFFT.
+
+Pour aligner les séquences du fichier `sequence.fasta` avec **OMM_MACSE**, exécutez le code 
+ci-dessous sur le serveur de calcul:  
+```bash
+## Ajuster les variables ci-dessous de façon appropriée
+SRC_MACSE=/opt/omm_macse_v12.01.sif 
+#SRC_SING=/opt/singularity-ce-4.2.0/builddir
+WD=/home/$USER/
+SEQIN=sequence.fasta
+OUTFOLDER=macse_output
+OUTPREFIX=test
+GENETICCODE=11 # 1: standard, 11: bactéries/chloroplastes
+EMAIL=votre.courriel@umontreal.ca
+TIME="0-12:00:00"
+MEMORY=1G
+
+###
+## aligner les séquences
+###
+
+mkdir -p $WD
+cd $WD
+
+## create a SLURM batchfile to align with MAFFT
+echo '#!/bin/bash' > macse.sbatch
+echo "#SBATCH --job-name=macse
+#SBATCH --output=macse.out
+#SBATCH --mail-type=end
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=$MEMORY
+#SBATCH --time=$TIME
+
+$SRC_MACSE \\
+  --in_seq_file $SEQIN \\
+  --out_dir $OUTFOLDER \\
+  --out_file_prefix $OUTPREFIX \\
+  --genetic_code_number $GENETICCODE \\
+  --java_mem $MEMORY" >> macse.sbatch
+
+## Envoyer la tâche d'alignement à SLURM
+sbatch --mail-user=$EMAIL macse.sbatch
+
+```
 

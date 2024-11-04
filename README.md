@@ -135,7 +135,17 @@ Avec les données HybSeq:
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
 Avec les données Sanger:  
-  1. !!! À faire !!!
+  1. [Sanger/06--Vraisemblance.md](Sanger/06--Vraisemblance.md)
 
 Avec les données HybSeq:  
   1. [HybSeq/09--Vraisemblance.md](HybSeq/09--Vraisemblance.md)
+
+## T.P. 7: Analyse phylogénétique Bayesienne
+
+Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
+
+Avec les données Sanger:  
+  1. [Sanger/07--Analyse_Bayesienne.md](Sanger/07--Analyse_Bayesienne.md)
+
+Avec les données HybSeq:  
+  1. [HybSeq/10--Analyse_Bayesienne.md](HybSeq/10--Analyse_Bayesienne.md)

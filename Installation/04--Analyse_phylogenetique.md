@@ -62,3 +62,66 @@ SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
 $SRC_IQ/iqtree2 --help
 
 ```
+
+## Analyse Bayesienne
+
+Installer Beagle:  
+```bash
+sudo apt-get update
+sudo apt-get install \
+  cmake \
+  build-essential \
+  autoconf \
+  automake \
+  libtool \
+  git \
+  pkg-config \
+  openjdk-11-jdk
+
+cd /opt
+sudo git clone --depth=1 https://github.com/beagle-dev/beagle-lib.git
+cd beagle-lib
+sudo mkdir build
+cd build
+sudo cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/beagle-lib ..
+sudo make install
+
+```
+
+Installer MrBayes avec Beagle. Note importante: j'ai tenté initialement d'installer MrBayes 
+avec mpich, et ça ne fonctionnait pas (mpirun initialisait plusieurs instances à 1 processeur 
+chacune, au lieu d'une seule instance avec plusieurs processeurs). Ensuite, j'ai tenté avec 
+OpenMPI et ç'a fonctionné tout de suite.  
+```bash
+## installer prérequis
+sudo apt install \
+  automake \
+  autoconf \
+  pkg-config \
+  autoconf-archive \
+  openmpi-bin \
+  libopenmpi-dev
+
+## installer version parallèle
+cd /opt
+sudo git clone --depth=1 https://github.com/NBISweden/MrBayes.git
+sudo mv MrBayes MrBayes-mpi
+cd MrBayes-mpi
+sudo ./configure --with-mpi --with-beagle=/opt/beagle-lib
+sudo make && sudo make install
+sudo mv /opt/MrBayes-mpi/src/mb /opt/MrBayes-mpi/src/mb-mpi
+
+## installer version non-parallèle
+cd /opt
+sudo git clone --depth=1 https://github.com/NBISweden/MrBayes.git
+cd MrBayes
+sudo ./configure --without-mpi --with-beagle=/opt/beagle-lib
+sudo make && sudo make install
+
+## tester version non-parallèle
+/opt/MrBayes/src/mb -v
+
+## tester la version parallèle
+mpirun.openmpi -np 2 /opt/MrBayes-mpi/src/mb-mpi
+
+```

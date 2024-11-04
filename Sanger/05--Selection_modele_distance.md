@@ -47,8 +47,28 @@ partitionnement naturel de vos données (par exemple, avec l'aide de la commande
 
 4. Exécuter IQ-Tree avec partitionnement :
    ```bash
+   ## Ajuster les variables ci-dessous de façon appropriée
    SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
-   $SRC_IQ/iqtree2 -s test.nex -p partitions.txt -m TESTMERGEONLY -nt 1
+   WD=/home/$USER
+   ALIGNMENT=/home/$USER/test.nex
+   PARTITIONS=/home/$USER/partitions.txt
+   EMAIL=votre.courriel@umontreal.ca
+   TIME="0-12:00:00"
+   THREADS=1
+      
+   sbatch \
+     --job-name=iqtree_modeltest \
+     --output=iqtree_modeltest.log \
+     --mail-user=$EMAIL \
+     --nodes=1 \
+     --time=$TIME \
+     --cpus-per-task=$THREADS \
+     --mem-per-cpu=2G \
+     --wrap="$SRC_IQ/iqtree2 \
+	   -s $ALIGNMENT \
+	   -p $PARTITIONS \
+	   -m TESTMERGEONLY \
+	   -nt $THREADS"
    
    ```
    - la ligne débutant par `SRC_IQ=` initialise une variable qui indique où se trouve le programme 

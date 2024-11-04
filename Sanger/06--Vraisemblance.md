@@ -1,41 +1,41 @@
-# Analyse de maximum de vraisemblance
+# Maximum de vraisemblance
 
 Ce tutoriel vous guidera dans l’utilisation d'**IQ-Tree** et de **RAxML** pour l'analyse de 
-maximum de vraisemblance (*maximum likelihood*) sur une matrice de données concaténées ou 
-sur un seul gène. Il assume qu'on sait déjà quel est le meilleur modèle de substitution.
+maximum de vraisemblance (*maximum likelihood*) sur une matrice de données concaténées provenant 
+d'un seul gène. Il assume qu'on sait déjà quel est le meilleur modèle de substitution.
 
 ---
 
 ## Maximum de vraisemblance dans IQ-Tree
 
-**IQ-Tree** offre une approche rapide et flexible pour la sélection de modèles et le 
-partitionnement. Il permet de faire des analyses de maximum de vraisemblance sur à peu 
-près n'importe quel modèle d'évolution et de partitionnement imaginable. Cette flexibilité 
-vient avec un coût: il est plus lent que RAxML, particulièrement avec les jeux de données 
-qui sont un peu plus grands.
+**IQ-Tree** permet de faire des analyses de maximum de vraisemblance sur à peu près n'importe quel 
+modèle d'évolution et de partitionnement imaginable. Cette flexibilité vient avec un coût: il est 
+plus lent que RAxML, particulièrement avec les jeux de données qui sont un peu plus grands.
 
 Prérequis:
-- Avoir un fichier en format phylip (.phy) contenant la concaténation de tous les loci;  
+- Avoir un fichier en format phylip (.phy) ou nexus (.nex) contenant l'alignement d'un seul gène;
 - Avoir un fichier associé qui donne les informations sur les partitions optimales 
 (déterminées lors de notre sélection de modèle);  
 - Connaître le modèle le plus approprié pour chacune de nos partitions;
 - Il suffit d'avoir suivi les instructions du 
-[tutoriel sur la sélection de modèle](HybSeq/07--Selection_modele.md) pour avoir ces 
+[tutoriel sur la sélection de modèle](Sanger/05--Selection_modele-distance.md) pour avoir ces 
 fichiers.  
 
-Les fichiers d'intérêt sont donc `filtered_concat.partitions.best_scheme.nex` et `filtered_concat.phy`, dans votre dossier `/scratch/$USER/HybSeqTest/seqs/exon/align/concat`.
+Les fichiers d'intérêt sont donc `partitions.txt.best_scheme.nex` et `test.phy`, dans votre dossier
+`/home/$USER`.
 
-- **Question**: Examinez ces fichiers à l'aider de la commande `more`, et assurez-vous que vous comprenez comment ils sont formattés.  
+- **Question**: Examinez ces fichiers à l'aider de la commande `more`, et assurez-vous que vous 
+comprenez comment ils sont formattés.  
 
 Une fois cela fait, voici du code pour faire une analyse de maximum de vraisemblance avec 
 **IQ-Tree**:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
-WD=/scratch/$USER/HybSeqTest/trees/exon/align/concat/iqtree
-ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.phy
-PARTITIONS=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.partitions.best_scheme.nex
-OUTPUT_PREFIX=Dryopteris
+WD=/home/$USER/test_iqtree
+ALIGNMENT=/home/$USER/test.nex
+PARTITIONS=/home/$USER/partitions.txt.best_scheme.nex
+OUTPUT_PREFIX=test
 BOOTSTRAP_REPS=100
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
@@ -52,8 +52,8 @@ ln $PARTITIONS $OUTPUT_PREFIX.nex
 
 ## Exécuter ce batchfile en mode non-intéractif sur SLURM
 sbatch \
-  --job-name=iqtree.search_bootstrap \
-  --output=iqtree.search_bootstrap.log \
+  --job-name=iqtree_search_bootstrap \
+  --output=iqtree_search_bootstrap.log \
   --mail-user=$EMAIL \
   --nodes=1 \
   --time=$TIME \
@@ -65,96 +65,115 @@ sbatch \
 
 ### Description des paramètres dans l'analyse IQ-Tree
 
-1. **`SRC_IQ`** : Spécifie l'emplacement du binaire IQ-TREE sur le système. Ici, il est situé à 
+Voici une description ajustée des paramètres utilisés dans le code IQ-Tree:
+
+1. **`SRC_IQ`** : Chemin vers le binaire IQ-TREE sur le système, défini ici comme 
 `/opt/iqtree-2.3.6-Linux-intel/bin`.
-   
-2. **`WD`** : Définit le répertoire de travail où les résultats seront stockés. Dans ce cas, c'est `/scratch/$USER/HybSeqTest/trees/exon/align/concat/iqtree`.
 
-3. **`ALIGNMENT`** : Fichier d'alignement au format **PHYLIP** contenant la concaténation de tous 
-les loci. Ce fichier est essentiel pour l'analyse phylogénétique.
+2. **`WD`** : Répertoire de travail où les résultats seront sauvegardés. Dans cet exemple, il 
+s'agit de `/home/$USER/test_iqtree`.
 
-4. **`PARTITIONS`** : Fichier définissant les partitions et les modèles de substitution optimaux 
-pour chaque partition. Il a été généré lors de l'étape de sélection du modèle.
+3. **`ALIGNMENT`** : Chemin vers le fichier d'alignement en entrée, spécifié ici comme 
+`/home/$USER/test.nex`.
 
-5. **`OUTPUT_PREFIX`** : Préfixe utilisé pour nommer les fichiers de sortie. Ici, les fichiers de 
-sortie auront le préfixe `Dryopteris`.
+4. **`PARTITIONS`** : Fichier de partitions indiquant les modèles de substitution optimaux pour 
+chaque partition. Ce fichier est situé à `/home/$USER/partitions.txt.best_scheme.nex`.
 
-6. **`BOOTSTRAP_REPS`** : Le nombre de réplicats bootstrap à effectuer. Ici, 100 réplicats sont 
-spécifiés pour évaluer la robustesse de l'arbre.
+5. **`OUTPUT_PREFIX`** : Préfixe pour les fichiers de sortie, défini comme `test` dans cet exemple, 
+ce qui signifie que les fichiers de sortie porteront ce préfixe.
 
-7. **`EMAIL`** : Adresse e-mail de l'utilisateur pour recevoir les notifications lorsque le 
-travail est terminé ou en cas d'erreur.
+6. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à exécuter, fixé ici à 100, pour évaluer la 
+robustesse des branches de l’arbre.
 
-8. **`TIME`** : Le temps maximum alloué pour le travail sur le système SLURM, ici 12 heures.
+7. **`EMAIL`** : Adresse courriel de l’utilisateur pour recevoir des notifications une fois le 
+travail terminé.
 
-9. **`-s $OUTPUT_PREFIX.phy`** : Spécifie le fichier d'alignement à utiliser dans l'analyse.
+8. **`TIME`** : Durée maximale allouée pour le travail sur SLURM, ici configurée pour 12 heures.
 
-10. **`-p $OUTPUT_PREFIX.nex`** : Indique le fichier de partitions à utiliser dans l'analyse.
+9. **`-s $OUTPUT_PREFIX.phy`** : Paramètre indiquant le fichier d’alignement à utiliser dans 
+l’analyse.
 
-11. **`-nt 4`** : Utilise 4 threads pour accélérer l'analyse.
+10. **`-p $OUTPUT_PREFIX.nex`** : Paramètre spécifiant le fichier de partitions pour l’analyse.
+
+11. **`-nt 4`** : Utilisation de 4 threads pour accélérer l’analyse IQ-Tree.
 
 12. **`-b $BOOTSTRAP_REPS`** : Effectue 100 réplicats bootstrap pour estimer la robustesse des 
-branches de l'arbre.
+branches de l’arbre phylogénétique.
 
 ### Fichiers de sortie de IQ-Tree
 
-Lorsque vous exécutez IQ-Tree avec le script fourni, plusieurs fichiers de sortie sont générés. Ces fichiers contiennent des informations sur l'arbre de maximum de vraisemblance, les partitions, les réplicats bootstrap et les modèles de substitution utilisés. Voici une description des principaux fichiers de sortie créés par IQ-Tree dans ce script :
+Voici les descriptions ajustées des fichiers de sortie générés par IQ-Tree:
 
-1. **`Dryopteris.treefile`** :
-   - Ce fichier contient l'arbre de maximum de vraisemblance (ML) inféré par IQ-Tree. C'est le résultat principal de l'analyse, avec les longueurs de branches optimisées et les topologies déterminées en fonction du modèle de substitution choisi.
+1. **`test.treefile`** :
+   - Ce fichier contient l’arbre de maximum de vraisemblance inféré par IQ-Tree avec les longueurs 
+   de branches et la topologie optimisées selon le modèle choisi. C'est le résultat principal de 
+   l’analyse phylogénétique.
 
-2. **`Dryopteris.log`** :
-   - Un journal détaillé de l'exécution du programme IQ-Tree. Il comprend des informations sur les options choisies pour l'exécution, les modèles de substitution appliqués à chaque partition, les résultats intermédiaires et les statistiques sur la convergence de l'arbre.
+2. **`test.log`** :
+   - Un journal d’exécution détaillé de l’analyse, incluant les paramètres utilisés, les modèles de 
+   substitution appliqués à chaque partition et des statistiques sur la convergence de l’arbre.
 
-3. **`Dryopteris.iqtree`** :
-   - Ce fichier fournit des informations complètes sur les paramètres de l'analyse. Il inclut la log-vraisemblance de l'arbre final, des informations sur les partitions, le modèle de substitution utilisé pour chaque partition, et les réplicats bootstrap. Ce fichier est utile pour examiner les détails des résultats et pour la reproductibilité de l'analyse.
+3. **`test.iqtree`** :
+   - Ce fichier présente les détails de l’analyse finale, comme la log-vraisemblance de l’arbre, 
+   les informations sur les partitions et les modèles de substitution. Il est essentiel pour 
+   examiner la reproductibilité de l’analyse.
 
-4. **`Dryopteris.bionj`** :
-   - Un arbre NJ (Neighbor-Joining) initial utilisé par IQ-Tree pour commencer l'optimisation de l'arbre de maximum de vraisemblance. Cet arbre est généré avant le calcul ML final, et sert souvent de point de départ pour la recherche de la meilleure topologie.
+4. **`test.bionj`** :
+   - Un arbre initial de type NJ (Neighbor-Joining) utilisé comme point de départ pour optimiser 
+   l’arbre de maximum de vraisemblance final.
 
-5. **`Dryopteris.model.gz`** :
-   - Un fichier compressé contenant des informations détaillées sur le modèle de substitution pour chaque partition. Ce fichier peut être utile si vous souhaitez réutiliser les mêmes modèles pour une autre analyse ou examiner de manière approfondie les paramètres de chaque modèle.
+5. **`test.model.gz`** :
+   - Un fichier compressé contenant les informations sur les modèles de substitution pour chaque 
+   partition, utile pour réutiliser les modèles dans des analyses similaires ou approfondir 
+   l’examen des paramètres.
 
-6. **`Dryopteris.ckp.gz`** :
-   - Un fichier de checkpoint qui permet à IQ-Tree de reprendre une analyse interrompue, par exemple à cause d'une limite de temps dépassée. Si l'analyse est interrompue, IQ-Tree peut être relancé en utilisant ce fichier pour continuer depuis ce point.
+6. **`test.ckp.gz`** :
+   - Un fichier de checkpoint permettant de reprendre l’analyse en cas d’interruption. IQ-TREE peut 
+   utiliser ce fichier pour continuer à partir de l’endroit où l’analyse s'est arrêtée.
 
-7. **`Dryopteris.splits.nex`** :
-   - Ce fichier contient les informations sur les clades supportés par les réplicats bootstrap. Il peut être utilisé pour visualiser les bipartitions dans un logiciel comme SplitsTree ou pour des analyses supplémentaires sur les partitions d'arbre.
+7. **`test.splits.nex`** :
+   - Ce fichier contient les informations sur les clades supportés par les réplicats bootstrap. Il 
+   peut être visualisé dans des logiciels de phylogénie comme SplitsTree.
 
-8. **`Dryopteris.bootstrap`** :
-   - Ce fichier contient les arbres bootstrap générés au cours de l'analyse. Ces arbres sont utilisés pour estimer le support bootstrap des branches dans l'arbre final de maximum de vraisemblance. Chaque arbre correspond à un réplicat bootstrap différent.
+8. **`test.bootstrap`** :
+   - Les arbres bootstrap générés pour estimer la robustesse des branches de l’arbre final. Chaque 
+   arbre correspond à un réplicat bootstrap distinct.
 
-9. **`Dryopteris.contree`** :
-   - L'arbre de consensus basé sur les réplicats bootstrap. Il contient les valeurs de support bootstrap annotées sur les branches. Cet arbre donne une idée de la robustesse des clades et des relations phylogénétiques observées dans l'arbre ML.
+9. **`test.contree`** :
+   - L’arbre de consensus basé sur les réplicats bootstrap, avec les valeurs de support des 
+   branches. Il fournit un aperçu de la stabilité des relations observées dans l’arbre ML.
 
 10. **`iqtree.search_bootstrap.log`** :
-   - Un fichier journal généré par SLURM qui contient toutes les informations relatives à l'exécution du travail (temps d'exécution, ressources utilisées, messages d'erreurs, etc.). Ce fichier est utile pour diagnostiquer les problèmes de calcul.
+   - Un journal SLURM contenant les informations sur l’exécution, comme le temps, les ressources 
+   utilisées, et les messages d’erreurs éventuels.
 
 ---
 
+
+!!! Le code ci-dessous n'est pas terminé !!!
+!!! En attendant, vous pouvez suivre le tutoriel sur le maximum de vraisemblance dans le dossier HybSeq !!!
+!!! Ce tutoriel vous montrera comment utiliser RAxML (c'est la même chose que pour les données Sanger) !!!
+
+
 ## Maximum de vraisemblance dans RAxML
 
-**RAxML** est moins flexible que IQ-Tree, mais très efficace à faire ce qu'il fait le mieux: 
-estimer très rapidement un arbre de maximum de vraisemblance en utilisant un modèle GTR ou 
-GTR+Gamma. Il est aussi rapide pour le calcul de support bootstrap. En conséquence, il s'agit du 
-programme d'analyse de maximum de vraisemblance le plus populaire à ce jour.
+**RAxML** est moins flexible que IQ-Tree, mais très efficace à ce qu'il fait le mieux: estimer très 
+rapidement un arbre de maximum de vraisemblance en utilisant un modèle GTR ou GTR+Gamma. Il est 
+aussi rapide pour le calcul de support bootstrap. Ces caractéristiques en font le programme 
+d'analyse de maximum de vraisemblance le plus populaire à ce jour.
 
-Prérequis:
-- Avoir un fichier en format phylip (.phy) contenant la concaténation de tous les loci;  
-- Avoir un fichier associé qui donne les informations sur les partitions optimales 
-(déterminées lors de notre sélection de modèle);  
-- Connaître le modèle le plus approprié pour chacune de nos partitions;
-- Il suffit d'avoir suivi les instructions du 
-[tutoriel sur la sélection de modèle](HybSeq/07--Selection_modele.md) pour avoir ces 
-fichiers.  
+Prérequis: les mêmes que pour l'analyse de maximum de vraisemblance avec IQ-Tree.
 
-Les fichiers d'intérêt sont donc `filtered_concat.partitions.best_scheme` et 
-`filtered_concat.phy`, dans votre dossier `/scratch/$USER/HybSeqTest/seqs/exon/align/concat`.
+**RAxML** ne fonctionne qu'avec des fichiers de type phylip (`.phy`) en entrée. En conséquence, il faut tout d'abord 
+transformer le fichier de type nexus (`.nex`) en fichier de type phylip. Nous allons faire ça avec la fonction `export` de 
+PAUP\*. 
+```bash
+SRC_PAUP=/opt/
 
-- **Question**: Examinez ces fichiers à l'aider de la commande `more`, et assurez-vous que vous comprenez comment ils sont formattés.  
 
-Une fois cela fait, voici du code pour faire une analyse de maximum de vraisemblance avec 
-**RAxML**:  
+```
+
+Ensuite, on lance l'analyse RAxML.
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC_RAXML=/opt/RAxML-8.2.12
@@ -162,7 +181,7 @@ WD=/scratch/$USER/HybSeqTest/trees/exon/align/concat/raxml
 ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.phy
 PARTITIONS=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.partitions.best_scheme
 MODEL=GTRCAT
-OUTPUT_PREFIX=Dryopteris
+OUTPUT_PREFIX=test
 BOOTSTRAP_REPS=100
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
