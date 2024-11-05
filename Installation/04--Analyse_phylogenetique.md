@@ -125,3 +125,15 @@ sudo make && sudo make install
 mpirun.openmpi -np 2 /opt/MrBayes-mpi/src/mb-mpi
 
 ```
+
+Installer BEAST 2:  
+```bash
+cd /opt
+sudo wget https://github.com/CompEvol/beast2/releases/download/v2.7.7/BEAST.v2.7.7.Linux.x86.tgz
+sudo tar -xzvf BEAST.v2.7.7.Linux.x86.tgz
+sudo rm BEAST.v2.7.7.Linux.x86.tgz
+
+## test Installation
+/opt/beast/bin/beast -help
+
+```

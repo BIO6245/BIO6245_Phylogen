@@ -149,3 +149,10 @@ Avec les données Sanger:
 
 Avec les données HybSeq:  
   1. [HybSeq/10--Analyse_Bayesienne.md](HybSeq/10--Analyse_Bayesienne.md)
+
+## T.P. 8: Estimation de l'arbre d'espèce
+
+Pour ce T.P., faites le tutoriel suivant:
+
+Avec les données Sanger:
+  1. [Sanger/08--Arbre_despeces.md](Sanger/08--Arbre_despeces.md)
