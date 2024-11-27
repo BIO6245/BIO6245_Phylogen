@@ -6,6 +6,8 @@ plusieurs gènes différents, via l'estimation d'arbres de gènes. Il existe deu
 2. Estimation des arbres de gènes individuels, puis estimation d'un arbre d'espèce avec une 
 méthode par abrégé (p.ex., **ASTRAL**, **svdQuartets**, etc.)
 
+---
+
 ## Co-estimation avec \*BEAST
 
 ### Installer BEAST 2
@@ -76,14 +78,13 @@ les analyses Bayesiennes dans MrBayes (référez-vous au tutoriel de MrBayes).
 - Une fois que tous les paramètres sont bien sélectionnés, sauvegardez le fichier de paramètres 
 avec File -> Save As. Nommez-le `Gaufres_starBeast.xml`.
 
-### Analyse Bayesienne \*BEAST
+### Analyse Bayesienne \*BEAST sur votre ordinateur
 
 - Ouvrez le module BEAST
 
 - Choisissez `Gaufres_starBEAST.xml` comme "Input File".
 
-- Lancez 2 chaînes ("Instances" = 2) qui utilisent chacune 2 processeurs ("Threads" = 2) et 
-cliquez sur "Run".
+- Lancez la chaîne MCMC en utilisant 2 processeurs ("Threads" = 2) et cliquez sur "Run".
 
 - Vous allez pouvoir suivre le progrès des chaînes à l'écran.
 
@@ -102,5 +103,57 @@ poubelle (burnin), puis sélectionnez `species.trees` comme "Input Tree File" et
 output tree file `best.starBeast.species.tre`. 
 
 - Fermez le module TreeAnnotator et ouvrez le fichier `best.starBeast.species.tre` dans 
-FigTree pour visuler votre arbre d'espèce estimé par \*BEAST.
+FigTree pour visualiser votre arbre d'espèce estimé par \*BEAST.
+
+### Analyse Bayesienne \*BEAST sur le serveur
+
+Bien que le jeu de données utilisé dans ce tutoriel soit suffisamment petit pour pouvoir être 
+analysé sur votre propre ordinateur, il sera la plupart du temps nécessaire d'effectuer l'analyse 
+sur un serveur de calcul. Dans ce cas, suivez les instructions ci-dessous:
+
+- Une fois que vous avez préparé le fichier de préparation `Gaufres_starBEAST.xml` avec BEAUti 
+(voir la section ci-haut), téléversez-le sur le serveur de calcul du cours à l'aide de la commande 
+`rsync`.
+
+- Connectez-vous au serveur de calcul et naviguez jusqu'au dossier où vous avez transféré le 
+fichier `Gaufres_starBEAST.xml`.
+
+- Lancez l'analyse avec **BEAST 2** à l'aide de ces commandes:  
+   ```bash
+   ## Ajuster les variables ci-dessous de façon appropriée
+   SRC_BEAST=/opt/beast/bin
+   WD=/home/$USER/
+   XML_INPUT=$WD/Gaufres_starBeast.xml 
+   EMAIL=votre.courriel@umontreal.ca
+   TIME="0-12:00:00"
+   THREADS=2
+   
+   cd $WD
+   
+   ## Mettre la bibliothèque BEAGLE dans le PATH pour accélérer les calculs
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/beagle-lib/lib
+   
+   ## Utiliser le "ThreadedTreeLikelihood" pour accélérer les calculs
+   sed -i 's/spec="TreeLikelihood"/spec="ThreadedTreeLikelihood"/g' $XML_INPUT
+
+   ## Lancer la tâche sur SLURM
+   sbatch \
+     --job-name=beast \
+	 --output=beast.log \
+	 --mail-user=$EMAIL \
+	 --nodes=1 \
+	 --time=$TIME \
+	 --cpus-per-task=$THREADS \
+	 --mem-per-cpu=2G \
+	 --wrap="$SRC_BEAST/beast \
+	   -beagle \
+	   -threads $THREADS \
+	   -INSTANCES $THREADS \
+	   $XML_INPUT"
+	   
+   ```
+
+---
+
+## Estimation par abrégé avec ASTRAL
 

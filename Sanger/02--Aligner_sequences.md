@@ -248,8 +248,7 @@ Pour aligner les séquences du fichier `sequence.fasta` avec **OMM_MACSE**, exé
 ci-dessous sur le serveur de calcul:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
-SRC_MACSE=/opt/omm_macse_v12.01.sif 
-#SRC_SING=/opt/singularity-ce-4.2.0/builddir
+SRC_MACSE=/opt/omm_macse_v12.01.sif
 WD=/home/$USER/
 SEQIN=sequence.fasta
 OUTFOLDER=macse_output
@@ -276,6 +275,10 @@ echo "#SBATCH --job-name=macse
 #SBATCH --mem-per-cpu=$MEMORY
 #SBATCH --time=$TIME
 
+## nécessaire pour que MACSE puisse accéder à l'alignement
+export SINGULARITY_BINDPATH="$SEQIN"
+
+## alignement MACSE
 $SRC_MACSE \\
   --in_seq_file $SEQIN \\
   --out_dir $OUTFOLDER \\

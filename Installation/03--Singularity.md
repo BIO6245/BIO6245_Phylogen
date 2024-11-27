@@ -1,8 +1,6 @@
 # Installer Singularity
 
-Oui, il est tout à fait possible d'installer **OMM_MACSE** via Singularity sur un serveur Linux, surtout si vous avez un accès root. Voici un guide étape par étape pour y parvenir :
-
-### Mettre à jour les paquets et installer les dépendances
+## Mettre à jour les paquets et installer les dépendances
 
 ```bash
 sudo apt-get update && sudo apt-get upgrade
@@ -31,7 +29,7 @@ sudo apt-get install -y \
 
 ```
 
-### Installer Go
+## Installer Go
 
 Singularity nécessite Go (version 1.18 ou plus récente). L'installer avec ces commandes:  
 ```bash
@@ -67,7 +65,7 @@ go install github.com/golang/dep/cmd/dep@latest
 
 ```
 
-### Télécharger et installer Singularity
+## Télécharger et installer Singularity
 
 ```bash
 VERSION=4.2.0

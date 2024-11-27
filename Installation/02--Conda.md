@@ -62,6 +62,9 @@ conda config --add channels conda-forge
 
 Creating environments and installing software inside those environments:  
 ```bash
+## list all environments
+conda info --envs
+
 ## newick_utils
 sudo /opt/miniconda/bin/conda create -y -n newick_utils -c bioconda newick_utils -c bioconda catfasta2phyml
 
@@ -71,6 +74,9 @@ sudo /opt/miniconda/bin/conda create -y -n hybpiper -c bioconda -c conda-forge -
 
 ## biopython
 sudo /opt/miniconda/bin/conda create -y -n bio -c conda-forge biopython
+
+## ipyrad
+sudo /opt/miniconda/bin/conda create -y -n ipyrad -c conda-forge -c bioconda ipyrad
 
 ```
 
@@ -84,9 +90,6 @@ get_organelle_config.py --config-dir $WD/getOrganelle --add embplant_pt,embplant
 
 ## RagTag
 $SRC/conda create -n ragtag -c bioconda ragtag
-
-## ipyrad
-conda create -y -n ipyrad -c conda-forge ipyrad
 
 ## list all environments
 $SRC/conda info --envs

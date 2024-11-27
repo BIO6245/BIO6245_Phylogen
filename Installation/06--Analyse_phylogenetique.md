@@ -137,3 +137,66 @@ sudo rm BEAST.v2.7.7.Linux.x86.tgz
 /opt/beast/bin/beast -help
 
 ```
+
+Installer des paquets de BEAST 2. La méthode standard avec le `packagemanager` ne fonctionne pas, 
+car les TI ont bloqué l'accès Internet aux programmes sur les serveurs de l'UdeM. Il faut donc 
+installer les paquets à la main:  
+```bash
+VERSION=2.7
+
+## créer dossier partagé pour les paquets BEAST 2
+sudo mkdir -p /usr/local/share/beast/$VERSION
+
+## télécharger les paquets
+cd ~
+wget https://github.com/BEAST2-Dev/BEASTLabs/releases/download/v2.0.0/BEASTlabs.package.v2.0.2.zip
+wget https://github.com/rbouckaert/starbeast3/releases/download/v1.1.9/starbeast3.addon.v1.1.9.zip
+wget https://github.com/jordandouglas/ORC/releases/download/v1.2.0/ORC.addon.v1.2.0.zip
+
+## extraire les paquets dans le dossier partagé
+sudo unzip BEASTlabs.package.v2.0.2.zip -d /usr/local/share/beast/$VERSION/BEASTlabs
+sudo unzip starbeast3.addon.v1.1.9.zip -d /usr/local/share/beast/$VERSION/starbeast3
+sudo unzip ORC.addon.v1.2.0.zip -d /usr/local/share/beast/$VERSION/ORC
+
+## supprimer beauti.properties de tous utilisateurs pour réinitialiser chemin vers paquets
+for i in $(ls -d /home/*)
+  do
+    sudo rm $i/.beast/2.7/beauti.properties
+  done
+
+```
+
+## Arbres d'espèces
+
+Installer ASTER:  
+```bash
+cd /opt
+sudo wget https://github.com/chaoszhang/ASTER/archive/refs/heads/Linux.zip
+sudo mv Linux.zip ASTER.zip
+sudo unzip ASTER.zip
+sudo mv ASTER-Linux ASTER
+cd ASTER
+sudo make
+sudo rm ASTER.zip
+
+## tester l'Installation
+/opt/ASTER/bin/wastral -h
+
+
+```
+
+
+## Réconciliation de famille de gènes sur arbre d'espèces
+
+AleRax:  
+```bash
+cd /opt
+sudo git clone --recursive https://github.com/BenoitMorel/AleRax
+cd AleRax
+sudo ./install.sh
+
+## test AleRax
+/opt/AleRax/build/bin/alerax -h
+
+```
+

@@ -71,10 +71,10 @@ de bien documenter votre travail bioinformatique dans ce cours:
 ## Organisation du Github du cours
 
 Les travaux sont organisés par thème dans des dossiers:
-- HybSeq: assemblage et analyse phylogénétique des données HybSeq
-- RADseq: assemblage et analyse phylogénétique des données RADseq
-- Reseq: assemblage et analyse phylogénétique des données de reséquençage de génome complet
-- Sanger: assemblage et analyse phylogénétique de données issues de séquençage Sanger
+  - HybSeq: assemblage et analyse phylogénétique des données HybSeq
+  - RADseq: assemblage et analyse phylogénétique des données RADseq
+  - Reseq: assemblage et analyse phylogénétique des données de reséquençage de génome complet
+  - Sanger: assemblage et analyse phylogénétique de données issues de séquençage Sanger
 
 À l'intérieur de chaque dossier, un tutoriel vous guidera à travers les étapes d'analyse sur le 
 serveur.
@@ -82,77 +82,80 @@ serveur.
 ## T.P. 1: Utiliser une ligne de commande et un serveur de calcul
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
-  1. [General/01--Ligne_de_commande_bash.md](General/01--Ligne_de_commande_bash.md)  
-  2. [General/02--Serveur_de_calcul.md](General/02--Serveur_de_calcul.md)  
-  3. [General/03--Ordonnanceur_SLURM.md](General/03--Ordonnanceur_SLURM.md)  
-  4. [General/04--Journal_de_bord.md](General/04--Journal_de_bord.md)  
+  - [General/01--Ligne_de_commande_bash.md](General/01--Ligne_de_commande_bash.md)  
+  - [General/02--Serveur_de_calcul.md](General/02--Serveur_de_calcul.md)  
+  - [General/03--Ordonnanceur_SLURM.md](General/03--Ordonnanceur_SLURM.md)  
+  - [General/04--Journal_de_bord.md](General/04--Journal_de_bord.md)  
 
 ## T.P. 2: Télécharger, assembler et aligner des séquences
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
 Avec les données Sanger:  
-  1. [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)  
-  2. [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)  
+  - [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)  
+  - [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)  
 
 Avec les données HybSeq:  
-  1. [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
-  2. [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
-  3. [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
-  4. [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
+  - [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
+  - [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
+  - [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
+  - [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
 
 ## T.P. 3: Analyse de parcimonie
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
 Avec les données Sanger:  
-  1. [Sanger/03--Parcimonie.md](Sanger/03--Parcimonie.md)  
+  - [Sanger/03--Parcimonie.md](Sanger/03--Parcimonie.md)  
 
 Avec les données HybSeq:  
-  1. [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
-  2. [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
+  - [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
+  - [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
   
 ## T.P. 4: Analyse de parcimonie
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
 Avec les données Sanger:  
-  1. [Sanger/04--Congruence_support.md](Sanger/04--Congruence_support.md)  
+  - [Sanger/04--Congruence_support.md](Sanger/04--Congruence_support.md)  
 
 ## T.P. 5: Distance et modèles de substitution
 
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
 Avec les données Sanger:  
-  1. [Sanger/05--Selection_modele_distance.md](Sanger/05--Selection_modele_distance.md)
+  - [Sanger/05--Selection_modele_distance.md](Sanger/05--Selection_modele_distance.md)
 
 Avec les données HybSeq:  
-  1. [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
-  2. [HybSeq/08--Distance.md](HybSeq/08--Distance.md)
+  - [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
+  - [HybSeq/08--Distance.md](HybSeq/08--Distance.md)
   
 ## T.P. 6: Maximum de vraisemblance
 
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
 Avec les données Sanger:  
-  1. [Sanger/06--Vraisemblance.md](Sanger/06--Vraisemblance.md)
+  - [Sanger/06--Vraisemblance.md](Sanger/06--Vraisemblance.md)
 
 Avec les données HybSeq:  
-  1. [HybSeq/09--Vraisemblance.md](HybSeq/09--Vraisemblance.md)
+  - [HybSeq/09--Vraisemblance.md](HybSeq/09--Vraisemblance.md)
 
 ## T.P. 7: Analyse phylogénétique Bayesienne
 
 Pour ce T.P., faites les tutoriels suivants, dans cet ordre:
 
 Avec les données Sanger:  
-  1. [Sanger/07--Analyse_Bayesienne.md](Sanger/07--Analyse_Bayesienne.md)
+  - [Sanger/07--Analyse_Bayesienne.md](Sanger/07--Analyse_Bayesienne.md)
 
 Avec les données HybSeq:  
-  1. [HybSeq/10--Analyse_Bayesienne.md](HybSeq/10--Analyse_Bayesienne.md)
+  - [HybSeq/10--Analyse_Bayesienne.md](HybSeq/10--Analyse_Bayesienne.md)
 
 ## T.P. 8: Estimation de l'arbre d'espèce
 
 Pour ce T.P., faites le tutoriel suivant:
 
-Avec les données Sanger:
-  1. [Sanger/08--Arbre_despeces.md](Sanger/08--Arbre_despeces.md)
+Avec les données Sanger:  
+  - [Sanger/08--Arbre_despeces.md](Sanger/08--Arbre_despeces.md)
+
+Avec les données HybSeq:    
+  - [HybSeq/11--Arbre_despeces.md](HybSeq/11--Arbre_despeces.md)

@@ -32,7 +32,7 @@ Une fois cela fait, voici du code pour faire une analyse de maximum de vraisembl
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
-WD=/scratch/$USER/HybSeqTest/trees/exon/align/concat/iqtree
+WD=/scratch/$USER/HybSeqTest/trees/exon/concat/iqtree
 ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.phy
 PARTITIONS=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.partitions.best_scheme.nex
 OUTPUT_PREFIX=Dryopteris
@@ -158,7 +158,7 @@ Une fois cela fait, voici du code pour faire une analyse de maximum de vraisembl
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC_RAXML=/opt/RAxML-8.2.12
-WD=/scratch/$USER/HybSeqTest/trees/exon/align/concat/raxml
+WD=/scratch/$USER/HybSeqTest/trees/exon/concat/raxml
 ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.phy
 PARTITIONS=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.partitions.best_scheme
 MODEL=GTRCAT
@@ -188,7 +188,6 @@ sbatch \
   --cpus-per-task=4 \
   --mem-per-cpu=2G \
   --wrap="$SRC_RAXML/raxmlHPC-PTHREADS-SSE3 \
-    $ARGUMENTS_FOR_RAXML \
 	-f a \
     -T 4 \
 	-p 1234 \
