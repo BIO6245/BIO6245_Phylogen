@@ -6,7 +6,7 @@ Le [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra) est le plus impo
 séquences Illumina. Il est utilisé pour archiver les données brutes produites dans presques toutes 
 les études phylogénomiques, incluant celles que nous allons utiliser pour tester les méthodes 
 apprises dans ce cours. Voici un petit guide pour obtenir les données de 
-[Marinček et al. (2024)](https://doi.org/10.1093/sysbio/syae024) depuis le SRA:  
+[Marinček et al. (2024)]( https://doi.org/10.1002/ajb2.16361) depuis le SRA:  
 
 1. Feuilleter Marinček et al. (2024) en cherchant un numéro d'étude SRA. À la fin de l'article, 
 on peut trouver un tableau contenant l'information détaillée de l'échantillonnage "Appendix 1". 

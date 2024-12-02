@@ -99,6 +99,6 @@ sbatch --mail-user=$EMAIL --time=$TIME ipyrad_assemble.sbatch
 Une fois la tâche envoyée, vous pouvez faire le suivi en exécutant `tail -f ipyrad_assemble.out`. Pendant que 
 l'analyse roule, continuez à lire les explications sur le [site web d'iPyrad](https://ipyrad.readthedocs.io/en/master/4-data.html).  
 
-Lorsque cette tâche sera terminée, le résultat pourra directement être analysé à l'aide d'algorithme 
+Lorsque cette tâche sera terminée, le résultat pourra directement être analysé à l'aide d'algorithmes 
 d'estimation phylogénétique.  
 
