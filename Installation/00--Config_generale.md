@@ -4,9 +4,15 @@ sudo res# Configuration générale du serveur
 
 See this webpage for details on how to share data between users: https://docs.alliancecan.ca/wiki/Sharing_data
 
-The problem is that, by default, group members do not have access to files produced by other group members. It is possible to change a folder so that it is accessible by everyone in my group with `chmod g+rwx fichier`, but when a user creates a file in this folder, the file is only accessible to them and not to other users. The user would then have to `chmod` each new file it produces to give access to other group members, which is far from ideal.
+The problem is that, by default, group members do not have access to files 
+produced by other group members. It is possible to change a folder so that it 
+is accessible by everyone in my group with `chmod g+rwx fichier`, but when a 
+user creates a file in this folder, the file is only accessible to them and 
+not to other users. The user would then have to `chmod` each new file it 
+produces to give access to other group members, which is far from ideal.
 
-Instead, it is possible to create a folder that is accessible to everyone in the group, and inside which files are open to everyone by default (r/w/x):
+Instead, it is possible to create a folder that is accessible to everyone in 
+the group, and inside which files are open to everyone by default (r/w/x):
 ```bash
 ## fix permissions and default permissions on /data
 sudo chown -R root:etudiants /data
@@ -24,8 +30,27 @@ getfacl /scratch
 mkdir -p /data/hybseqRefs
 sudo chown -R root:etudiants /data/hybseqRefs
 sudo chmod -R g+rx /data/hybseqRefs
+sudo chmod -R -x /data/hybseqRefs/*
 sudo setfacl -R -d -m g:etudiants:rx /data/hybseqRefs
 getfacl /data/hybseqRefs
+
+## fix permissions and default permissions on /data/sequenceData
+mkdir -p /data/sequenceData
+sudo chown -R root:etudiants /data/sequenceData
+sudo chmod -R g+rx /data/sequenceData
+sudo chmod -R -x /data/sequenceData/*
+sudo chmod -R g-w /data/sequenceData
+sudo setfacl -R -d -m g:etudiants:rx /data/sequenceData
+getfacl /data/sequenceData
+
+## fix permissions and default permissions on /data/genomes
+mkdir -p /data/genomes
+sudo chown -R root:etudiants /data/genomes
+sudo chmod -R g+rx /data/genomes
+sudo find /data/genomes/ -type f -exec chmod -R -x -- {} +
+sudo chmod -R g-w /data/genomes
+sudo setfacl -R -d -m g:etudiants:rx /data/genomes
+getfacl /data/genomes
 
 ```
 
@@ -33,6 +58,9 @@ getfacl /data/hybseqRefs
 
 Voici une liste des paquets installés
 ```bash
+## Paquets de base
+sudo apt-get install rename
+
 ## Java
 sudo apt-get install default-jre default-jdk
 

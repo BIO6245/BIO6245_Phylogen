@@ -26,6 +26,27 @@ sudo chmod +x paup4a168_centos64
 
 ```
 
+## Détermination des partitions et modèles
+
+PartitionFinder:
+```bash
+cd /opt
+sudo wget https://github.com/brettc/partitionfinder/archive/refs/tags/v2.1.1.tar.gz
+sudo tar -xzvf v2.1.1.tar.gz
+sudo rm v2.1.1.tar.gz
+cd /opt/partitionfinder-2.1.1
+sudo chmod +x PartitionFinder.py
+
+## test
+## !!! Make sure to create a partitionFinder conda environment (see Conda installation page)
+conda activate partitionFinder
+mkdir -p /scratch/elbourret/test/partitionFinder
+cd /scratch/elbourret/test/partitionFinder
+cp -r /opt/partitionfinder-2.1.1/examples/nucleotide .
+/opt/partitionfinder-2.1.1/PartitionFinder.py --processes=1 nucleotide/partition_finder.cfg
+
+```
+
 
 ## Maximum de vraisemblance
 
@@ -152,11 +173,15 @@ cd ~
 wget https://github.com/BEAST2-Dev/BEASTLabs/releases/download/v2.0.0/BEASTlabs.package.v2.0.2.zip
 wget https://github.com/rbouckaert/starbeast3/releases/download/v1.1.9/starbeast3.addon.v1.1.9.zip
 wget https://github.com/jordandouglas/ORC/releases/download/v1.2.0/ORC.addon.v1.2.0.zip
+wget https://github.com/rbouckaert/AlmostDistributions/releases/download/v0.2.0/AlmostDistributions.addon.v0.2.0.zip
+wget https://github.com/nicfel/CoupledMCMC/releases/download/v1.2.0/CoupledMCMC.v1.2.2.zip
 
 ## extraire les paquets dans le dossier partagé
 sudo unzip BEASTlabs.package.v2.0.2.zip -d /usr/local/share/beast/$VERSION/BEASTlabs
 sudo unzip starbeast3.addon.v1.1.9.zip -d /usr/local/share/beast/$VERSION/starbeast3
 sudo unzip ORC.addon.v1.2.0.zip -d /usr/local/share/beast/$VERSION/ORC
+sudo unzip AlmostDistributions.addon.v0.2.0.zip -d /usr/local/share/beast/$VERSION/AlmostDistributions
+sudo unzip CoupledMCMC.v1.2.2.zip -d /usr/local/share/beast/$VERSION/CoupledMCMC
 
 ## supprimer beauti.properties de tous utilisateurs pour réinitialiser chemin vers paquets
 for i in $(ls -d /home/*)

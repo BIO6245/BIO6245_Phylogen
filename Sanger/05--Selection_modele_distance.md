@@ -85,6 +85,12 @@ partitionnement naturel de vos données (par exemple, avec l'aide de la commande
 
 ---
 
+## Sélection de modèles et partitions avec PartitionFinder
+
+!!! À faire (voir analyse PrimConv pour exemple à suivre) !!!
+
+---
+
 ## Estimation d'arbres de distance dans PAUP\*
 
 **PAUP\*** demeure un des programmes les plus polyvalents pour l'estimation de matrices de 

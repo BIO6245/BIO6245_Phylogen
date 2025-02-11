@@ -78,6 +78,12 @@ sudo /opt/miniconda/bin/conda create -y -n bio -c conda-forge biopython
 ## ipyrad
 sudo /opt/miniconda/bin/conda create -y -n ipyrad -c conda-forge -c bioconda ipyrad
 
+## partitionFinder
+sudo /opt/miniconda/bin/conda create -y -n partitionFinder -c conda-forge python=2.7 numpy pandas pytables pyparsing scipy scikit-learn
+
+## dendropy
+sudo /opt/miniconda/bin/conda create -y -n dendropy -c conda-forge -c bioconda dendropy
+
 ```
 
 !!! code below is not run AND NEEDS TO BE ADJUSTED TO THIS SERVER !!!
