@@ -202,6 +202,7 @@ sudo unzip ASTER.zip
 sudo mv ASTER-Linux ASTER
 cd ASTER
 sudo make
+cd /opt
 sudo rm ASTER.zip
 
 ## tester l'Installation

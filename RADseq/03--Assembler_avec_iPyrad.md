@@ -98,7 +98,7 @@ lancer l'analyse sur SLURM:
 ```
 WD=/scratch/$USER/RADseqTest
 NAME=test
-EMAIL=etienne.leveille-bourret@umontreal.ca
+EMAIL=votre.courriel@umontreal.ca
 TIME="0-3:00:00"
 CORES=8
 
@@ -159,7 +159,7 @@ Ensuite, rouler ce code, en s'assurant de bien ajuster le contenu de la
 commande `echo` pour refléter le chemin vers les lectures associées à chacune 
 des bibliothèques 3RAD qui sont à analyser.  
 ```bash
-WD=/scratch/elbourret/radCrat
+WD=/scratch/$USER/radCrat
 
 mkdir -p $WD
 cd $WD
@@ -177,14 +177,14 @@ Les bibliothèques à assembler contiennent des échantillons qui ne sont pas de
 *Crataegus*, le genre focal ici. Ainsi, il faut créer un fichier 
 `TaxaToInclude.txt` 
 
-## Assembler avec iPyrad
+### Assembler avec iPyrad
 
 Une fois que ce fichier `libraries.txt` est créé, il est possible de rouler le 
 code ci-dessous pour préparer le dossier et le fichier de paramètres pour 
 iPyrad:  
 ```bash
 ## ajuster les valeurs de ces variables
-WD=/scratch/elbourret/radCrat
+WD=/scratch/$USER/radCrat
 SAMPLES_TO_KEEP=Crataegus
 METHOD=reference
 REF_SEQ=/data/genomes/Crataegus_pinnatifida_var._major/Cpinnatifida_major_v1.0.fasta
@@ -195,19 +195,19 @@ BARCODE_MISMATCH=1
 MAX_ALLELES=4
 MAX_HS=0.15
 MAX_SHARED_HS=1
-EMAIL=etienne.leveille-bourret@umontreal.ca
-TIME="1-00:00:00"
+EMAIL=votre.courriel@umontreal.ca
+TIME="5-00:00:00"
 CORES_DEMULTIPLEXING=8
 CORES_ASSEMBLING=16
 
 cd $WD
 conda activate ipyrad
 
-## faire un lien vers le génome de référence
+## faire une copie du génome de référence
 ## c'est nécessaire car iPyrad doit pouvoir créer des fichiers dans le dossier 
-## dans lequel le génome est sauvegardé...
+## dans lequel le génome est sauvegardé, et même avec un lien ça ne marche pas
 mkdir -p $WD/genomeRef
-ln -s -f $REF_SEQ $WD/genomeRef/refseq.fasta
+cp $REF_SEQ $WD/genomeRef/refseq.fasta
 
 ## loop pour chaque bibliothèque (chaque ligne dans libraries.txt)
 while IFS=$'\t' read -r -a line
@@ -317,3 +317,41 @@ JOB_ID=$(sbatch --parsable --array=1-$NFILES --mail-user=$EMAIL --time=$TIME ipy
   sbatch --dependency=afterok:$JOB_ID --mail-user=$EMAIL --time=$TIME ipyrad_assembly.sbatch
 
 ```
+
+### Téléchargez les résultats
+
+Une fois l'assemblage terminé, il peut être utile de télécharger les fichiers 
+sur votre ordinateur personnel pour pouvoir les examiner plus facilement. À 
+partir de votre ordinateur, tapez les lignes ci-dessous, en modifiant de façon 
+appropriée les variables qui indiquent le chemin vers les fichiers enregistrés 
+sur votre ordinateur et le chemin d'arrivée sur le serveur de calcul:  
+```bash
+## Rouler le code ci-dessous à partir de votre machine locale
+
+## Ajuster les variables ci-dessous de façon appropriée
+CLUSTER_USERNAME=elbourret
+LOCAL=/mnt/c/Users/Etienne/Downloads
+REMOTE=/scratch/$CLUSTER_USERNAME/radCrat/*/merged_outfiles
+
+
+rsync \
+  --progress \
+  $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/merged.snps \
+	$LOCAL/
+rsync \
+  --progress \
+  $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/merged_stats.txt \
+	$LOCAL/
+
+```
+
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
+des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
+notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
+terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
+vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
+chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Par exemple:  
+- Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
