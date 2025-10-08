@@ -29,7 +29,7 @@ getfacl /scratch
 ## fix permissions and default permissions on /data/hybseqRefs
 mkdir -p /data/hybseqRefs
 sudo chown -R root:etudiants /data/hybseqRefs
-sudo chmod -R g+rx /data/hybseqRefs
+sudo chmod -R g+rX /data/hybseqRefs
 sudo chmod -R -x /data/hybseqRefs/*
 sudo setfacl -R -d -m g:etudiants:rx /data/hybseqRefs
 getfacl /data/hybseqRefs
@@ -37,20 +37,29 @@ getfacl /data/hybseqRefs
 ## fix permissions and default permissions on /data/sequenceData
 mkdir -p /data/sequenceData
 sudo chown -R root:etudiants /data/sequenceData
-sudo chmod -R g+rx /data/sequenceData
 sudo chmod -R -x /data/sequenceData/*
 sudo chmod -R g-w /data/sequenceData
-sudo setfacl -R -d -m g:etudiants:rx /data/sequenceData
+sudo chmod -R g+rX /data/sequenceData
+sudo setfacl -R -d -m g:etudiants:rX /data/sequenceData
 getfacl /data/sequenceData
 
 ## fix permissions and default permissions on /data/genomes
 mkdir -p /data/genomes
 sudo chown -R root:etudiants /data/genomes
-sudo chmod -R g+rx /data/genomes
+sudo chmod -R g+rX /data/genomes
 sudo find /data/genomes/ -type f -exec chmod -R -x -- {} +
 sudo chmod -R g-w /data/genomes
 sudo setfacl -R -d -m g:etudiants:rx /data/genomes
 getfacl /data/genomes
+
+## fix permissions and default permissions on /data/testdata
+mkdir -p /data/testdata
+sudo chown -R root:etudiants /data/testdata
+sudo chmod -R g+rX /data/testdata
+sudo find /data/testdata/ -type f -exec chmod -R -x -- {} +
+sudo chmod -R g-w /data/testdata
+sudo setfacl -R -d -m g:etudiants:rx /data/testdata
+getfacl /data/testdata
 
 ```
 
@@ -74,6 +83,9 @@ sudo apt-get install libboost-dev libboost-system-dev libboost-program-options-d
 ## Julia
 sudo apt-get install snapd
 sudo snap install julia --classic
+
+## Picard
+sudo apt-get install picard
 
 ```
 

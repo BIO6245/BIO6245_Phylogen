@@ -2,15 +2,16 @@
 
 ## Rouler FastQC sur les données brutes
 
-Les étapes suivantes se feront toutes sur l'espace `/scratch` étant donné qu'il ne s'agit pas de données 
-(qui doivent être entreposées sur `/data`), mais d'analyses de données qui doivent se faire sur le 
-`/scratch`. Pour ne pas avoir à faire des copies des données Illumina, nous allons faire un "lien" 
-vers ces données avec la commande `ln -s`. Nous allons ensuite effectuer un premier contrôle qualité 
-à l'aide de [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).  
+Les étapes suivantes se feront toutes sur l'espace `/scratch` étant donné 
+qu'il ne s'agit pas de données (qui doivent être entreposées sur `/data`), 
+mais d'analyses de données qui doivent se faire sur le `/scratch`. Pour ne 
+pas avoir à faire des copies des données Illumina, nous allons faire un 
+"lien" vers ces données avec la commande `ln -s`. Nous allons ensuite 
+effectuer un premier contrôle qualité à l'aide de [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/RADseqTest
-READS_PATH=/data/$USER/RADseqTest/reads
+READS_PATH=/data/testdata/RADseq_Salix
 
 mkdir -p $WD/reads
 cd $WD/reads

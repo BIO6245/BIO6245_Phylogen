@@ -115,6 +115,7 @@ echo "#SBATCH --job-name=ipyrad_assemble
 ipyrad -c $CORES -p params-$NAME.txt -s 1234567" >> ipyrad_assemble.sbatch
 
 ## Soumettre ce fichier batch à SLURM
+conda activate ipyrad
 sbatch --mail-user=$EMAIL --time=$TIME ipyrad_assemble.sbatch
 
 ```
@@ -221,7 +222,7 @@ while IFS=$'\t' read -r -a line
 		
 		## 
 		
-		## liens des liens vers les fichiers de lectures Illumina
+		## créer des liens vers les fichiers de lectures Illumina
 		for i in $(ls ${line[2]})
 		  do
 			  ln -s -f $i "${line[0]}/"

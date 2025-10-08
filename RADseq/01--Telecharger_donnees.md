@@ -91,8 +91,6 @@ for i in "${SELECTED_ACCESSIONS[@]}"
   done
 
 
-
-
 ## Créer une batch file pour télécharger les données depuis SRA
 echo '#!/bin/bash' > download_sra.sbatch
 echo "#SBATCH --job-name=download_sra
@@ -103,27 +101,27 @@ echo "#SBATCH --job-name=download_sra
 #SBATCH --mem-per-cpu=8G
 #SBATCH --time=$TIME
 
-## select one accession to download
+## Sélectionner un échantillon à télécharger
 CURRENT_ACC=\$(head -n \$SLURM_ARRAY_TASK_ID SraAccList.csv | tail -1)
 
-## prepare the download
+## Préparer le téléchargement
 $SRC_SRA/prefetch --verify no \$CURRENT_ACC
 
-## download the data
+## Télécharger
 $SRC_SRA/fasterq-dump -t $SCRATCH --split-files \$CURRENT_ACC
 
-## compress the file to save space
+## Compresser avec gzip pour réduire l'espace nécessaire
 gzip \${CURRENT_ACC}*.fastq
 
 wait
 
-## remove temporary folders for this accession
+## Supprimer les fichiers temporaires
 rm -r \$CURRENT_ACC/
 
-## get the species name for the current accession number
+## Trouver le nom de l'espèce correspondant à l'échantillon
 SP=\$(grep \$CURRENT_ACC SraRunInfo.csv | cut -d',' -f29 | sed 's/ /_/g')
 
-## change the name of the read files to include the species name
+## Changer le nom des fichiers pour afficher le nom d'espèce
 mv \${CURRENT_ACC}.fastq.gz \${SP}_\${CURRENT_ACC}_1.fastq.gz
 mv \${CURRENT_ACC}_1.fastq.gz \${SP}_\${CURRENT_ACC}_1.fastq.gz
 mv \${CURRENT_ACC}_2.fastq.gz \${SP}_\${CURRENT_ACC}_2.fastq.gz
