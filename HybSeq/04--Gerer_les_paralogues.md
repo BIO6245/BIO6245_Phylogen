@@ -152,6 +152,7 @@ avec HybPiper.
 Exécuter les commandes ci-dessous pour éliminer les paralogues dans vos 
 séquences en utilisant ParaGone:  
 ```bash
+SRC_NONINTERACTIVE_CONDA=/opt/miniconda/etc/profile.d
 WD=/scratch/$USER/HybSeqTest
 PARALOGS_FILES=$WD/paralogs_all/*.fasta
 EMAIL=votre.courriel@umontreal.ca
@@ -200,11 +201,30 @@ paragone check_and_align \\
 paragone alignment_to_tree \\
 	04_alignments_trimmed_cleaned \\
 	--pool $CPUS \\
-	--threads 1 \\
-	--use_fasttree
+	--threads 1
+
+## boucle pour déterminer si un arbre de gène contient très peu de valeurs 
+## distinctes de longueur de branche, qui peut causer des problèmes de calcul 
+## pour TreeShrink (qui doit estimer la tendance centrale de la variation)
+source $SRC_NONINTERACTIVE_CONDA/conda.sh
+conda activate newick_utils
+for GENE in \$(ls 05_trees_pre_quality_control/*.treefile)
+  do
+	
+		NB_DISTINCT_LENGTHS=\$(nw_distance -m p \$GENE | awk '{d[\$1]++} END {print length(d)}')
+		
+		echo \"A very small random number was added to each branch length of \$GENE 
+		to provide more variance to prevent TreeShrink from crashing.\"
+			
+		perl -pi -e 's/:(\\d*\\.\\d+)/\":\".\$1.\"0000\".(int(rand(9))+1)/ge' \$GENE
+			
+	done
+
+conda activate paragone
 
 paragone qc_trees_and_extract_fasta 04_alignments_trimmed_cleaned \\
-	--cut_deep_paralogs_internal_branch_length_cutoff 0.04
+	--treeshrink_q_value 0.05 \\
+	--cut_deep_paralogs_internal_branch_length_cutoff 0.3
 
 paragone align_selected_and_tree \\
 	04_alignments_trimmed_cleaned \\
@@ -239,10 +259,10 @@ ainsi que d'extraction des clades de ces arbres correspondant à des paralogues
 différents. Il existe 4 méthodes différentes à l'étape d'extraction, chacune 
 avec des avantages et inconvénients.
 
-  - **Question**: Quelles sont les 4 méthodes d'extraction?
-	
-  - **Question**: Quels sont les avantages et inconvénients de ces 4 méthodes?
-	
+	- **Question**: Quelles sont les 4 méthodes d'extraction?
+
+	- **Question**: Quels sont les avantages et inconvénients de ces 4 méthodes?
+
 	- **Question**: Pourquoi la méthode *MO* est préférable dans la majorité des 
 	cas lorsque des hors-groupes sont inclus dans les séquences à analyser?
 

@@ -83,31 +83,19 @@ TARGETS=/data/hybseqRefs/combined_Mega353_Carex554.fa
 cd $WD
 
 ## Créer une liste des échantillons assemblés avec HybPiper
-ls -d Carex*/ | cut -f1 -d'/' > samplelist.txt
-
+ls -d Carex*/ C_*/ | cut -f1 -d'/' > samplelist.txt
 
 ## Exécuter hybpiper_stats
 conda activate hybpiper
 sbatch --job-name=hybpiper_stats \
   --output=hybpiper_stats.out \
   --time=2:00:00 \
+	--cpus-per-task=1 \
+	--mem-per-cpu=4G \
   --wrap "
 		hybpiper stats -t_dna $TARGETS gene samplelist.txt
 		hybpiper recovery_heatmap --heatmap_dpi 300 --heatmap_filetype pdf seq_lengths.tsv
 		"
-
-```
-
-Une fois la tâche précédente terminée, créer une heatmap de récupération avec `hybpiper recovery_heatmap`:  
-```bash
-## Ajuster les variables ci-dessous de façon appropriée
-WD=/scratch/$USER/HybSeqTest
-TARGETS=/data/hybseqRefs/GoFlag_targets.fa
-
-cd $WD
-
-## Exécuter recovery_heatmap
-nohup hybpiper recovery_heatmap --heatmap_dpi 300 --heatmap_filetype pdf seq_lengths.tsv > hybpiper_heatmap.log &
 
 ```
 
