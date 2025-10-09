@@ -15,20 +15,20 @@ Pour cette approche, il faut préparer un alignement où les allèles
 alternatives sont codées comme des ambiguïtés IUPAC. Voici les étapes pour 
 faire cela:  
 
-  1. Assembler les séquences d'une allèle représentative de chaque locus 
-	(p.ex. avec HybPiper);  
+1. Assembler les séquences d'une allèle représentative de chaque locus 
+(p.ex. avec HybPiper);  
+
+2. Optionnellement: filtrer les données pour s'assurer de la qualité (p.ex. 
+avec Paragone et trimAl);  
 	
-	2. Optionnellement: filtrer les données pour s'assurer de la qualité (p.ex. 
-	avec Paragone et trimAl);  
+3. Utiliser les allèles ainsi assemblées (et filtrées) comme séquences de 
+référence pour le re-mappage des données brutes (p.ex., avec bwa-mem);  
 	
-	3. Utiliser les allèles ainsi assemblées (et filtrées) comme séquences de 
-	référence pour le re-mappage des données brutes (p.ex., avec bwa-mem);  
+4. Inférer les allèles alternatives à l'aide des données ainsi mappées 
+(p.ex. avec GATK);  
 	
-	4. Inférer les allèles alternatives à l'aide des données ainsi mappées 
-	(p.ex. avec GATK);  
-	
-	5. Générer un alignement où toutes les allèles sont représentées à l'aide de 
-	codes d'ambiguïté IUPAC.  
+5. Générer un alignement où toutes les allèles sont représentées à l'aide de 
+codes d'ambiguïté IUPAC.  
 	
 Une fois qu'on a cet alignement avec allèles codées IUPAC, on peut le 
 soumettre au processus de polarisation itérative, qui fonctionne ainsi:  
