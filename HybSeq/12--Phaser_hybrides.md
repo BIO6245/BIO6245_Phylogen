@@ -1,6 +1,61 @@
 # Phaser les allèles ou sous-génomes des hybrides ou allopolyploïdes
 
-## Mapper, identifier les variants et les filtrer dans chaque échantillon
+
+## Approche du phasage par polarisation
+
+Cette approche inventée initialement par 
+[Leal et al. 2023](https://doi.org/10.1093/sysbio/syad009) est rapide et 
+efficace pour phaser les allèles des hybrides et allopolyploïdes d'origine 
+récente, lorsqu'on a les séquences d'au moins une des lignées parentales. 
+Toutefois, elle est sensible aux données manquantes et aux erreurs 
+d'alignement. Il est donc préférable d'avoir des données de grande qualité, 
+quitte à en éliminer une certaine quantité (avec du filtrage plus sévère).
+
+Pour cette approche, il faut préparer un alignement où les allèles 
+alternatives sont codées comme des ambiguïtés IUPAC. Voici les étapes pour 
+faire cela:  
+  1. Assembler les séquences d'une allèle représentative de chaque locus 
+	(p.ex. avec HybPiper);
+	2. Optionnellement: filtrer les données pour s'assurer de la qualité (p.ex. 
+	avec Paragone et trimAl);
+	3. Utiliser les allèles ainsi assemblées (et filtrées) comme séquences de 
+	référence pour le re-mappage des données brutes (p.ex., avec bwa-mem);
+	4. Inférer les allèles alternatives à l'aide des données ainsi mappées 
+	(p.ex. avec GATK);
+	5. Générer un alignement où toutes les allèles sont représentées à l'aide de 
+	codes d'ambiguïté IUPAC.
+	
+Une fois qu'on a cet alignement avec allèles codées IUPAC, on peut le 
+soumettre au processus de polarisation itérative, qui fonctionne ainsi:  
+  1. Générer un arbre aléatoire;
+	2. Pour chaque échantillon ***i***, déterminer l'échantillon ***j*** le plus 
+	proche dans l'arbre;
+	3. Polariser la séquence de ***i*** en fonction de ***j***, c'est à dire que 
+	si on a un S à la position 1 de ***i***, qui signifie les allèles C/G, 
+	et qu'on a C à la même position chez ***j***, on va générer la séquence G 
+	(le complément de C dans l'ensemble C/G);
+	4. La séquence ainsi polarisée est **le plus différent possible** de celle 
+	de ***j***, ainsi, si ***j*** est un des parents de ***i***, la séquence 
+	polarisée devrait normalement ressembler à celle de l'autre parent;
+	5. On va polariser les allèles de ***i*** qui n'ont pas pu être polarisés 
+	à l'étape précédente (car ils étaient absents ou ambigus chez ***j***) en 
+	fonction de la séquence du prochain échantillon le plus proche dans l'arbre, 
+	et ainsi de suite, de façon à ce qu'à la fin on ait iterativement polarisé 
+	***i*** en fonction de tous les échantillons de l'arbre, par ordre de 
+	proximité phylogénétique;
+	6. On fait cette polarisation itérative pour tous les échantillons;
+	7. L'alignement ainsi polarisé est soumis à l'analyse phylogénétique;
+	8. Le nouvel arbre produit sert de base pour répéter la polarisation 
+	itérative (étapes 2 à 7);
+	9. On répète les étapes précédentes (2 à 8) jusqu'à stabilisation (état 
+	où chaque échantillon hybride ou allopolyploïde alternera entre la séquence 
+	d'un parent et de l'autre parent);
+	10. Lorsqu'on atteint la stabilisation, on détermine les séquences phasées à 
+	l'aide des arbres n et n-1, où n est le numéro du dernier arbre produit.
+	
+Les sections suivantes indiquent comment effectuer tout cela.
+
+### Mapper, identifier les variants et les filtrer dans chaque échantillon
 
 Mappage des lectures Illumina sur les exons assemblés par HybPiper avec bwa, 
 suivi de l'identification des variants alléliques et filtration de ces 
@@ -136,7 +191,7 @@ par HybPiper, mais avec les positions hétérozygotes codées avec les codes
 d'ambiguïté IUPAC.
 
 
-## Créer des listes de séquences avec hétérozygotes par gène
+### Créer des listes de séquences avec hétérozygotes par gène
 
 Code pour concaténer toutes les séquences avec hétérozygotes IUPAC générés 
 dans la section précédente dans un seul fichier `.fasta` par locus:  
@@ -194,7 +249,7 @@ for i in $(ls ./*.fasta)
 
 ```
 
-## Alignement des loci avec hétérozygotes IUPAC
+### Alignement des loci avec hétérozygotes IUPAC
 
 Aligner tous les loci restants après le filtrage précédent avec MAFFT et 
 effectuer des estimations rapides de l'arbre phylogénétique avec FastTree:  
@@ -237,7 +292,7 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES mafft-fasttree.sbatch
 
 ```
 
-## Concaténer les séquences alignées
+### Concaténer les séquences alignées
 
 Concaténer les séquences alignées dans la section précédente en un seul grand alignement:  
 ```bash
@@ -284,9 +339,9 @@ sbatch \
 
 ```
 
-## Phaser les séquences par polarisation iterative (IterPol)
+### Phaser les séquences par polarisation iterative (IterPol)
 
-IterPol est basé sur l'approche de phasage par polarisation de 
+IterPol est un programme Python basé sur le phasage par polarisation de 
 [Leal et al. 2023](https://doi.org/10.1093/sysbio/syad009), mais avec des 
 améliorations inédites d'Étienne Léveillé-Bourret. Le code n'est pas encore 
 stable et n'est pas publié, mais il est déjà efficace pour phaser les allèles 
