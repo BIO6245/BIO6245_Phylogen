@@ -14,14 +14,19 @@ quitte à en éliminer une certaine quantité (avec du filtrage plus sévère).
 Pour cette approche, il faut préparer un alignement où les allèles 
 alternatives sont codées comme des ambiguïtés IUPAC. Voici les étapes pour 
 faire cela:  
+
   1. Assembler les séquences d'une allèle représentative de chaque locus 
 	(p.ex. avec HybPiper);  
+	
 	2. Optionnellement: filtrer les données pour s'assurer de la qualité (p.ex. 
 	avec Paragone et trimAl);  
+	
 	3. Utiliser les allèles ainsi assemblées (et filtrées) comme séquences de 
 	référence pour le re-mappage des données brutes (p.ex., avec bwa-mem);  
+	
 	4. Inférer les allèles alternatives à l'aide des données ainsi mappées 
 	(p.ex. avec GATK);  
+	
 	5. Générer un alignement où toutes les allèles sont représentées à l'aide de 
 	codes d'ambiguïté IUPAC.  
 	
@@ -30,7 +35,7 @@ soumettre au processus de polarisation itérative, qui fonctionne ainsi:
 
   1. Générer un arbre aléatoire;  
 	
-	2. Pour chaque échantillon ***i***, déterminer l'échantillon ***j*** le plus 
+  2. Pour chaque échantillon ***i***, déterminer l'échantillon ***j*** le plus 
 	proche dans l'arbre;  
 	
 	3. Polariser la séquence de ***i*** en fonction de ***j***, c'est à dire que 
