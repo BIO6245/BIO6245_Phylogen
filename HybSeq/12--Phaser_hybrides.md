@@ -33,40 +33,40 @@ codes d'ambiguïté IUPAC.
 Une fois qu'on a cet alignement avec allèles codées IUPAC, on peut le 
 soumettre au processus de polarisation itérative, qui fonctionne ainsi:  
 
-  1. Générer un arbre aléatoire;  
+1. Générer un arbre aléatoire;  
 	
-  2. Pour chaque échantillon ***i***, déterminer l'échantillon ***j*** le plus 
-	proche dans l'arbre;  
+2. Pour chaque échantillon ***i***, déterminer l'échantillon ***j*** le plus 
+proche dans l'arbre;  
 	
-	3. Polariser la séquence de ***i*** en fonction de ***j***, c'est à dire que 
-	si on a un S à la position 1 de ***i***, qui signifie les allèles C/G, 
-	et qu'on a C à la même position chez ***j***, on va générer la séquence G 
-	(le complément de C dans l'ensemble C/G);  
+3. Polariser la séquence de ***i*** en fonction de ***j***, c'est à dire que 
+si on a un S à la position 1 de ***i***, qui signifie les allèles C/G, 
+et qu'on a C à la même position chez ***j***, on va générer la séquence G 
+(le complément de C dans l'ensemble C/G);  
 	
-	4. La séquence ainsi polarisée est **le plus différent possible** de celle 
-	de ***j***, ainsi, si ***j*** est un des parents de ***i***, la séquence 
-	polarisée devrait normalement ressembler à celle de l'autre parent;  
+4. La séquence ainsi polarisée est **le plus différent possible** de celle 
+de ***j***, ainsi, si ***j*** est un des parents de ***i***, la séquence 
+polarisée devrait normalement ressembler à celle de l'autre parent;  
 	
-	5. On va polariser les allèles de ***i*** qui n'ont pas pu être polarisés 
-	à l'étape précédente (car ils étaient absents ou ambigus chez ***j***) en 
-	fonction de la séquence du prochain échantillon le plus proche dans l'arbre, 
-	et ainsi de suite, de façon à ce qu'à la fin on ait iterativement polarisé 
-	***i*** en fonction de tous les échantillons de l'arbre, par ordre de 
-	proximité phylogénétique;  
+5. On va polariser les allèles de ***i*** qui n'ont pas pu être polarisés 
+à l'étape précédente (car ils étaient absents ou ambigus chez ***j***) en 
+fonction de la séquence du prochain échantillon le plus proche dans l'arbre, 
+et ainsi de suite, de façon à ce qu'à la fin on ait iterativement polarisé 
+***i*** en fonction de tous les échantillons de l'arbre, par ordre de 
+proximité phylogénétique;  
 	
-	6. On fait cette polarisation itérative pour tous les échantillons;  
+6. On fait cette polarisation itérative pour tous les échantillons;  
 	
-	7. L'alignement ainsi polarisé est soumis à l'analyse phylogénétique;  
+7. L'alignement ainsi polarisé est soumis à l'analyse phylogénétique;  
 	
-	8. Le nouvel arbre produit sert de base pour répéter la polarisation 
-	itérative (étapes 2 à 7);  
+8. Le nouvel arbre produit sert de base pour répéter la polarisation 
+itérative (étapes 2 à 7);  
 	
-	9. On répète les étapes précédentes (2 à 8) jusqu'à stabilisation (état 
-	où chaque échantillon hybride ou allopolyploïde alternera entre la séquence 
-	d'un parent et de l'autre parent);  
+9. On répète les étapes précédentes (2 à 8) jusqu'à stabilisation (état 
+où chaque échantillon hybride ou allopolyploïde alternera entre la séquence 
+d'un parent et de l'autre parent);  
 	
-	10. Lorsqu'on atteint la stabilisation, on détermine les séquences phasées à 
-	l'aide des arbres n et n-1, où n est le numéro du dernier arbre produit.  
+10. Lorsqu'on atteint la stabilisation, on détermine les séquences phasées à 
+l'aide des arbres n et n-1, où n est le numéro du dernier arbre produit.  
 	
 Les sections suivantes indiquent comment effectuer tout cela.
 
