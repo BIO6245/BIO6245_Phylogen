@@ -321,7 +321,7 @@ WD=/scratch/$USER/HybSeqTest
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
 
-SEQS_PATH=$WD/remap/seqs_iupac/
+SEQS_PATH=$WD/remap/seqs_iupac
 TREES_PATH=$WD/remap/seqs_iupac/trees
 mkdir -p $SEQS_PATH/align/raw
 mkdir -p $SEQS_PATH/align/clean
@@ -335,23 +335,24 @@ echo "#SBATCH --job-name=mafft-fasttree
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=2G
+#SBATCH --mem-per-cpu=4G
 #SBATCH --time=$TIME
 
 SEQIN=\$(ls $SEQS_PATH/*.fasta | head -n \$SLURM_ARRAY_TASK_ID | tail -1)
-GENENAME=\$(basename \$SEQIN .fasta)
+GENENAME=\$(basename \$SEQIN .clean.fasta)
 
-mafft --genafpair --maxiterate 1000 \$SEQIN > \$GENENAME.fasta
+mafft --genafpair --maxiterate 1000 \$SEQIN \\
+	> $SEQS_PATH/align/raw/\$GENENAME.fasta
 
-python3 $SRC/SimpleAlignmentCleaner*.py \
-	-i $SEQS_PATH/align/raw/\$GENENAME.fasta \
-	-o $SEQS_PATH/align/clean/\$GENENAME.fasta \
-	--outformat fasta \
+python3 $SRC/SimpleAlignmentCleaner*.py \\
+	-i $SEQS_PATH/align/raw/\$GENENAME.fasta \\
+	-o $SEQS_PATH/align/clean/\$GENENAME.fasta \\
+	--outformat fasta \\
 	--quantile_threshold 0.9
 
-FastTree \
-	-nt \
-	-gtr $SEQS_PATH/align/clean/\$GENENAME.fasta \
+FastTree \\
+	-nt \\
+	-gtr $SEQS_PATH/align/clean/\$GENENAME.fasta \\
 	> $TREES_PATH/fastTree/\$GENENAME.tre
 " >> mafft-fasttree.sbatch
 
@@ -371,11 +372,12 @@ Concaténer les séquences alignées dans la section précédente en un seul gra
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
 WD=/scratch/$USER/HybSeqTest
+ALIGN_PATH=$WD/remap/seqs_iupac/align/clean
+ALIGN_FILE_NAMES=*.final.fasta
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-3:00:00"
 
 ## Créer dossier pour séquences concaténées
-ALIGN_PATH=$WD/remap/seqs_iupac/align
 mkdir -p $ALIGN_PATH/concat
 cd $ALIGN_PATH/concat
 
@@ -389,7 +391,7 @@ sbatch \
   --cpus-per-task=1 \
   --mem-per-cpu=8G \
   --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
-  --concatenate $ALIGN_PATH/*.fasta \
+  --concatenate $ALIGN_PATH/$ALIGN_FILE_NAMES \
   --sequential \
   1> concat.phy \
   2> concat.partitions"
@@ -405,9 +407,13 @@ sbatch \
   --mem-per-cpu=8G \
   --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
   --fasta \
-  --concatenate $ALIGN_PATH/*.fasta \
+  --concatenate $ALIGN_PATH/$ALIGN_FILE_NAMES \
   1> concat.fasta \
   2> /dev/null"
+
+sed -i 's!.*/!!' concat.partitions
+sed -i 's!\.final.fasta!!' concat.partitions
+sed -i 's!\.fasta!!' concat.partitions
 
 ```
 
@@ -424,7 +430,7 @@ Voici du code pour lancer la version la plus récente d'IterPol:
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
 WD=/scratch/$USER/HybSeqTest
-ALIGNMENT=$WD/remap/seqs_iupac/align/concat/concat.phy
+ALIGNMENT=$WD/remap/seqs_iupac/align/clean/concat/concat.phy
 PREFIX=Carex
 TIME=2-00:00:00
 CPUS=8
@@ -433,18 +439,19 @@ MEM_PER_CPU=4G
 mkdir -p $WD/iterpol
 cd $WD/iterpol
 
-conda activate bio
+conda activate dendropy
 sbatch --job-name=IterPol \
   --output=IterPol.out \
   --time=2:00:00 \
 	--cpus-per-task=$CPUS \
 	--mem-per-cpu=$MEM_PER_CPU \
   --wrap "
-		python3 $SRC/IterPol/IterPol_v0.8.py \
+		python3 $SRC/IterPol/IterPol_v*.py \
 			--infile $ALIGNMENT \
 			--out_prefix $PREFIX \
-			--method raxml \
+			--method paup \
 			--threads $CPUS \
-			--raxml_path "$SRC/RAxML-8.2.12/raxmlHPC-PTHREADS-SSE3"
+			--paup_path $SRC/paup4a168_centos64
+			"
 
 ```
