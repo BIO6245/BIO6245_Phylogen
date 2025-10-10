@@ -70,6 +70,51 @@ l'aide des arbres n et n-1, où n est le numéro du dernier arbre produit.
 	
 Les sections suivantes indiquent comment effectuer tout cela.
 
+
+## Nettoyer les séquences de référence avant le mappage
+
+```bash
+## Ajuster les variables ci-dessous de façon appropriée
+SRC=/opt
+WD=/scratch/$USER/HybSeqTest
+INPUT_ALIGNMENTS=$WD/paragone/26_MO_final_alignments_trimmed
+REF_FILE_ENDING=.1to1ortho.selected_stripped.aln.trimmed.fasta
+TIME="0-12:00:00"
+CPUS=1
+MEM_PER_CPU=8G
+
+# dossier pour remappage données Illumina sur séquences de ParaGone
+mkdir -p $WD/remap
+cd $WD/remap
+
+## dossier pour séquences de référence pour le remappage
+mkdir -p $WD/remap/ref_seqs/raw
+mkdir -p $WD/remap/ref_seqs/clean
+cd $WD/remap/ref_seqs/clean
+ln -s $INPUT_ALIGNMENTS/*$REF_FILE_ENDING ../raw/
+
+## nettoyage des séquences de référence avec SimpleAlignmentCleaner
+NFILES=$(ls -1 ../raw/*$REF_FILE_ENDING | wc -l)
+conda activate bio
+sbatch \
+  --job-name=SimpleAliClean \
+  --output=SimpleAliClean-%a.log \
+	--array=1-$NFILES \
+  --nodes=1 \
+  --time=$TIME \
+  --cpus-per-task=$CPUS \
+  --mem-per-cpu=$MEM_PER_CPU \
+  --wrap="
+		INFILE=\$(ls ../raw/*$REF_FILE_ENDING | head -n \$SLURM_ARRAY_TASK_ID | tail -1)
+		NAME=\$(basename \$INFILE $REF_FILE_ENDING)
+		python3 $SRC/SimpleAlignmentCleaner*.py \
+			-i \$INFILE \
+			-o \$NAME.clean \
+			--outformat fasta \
+			--quantile_threshold 0.9"
+
+```
+
 ### Mapper, identifier les variants et les filtrer dans chaque échantillon
 
 Mappage des lectures Illumina sur les exons assemblés par HybPiper avec bwa, 
@@ -81,8 +126,8 @@ SRC=/opt
 WD=/scratch/$USER/HybSeqTest
 READS_PATH=$WD/reads/trim
 SAMPLE_LIST_PATH=$WD/samplelist.txt
-REF_FOLDER=$WD/paragone/26_MO_final_alignments_trimmed
-REF_FILE_ENDING=.1to1ortho.selected_stripped.aln.trimmed.fasta
+REF_FOLDER=$WD/remap/ref_seqs/clean
+REF_FILE_ENDING=.final.fasta
 EMAIL=votre.courriel@umontreal.ca
 TIME="7-00:00:00"
 CPUS=1
@@ -220,7 +265,7 @@ mkdir -p $WD/remap/seqs_iupac
 cd $WD/remap/seqs_iupac
 
 ## Créer une liste des gènes
-grep '>' $TARGETS | cut -f 2 -d '-' | sort | uniq > genelist.txt
+ls -1 $WD/remap/ref_seqs/*.fasta | xargs -n1 basename -s .fasta > genelist.txt
 
 ## Pour chaque gène dans la liste de gène, aller chercher les séquences de 
 ## chaque espèce et les combiner dans un seul fichier fasta
@@ -266,17 +311,20 @@ for i in $(ls ./*.fasta)
 
 ### Alignement des loci avec hétérozygotes IUPAC
 
-Aligner tous les loci restants après le filtrage précédent avec MAFFT et 
-effectuer des estimations rapides de l'arbre phylogénétique avec FastTree:  
+Aligner tous les loci restants après le filtrage précédent avec MAFFT, 
+nettoyer avec SimpleAlignmentCleaner et estimer un arbre phylogénétique avec 
+FastTree:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
+SRC=/opt
 WD=/scratch/$USER/HybSeqTest
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
 
 SEQS_PATH=$WD/remap/seqs_iupac/
 TREES_PATH=$WD/remap/seqs_iupac/trees
-mkdir -p $SEQS_PATH/align
+mkdir -p $SEQS_PATH/align/raw
+mkdir -p $SEQS_PATH/align/clean
 mkdir -p $TREES_PATH/fastTree
 cd $SEQS_PATH/align
 
@@ -295,14 +343,23 @@ GENENAME=\$(basename \$SEQIN .fasta)
 
 mafft --genafpair --maxiterate 1000 \$SEQIN > \$GENENAME.fasta
 
-FastTree -nt -gtr \$GENENAME.fasta > $TREES_PATH/fastTree/\$GENENAME.tre
+python3 $SRC/SimpleAlignmentCleaner*.py \
+	-i $SEQS_PATH/align/raw/\$GENENAME.fasta \
+	-o $SEQS_PATH/align/clean/\$GENENAME.fasta \
+	--outformat fasta \
+	--quantile_threshold 0.9
+
+FastTree \
+	-nt \
+	-gtr $SEQS_PATH/align/clean/\$GENENAME.fasta \
+	> $TREES_PATH/fastTree/\$GENENAME.tre
 " >> mafft-fasttree.sbatch
 
 ## Déterminer le nombre de loci à analyser
 NFILES=$(ls -1 $SEQS_PATH/*.fasta | wc -l)
 
 ## Envoyer les tâches d'alignement à SLURM
-conda activate base
+conda activate bio
 sbatch --mail-user=$EMAIL --array=1-$NFILES mafft-fasttree.sbatch
 
 ```
@@ -366,8 +423,8 @@ Voici du code pour lancer la version la plus récente d'IterPol:
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
-WD=/scratch/$USER/HybSeqTest/remap/seqs_iupac/align/concat
-ALIGNMENT=/scratch/$USER/HybSeqTest/remap/seqs_iupac/align/concat/concat.phy
+WD=/scratch/$USER/HybSeqTest
+ALIGNMENT=$WD/remap/seqs_iupac/align/concat/concat.phy
 PREFIX=Carex
 TIME=2-00:00:00
 CPUS=8
@@ -391,5 +448,3 @@ sbatch --job-name=IterPol \
 			--raxml_path "$SRC/RAxML-8.2.12/raxmlHPC-PTHREADS-SSE3"
 
 ```
-
-
