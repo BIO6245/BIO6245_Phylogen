@@ -225,16 +225,19 @@ $SRC/gatk-4.6.0.0/gatk VariantFiltration \\
     -V \$SAMPLE.vcf \\
     -O \$SAMPLE.filt.vcf \\
     --filter-expression \"\$GATK_FILTER\" \\
-    --filter-name \"StandardFilters\"
+    --filter-name \"Exclude\"
+
+## Créer un VCF filtré
+bcftools view -f PASS \$SAMPLE.filt.vcf -Oz -o \$SAMPLE.filtered.vcf
 
 ## Créer une séquence consensus avec des codes IUPAC pour les positions hétérozygotes
-bgzip -c \$SAMPLE.filt.vcf > \$SAMPLE.filt.vcf.gz
-tabix -p vcf \$SAMPLE.filt.vcf.gz
+bgzip -c \$SAMPLE.filtered.vcf > \$SAMPLE.filtered.vcf.gz
+tabix -p vcf \$SAMPLE.filtered.vcf.gz
 bcftools consensus \\
   --iupac-codes \\
   --samples \$SAMPLE \\
   --fasta-ref \$SAMPLE.fasta \\
-  \$SAMPLE.filt.vcf.gz > \$SAMPLE.hetero.fasta" >> bwa-gatk.sbatch
+  \$SAMPLE.filtered.vcf.gz > \$SAMPLE.hetero.fasta" >> bwa-gatk.sbatch
 
 
 ## Déterminer combien d'échantillons à analyser
