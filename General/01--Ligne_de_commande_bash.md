@@ -354,7 +354,7 @@ Cette distinction entre `>` (écraser) et `>>` (ajouter à la suite) sera
 
 ### 15. Le pipe `|` : enchaîner des commandes
 
-Le **pipe** (symbole `|`) permet de prendre la sortie d'une commande et de
+Le ***pipe*** (symbole `|`) permet de prendre la sortie d'une commande et de
  l'envoyer directement comme entrée à une autre commande, sans passer par un
  fichier intermédiaire. C'est un des outils les plus puissants de la ligne de
  commande. 
@@ -566,6 +566,10 @@ En pratiquant ces commandes de base, vous vous familiariserez rapidement
 
 ### 2. **Manipulation de données**
 
+- `>` : Écrire l'élément à gauche de la flèche dans le fichier à droite de la
+ flèche. Écrase le contenu du fichier à droite, s'il existe déjà.
+- `>>` : Même chose que la commande `>`, mais ajoute l'élément à gauche des
+ doubles flèches à la fin du fichier à droite, sans écraser son contenu.
 - `cut` : Extraire des colonnes spécifiques d’un fichier.
 - `sort` : Trier les lignes d’un fichier.
 - `uniq` : Enlever les doublons dans un fichier trié.
@@ -592,8 +596,10 @@ En pratiquant ces commandes de base, vous vous familiariserez rapidement
 - `kill` : Terminer un processus via son PID.
 - `nohup` : Exécuter une commande sans interruption.
 
-## 6. **Scripts & Divers**
+## 6. **Scripts & divers**
 
+- `|` : Le "*pipe*" sert à envoyer le résultat d'une commande à gauche du pipe
+ comme entrée pour une commande à droite du pipe.
 - `bash` : Exécuter un script Bash.
 - `chmod` : Modifier les permissions des fichiers.
 - `echo` : Afficher du texte ou des variables.
