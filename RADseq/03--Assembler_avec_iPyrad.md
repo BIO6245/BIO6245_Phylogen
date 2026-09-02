@@ -3,9 +3,9 @@
 **iPyRAD** est un logiciel utilisé en phylogénie pour analyser des données 
 génomiques issues de méthodes comme le RADseq, ddRAD, 3RAD, GBS, DartSeq et 
 toutes les autres méthodes basées sur la sélection de loci avec des 
-enzymes de digestion. Il assemble des séquences brutes en loci homologues entre 
-individus ou espèces, corrige les erreurs et produit des jeux de données prêts 
-pour l'inférence phylogénétique avec des outils comme IQ-TREE ou RAxML.
+enzymes de digestion. Il assemble des séquences brutes en loci homologues 
+entre individus ou espèces, corrige les erreurs et produit des jeux de données 
+prêts pour l'inférence phylogénétique avec des outils comme IQ-TREE ou RAxML.
 
 ---
 
@@ -25,24 +25,25 @@ testant différentes configurations de paramètres.
 En premier, il faut générer un fichier de paramètres avec les valeurs par 
 défaut:  
 ```bash
-WD=/scratch/$USER/RADseqTest
+WD=/scratch/$USER/RADseq_test_Salix
+NAME=test_Salix
 
 ## Aller au répertoire de travail
+mkdir -p $WD
 cd $WD
 
 ## Créer un fichier de paramètres pour ipyrad
 conda activate ipyrad
-ipyrad -n test
+ipyrad -n $NAME
 
 ## visionner le contenu du fichier de paramètres qui vient d'être généré
-more params-test.txt
+more params-$NAME.txt
 
 ```
 
-Une fois cela fait, vous pouvez examiner le contenu de ce fichier de paramètres 
+Maintenant, vous pouvez examiner le contenu de ce fichier de paramètres 
 en exécutant la commande `more params-test.txt` ou `cat params-test.txt`. 
-Essayez de deviner ce que chaque paramètre influence dans l'assemblage des 
-données.  
+Essayez de déterminer ce que chaque paramètre influence dans l'assemblage.  
 
 Ensuite, lisez les instructions détaillées sur le site d'iPyrad pour mieux 
 comprendre comment choisir les valeurs de tous les paramètres 
@@ -57,11 +58,11 @@ Alternativement, vous pouvez modifier le script à l'aide de l'outil `sed`, qui
 a l'avantage d'être plus facile à répliquer sans erreur. Pour ce faire, roulez 
 le code ci-dessous:  
 ```bash
-WD=/scratch/$USER/RADseqTest
-SORTEDREADS=/scratch/$USER/RADseqTest/reads/trim
+WD=/scratch/$USER/RADseq_test_Salix
+SORTEDREADS=/data/testdata/RADseq_Salix/*.fastq.gz
 OVERHANG="TGCAG"
 RADTYPE=rad
-NAME=test
+NAME=test_Salix
 
 
 ## Aller au répertoire de travail
@@ -72,7 +73,7 @@ conda activate ipyrad
 ipyrad -n $NAME
 
 ## Ajouter le chemin vers les fichiers de lecture
-sed -i "s,                               ## \[4\],$SORTEDREADS/* ## \[4\],g" params-$NAME.txt
+sed -i "s,                               ## \[4\],$SORTEDREADS ## \[4\],g" params-$NAME.txt
 
 ## Changer le type de données pour le bon type
 sed -i "s,rad                            ## \[7\],$RADTYPE                       ## \[7\],g" params-$NAME.txt
@@ -96,11 +97,11 @@ cat params-$NAME.txt
 Une fois que le fichier des paramètres d'iPyrad est préparé, il suffit de 
 lancer l'analyse sur SLURM:  
 ```
-WD=/scratch/$USER/RADseqTest
-NAME=test
+WD=/scratch/$USER/RADseq_test_Salix
+NAME=test_Salix
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-3:00:00"
-CORES=8
+CORES=4
 
 ## Créer un fichier SLURM pour exécuter le démultiplexage + découpe/filtrage
 echo '#!/bin/bash' > ipyrad_assemble.sbatch

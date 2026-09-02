@@ -87,5 +87,14 @@ sudo snap install julia --classic
 ## Picard
 sudo apt-get install picard
 
+## Libraries pour dedup
+sudo apt-get install g++ make zlib1g-dev libsqlite3-dev libssl-dev
+
+## Libraries gsl pour fineRADstructure
+sudo apt-get install libgsl-dev libgsl
+
+## Libraries prérequises pour RAxML-ng
+sudo apt-get install libgmp3-dev libhts-dev libhtscodecs-dev 
+
 ```
 

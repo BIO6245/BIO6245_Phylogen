@@ -45,17 +45,21 @@ sbatch \
 	--time=$TIME \
 	--cpus-per-task=$CPUS \
 	--mem-per-cpu=$MEM_PER_CPU \
-	--wrap="bwa index ref.fa;	\
-	  wait; \
-    bwa mem -t $CPUS ref.fa $ORIGINAL_READS \
-		  | samtools view -bS - > aligned.bam; \
-		samtools sort aligned.bam -o aligned.sorted.bam; \
-		samtools index aligned.sorted.bam; \
-		samtools view -b aligned.sorted.bam \"$TARGET_REGION\" > aligned.subset.bam; \
-		samtools fastq \
-		  -1 Cicuta_test_3rad_R1.fastq.gz \
-		  -2 Cicuta_test_3rad_R2.fastq.gz \
-			-0 /dev/null -s /dev/null \
-			-n aligned.subset.bam"
+	--wrap="
+			bwa index ref.fa;
+			wait;
+			bwa mem -t $CPUS ref.fa $ORIGINAL_READS \\
+				| samtools view -b - > aligned.bam;
+			samtools sort aligned.bam -o aligned.sorted.bam;
+			samtools index aligned.sorted.bam;
+			samtools view -b aligned.sorted.bam \"$TARGET_REGION\" > aligned.subset.bam;
+			samtools fastq \\
+				-1 Cicuta_test_3rad_R1.fastq.gz \\
+				-2 Cicuta_test_3rad_R2.fastq.gz \\
+				-0 /dev/null -s /dev/null \\
+				-n aligned.subset.bam;"
 
 ```
+
+Une fois que le code est terminé, transférer les deux fichiers `.fastq.gz` vers 
+le dossier `data/testdata/3RAD_Cicuta/` avec `rsync`.

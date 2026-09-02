@@ -88,7 +88,32 @@ sudo /opt/miniconda/bin/conda create -y -n partitionFinder -c conda-forge python
 ## dendropy
 sudo /opt/miniconda/bin/conda create -y -n dendropy -c conda-forge -c bioconda biopython numpy dendropy
 
+## ASTER / ASTRAL / CASTER
+sudo /opt/miniconda/bin/conda create -y -n aster -c conda-forge -c bioconda biopython numpy dendropy aster
+
 ## RagTag
 sudo /opt/miniconda/bin/conda create -y -n ragtag -c bioconda ragtag
 
+## Blobtoolkit
+sudo /opt/miniconda/bin/conda create -y -n blobtools -c bioconda -c conda-forge blobtoolkit
+
+## Kraken2
+sudo /opt/miniconda/bin/conda create -y -n kraken2 -c bioconda kraken2
+
+## TreeShrink
+sudo /opt/miniconda/bin/conda create -y -n treeShrink -c smirarab -c conda-forge treeshrink r-base=3.6 libgfortran=3
+## test
+conda activate TreeShrink
+run_treeshrink.py -h
+
+## getOrganelle
+sudo /opt/miniconda/bin/conda create -y -n getOrganelle -c bioconda getorganelle
+conda activate getOrganelle
+get_organelle_config.py --add embplant_pt,embplant_mt
+
+## WhatsHap
+sudo /opt/miniconda/bin/conda create -n whatshap -c bioconda -c conda-forge whatshap=2.8
+## test installation
+conda activate whatshap
+whatshap --version
 ```

@@ -2,27 +2,34 @@
 
 ## Trouver des données sur le SRA
 
-Le [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra) est le plus important dépôt de 
-séquences Illumina. Il est utilisé pour archiver les données brutes produites dans presques toutes 
-les études phylogénomiques, incluant celles que nous allons utiliser pour tester les méthodes 
-apprises dans ce cours. Voici un petit guide pour obtenir les données de 
-[Marinček et al. (2024)]( https://doi.org/10.1002/ajb2.16361) depuis le SRA:  
+Le [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra) est le plus 
+important dépôt de séquences Illumina. Il est utilisé pour archiver les 
+données brutes produites dans presques toutes les études phylogénomiques, 
+incluant celles que nous allons utiliser pour tester les méthodes apprises 
+dans ce cours. Voici un petit guide pour obtenir les données de 
+[Marinček et al. (2024)]( https://doi.org/10.1002/ajb2.16361) depuis le 
+SRA:  
 
-1. Feuilleter Marinček et al. (2024) en cherchant un numéro d'étude SRA. À la fin de l'article, 
-on peut trouver un tableau contenant l'information détaillée de l'échantillonnage "Appendix 1". 
-Télécharger ce tableau et trouver le "numéro de projet" SRA.  
+1. Feuilleter Marinček et al. (2024) en cherchant un numéro d'étude SRA. À 
+la fin de l'article, on peut trouver un tableau contenant l'information 
+détaillée de l'échantillonnage "Appendix 1". Télécharger ce tableau et 
+trouver le "numéro de projet" SRA.  
 2. Naviguer vers [https://www.ncbi.nlm.nih.gov/sra/](https://www.ncbi.nlm.nih.gov/sra/)  
-3. Rechercher le terme: `PRJNA433286[study]`, qui est le numéro d'étude SRA  
-4. Cliquer sur *Send to -> File -> Accession list*   
+3. Rechercher le terme: `PRJNA433286[study]`, qui est le numéro d'étude 
+SRA  
+4. Cliquer sur *Send to -> File -> Accession list*  
 5. Cliquer sur *Send to -> File -> RunInfo*  
 
-Il faut ensuite transférer les fichiers `SraRunInfo.csv` et `SraAccList.csv` sur le serveur. Pour 
-ce faire, vous pouvez utiliser plusieurs approches. L'approche que je préconise est d'envoyer les 
-fichiers avec la commande `rsync`, qui doit être **executée à partir de votre machine locale,**
-**non pas du serveur**. En d'autres mots, il faut ouvrir un terminal Unix à partir de votre 
-ordinateur, ne pas vous connecter au serveur. À partir de votre ordinateur, tapez les lignes 
-ci-dessous, en modifiant de façon appropriée les variables qui indiquent le chemin vers les 
-fichiers enregistrés sur votre ordinateur et le chemin d'arrivée sur le serveur de calcul:  
+Il faut ensuite transférer les fichiers `SraRunInfo.csv` et 
+`SraAccList.csv` sur le serveur. Pour ce faire, vous pouvez utiliser 
+plusieurs approches. L'approche que je préconise est d'envoyer les fichiers 
+avec la commande `rsync`, qui doit être **executée à partir de votre **
+**machine locale, non pas du serveur**. En d'autres mots, il faut ouvrir un 
+terminal Unix à partir de votre ordinateur, ne pas vous connecter au 
+serveur. À partir de votre ordinateur, tapez les lignes ci-dessous, en 
+modifiant de façon appropriée les variables qui indiquent le chemin vers 
+les fichiers enregistrés sur votre ordinateur et le chemin d'arrivée sur le 
+serveur de calcul:  
 ```bash
 ## Rouler le code ci-dessous à partir de votre machine locale
 
@@ -37,24 +44,27 @@ rsync --progress $LOCAL/SraRunInfo.csv $CLUSTER_USERNAME@aphidzen.irbv.umontreal
 
 ```
 
-Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
-des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
-notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
-terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
-vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
-chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) 
+dans votre chemin avec des "forward slash" (\/). De plus, le chemin "C:/" 
+doit être remplacé par "/mnt/c/". Finalement, notez que les espaces dans 
+les noms des dossiers et fichiers causent problème sur tous les terminal 
+Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser 
+d'espaces dans vos noms de fichier, ou soit entourer les espaces par des 
+guillemets simples ('), ou précéder chaque espace par un "backslash" (\\) 
+lorsque vous spécifiez un chemin vers un dossier ou fichier.  
 Par exemple:  
 - Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
 - Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
-- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
+- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`  
 
 ---
 
 ## Télécharger des données depuis le SRA
 
-Le code ci-dessous va chercher les données Illumina pour 11 échantillons utilisés dans Marinček et 
-al. (2024), incluant des diploïdes et quelques polyploïdes d'origine potentiellement hybride. Les 
-commandes ci-dessous doivent être roulées sur le serveur de calcul, cette fois. Connectez-vous 
+Le code ci-dessous va chercher les données Illumina pour 11 échantillons 
+utilisés dans Marinček et al. (2024), incluant des diploïdes et quelques 
+polyploïdes d'origine potentiellement hybride. Les commandes ci-dessous 
+doivent être roulées sur le serveur de calcul, cette fois. Connectez-vous 
 tout d'abord au serveur avant d'exécuter ces commandes:   
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
@@ -135,20 +145,26 @@ sbatch --mail-user=$EMAIL  --array=1-$NFILES download_sra.sbatch
 
 ```
 
-Maintenant, il faut être patient car le serveur prendra plusieurs minutes (voir heures) pour 
-télécharger les données. Le téléchargement se fait "en background" grâce à la commande 
-`nohup [...] &`. Le progrès est inscrit dans un fichier ".log", nommé ici `dataFetch.log`. Il est 
-possible de suivre le progrès en temps réel en tapant `tail -f dataFetch.log` dans le dossier où 
-les données sont téléchargées. Pour quitter le suivi avec tail -f, il faut taper Ctrl+C.
+Maintenant, il faut être patient car le serveur prendra plusieurs minutes 
+(voir heures) pour télécharger les données. Le téléchargement se fait "en 
+background" grâce à la commande `nohup [...] &`. Le progrès est inscrit 
+dans un fichier ".log", nommé ici `dataFetch.log`. Il est possible de 
+suivre le progrès en temps réel en tapant `tail -f dataFetch.log` dans le 
+dossier où les données sont téléchargées. Pour quitter le suivi avec tail 
+-f, il faut taper Ctrl+C.
 
-Lorsque le téléchargement est terminé, vérifier combien de fichiers et quelle est leur taille à 
-l'aide de la commande `ls -sh`.
+Lorsque le téléchargement est terminé, vérifier combien de fichiers et 
+quelle est leur taille à l'aide de la commande `ls -sh`.
 
-- **Question:** Pourquoi y a-t-il plus de fichiers téléchargés que de nombre d'échantillons?
+  - **Question:** Pourquoi y a-t-il plus de fichiers téléchargés que de 
+	nombre d'échantillons?  
 
-- **Questions:** Quels échantillons ont une meilleure couverture de séquençage? Quels ont une 
-moins bonne couverture? Quelles sont les conséquences attendues d'une moins bonne couverture?
+  - **Questions:** Quels échantillons ont une meilleure couverture de 
+  séquençage? Quels ont une moins bonne couverture? Quelles sont les 
+	conséquences attendues d'une moins bonne couverture?
 
-  Regarder aussi le contenu de quelques fichiers à l'aide de la commande `zcat *.fastq.gz | more`.
+  Regarder aussi le contenu de quelques fichiers à l'aide de la commande 
+	`zcat *.fastq.gz | more`.  
 
-- **Question:** Que signifient chacune des 4 lignes associées à chaque lecture Illumina?
+	**Question:** Que signifient chacune des 4 lignes associées à chaque 
+	lecture Illumina?  

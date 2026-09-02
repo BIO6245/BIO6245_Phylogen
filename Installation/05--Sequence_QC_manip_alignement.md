@@ -77,6 +77,24 @@ chmod +x catfasta2phyml.pl
 
 ```
 
+Programme de déduplication par Simon Joly:  
+```bash
+cd /opt
+sudo git clone https://github.com/simjoly/dedup.git
+cd dedup
+make
+## tester:
+/opt/dedup/dedup --help
+
+```
+
+clustOpt pour optimiser le clustering threshold de iPyrad:  
+```bash
+cd /opt
+sudo git clone https://github.com/atcg/clustOpt.git
+
+```
+
 ## Alignement
 
 mafft:
@@ -125,30 +143,17 @@ sudo apt-get install bcftools
 
 ```
 
+vcftools:  
+```bash
+sudo apt-get update
+sudo apt-get install vcftools
+
+```
+
 tabix:  
 ```bash
 sudo apt-get update
 sudo apt-get install tabix
-
-```
-
-!!! Code ci-dessous pas encore terminé !!!
-
-
-
-
-OMM_Macse for alignment of genes and pseudogenes at the nucleotide level based on codon similarity:
-```bash
-WD=/project/def-bourret/shared/progs
-
-cd $WD
-
-module load StdEnv/2023
-module load apptainer/1.2.4
-
-apptainer remote add --no-login SylabsCloud cloud.sycloud.io
-apptainer remote use SylabsCloud
-apptainer pull --arch amd64 library://vranwez/default/omm_macse:v12.01
 
 ```
 
