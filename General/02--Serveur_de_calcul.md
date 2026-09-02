@@ -121,20 +121,14 @@ Utilisez la commande suivante pour afficher l’utilisation de l’espace disque
 df -h
 ```
 
-### Exercice 3 : Surveiller les processus avec `htop` et `btop`
+### Exercice 3 : Surveiller les processus avec `htop`
 
-1. **Lancer `htop`** pour observer l’utilisation du CPU, de la RAM, et des processus:  
+**Lancer `htop`** pour observer l’utilisation du CPU, de la RAM, et des processus:  
    ```bash
    htop
    ```
-   (Appuyez sur `F10` pour quitter.)
+   (Appuyez sur `F10` ou `q` pour quitter.)
 
-2. **Lancer `btop`** si disponible:  
-   ```bash
-   btop
-   ```
-
-   (Appuyez sur `q` pour quitter.)
 
 ### Exercice 4 : Créer et éditer un fichier
 
@@ -165,6 +159,7 @@ df -h
 Utilisez `free -h` pour voir la mémoire utilisée et disponible ainsi que la mémoire **swap**:  
 ```bash
 free -h
+
 ```
 
 ### Exercice 6 : Téléverser et télécharger des fichiers entre votre ordinateur et le serveur
@@ -177,35 +172,27 @@ free -h
    touch fichier_test
    exit
    ```
+   
    Maitenant, à partir de votre ordinateur personnel, téléchargez ce fichier:  
    ```bash
    CLUSTER_USERNAME=Votre_nom_utilisateur_sur_le_serveur
    rsync -avz $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:/home/$CLUSTER_USERNAME/fichier_test .
    ```
    
-   Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
-   des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
-   notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
-   terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
-   vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
-   chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+   Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\)
+   dans votre chemin avec    des "forward slash" (\/). De plus, le chemin
+   "C:/" doit être remplacé par "/mnt/c/". Finalement, notez que les espaces
+   dans les noms des dossiers et fichiers causent problème sur tous les 
+   terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais
+   utiliser d'espaces dans vos noms de fichier, ou soit entourer les espaces par
+   des guillemets simples ('), ou précéder chaque espace par un "backslash"
+   (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier.
+   
    Par exemple:  
-   - Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
+   - Le chemin Windows:
+   `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
    - Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
    - Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
 
-2. **Téléversez un fichier** vers le serveur. Essayez de le faire par vous-même. Demandez de l'aide 
-au professeur au besoin.
- 
-
----
-
-## 6. Conclusion
-
-Grâce à ces exercices, vous avez appris à explorer les partitions du serveur, surveiller les 
-processus en cours, et manipuler des fichiers. Cela vous aidera à mieux utiliser le serveur de 
-calcul pour vos analyses dans le cadre du cours **BIO6245 Analyses phylogénétiques**.
-
-Si vous rencontrez des difficultés, n'hésitez pas à consulter la documentation ou à demander de 
-l'aide à votre professeur.
-
+2. **Téléversez un fichier** vers le serveur. Essayez de le faire par vous-même.
+ Demandez de l'aide au professeur au besoin.

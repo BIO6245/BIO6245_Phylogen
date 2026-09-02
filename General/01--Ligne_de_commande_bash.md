@@ -323,6 +323,233 @@ ainsi de suite.
 
 ---
 
+## Aller plus loin : rediriger, combiner et automatiser des commandes
+
+Les sections précédentes montrent comment exécuter des commandes une à une.
+ En pratique, on combine souvent plusieurs commandes ensemble pour construire
+ analyses plus complexes. Les sections suivantes introduisent graduellement les
+ outils nécessaires pour comprendre et écrire un script qui traite
+ automatiquement plusieurs fichiers de séquences, un par un, à l'aide d'une
+ boucle.
+
+### 14. Rediriger une sortie vers un fichier
+
+Par défaut, une commande comme `echo` ou `ls` affiche son résultat à l'écran
+ (ce qu'on appelle la **sortie standard**, ou ***stdout*** pour *standard*
+ *output*"). On peut plutôt rediriger ce résultat vers un fichier avec `>`:
+```bash
+echo "Bonjour!" > message.txt
+```
+
+Cela crée (ou écrase) `message.txt` et y écrit "Bonjour!", sans rien afficher
+ à l'écran. Pour ajouter du texte à la fin d'un fichier existant plutôt que de
+ l'écraser, on utilise `>>` :
+```bash
+echo "Une autre ligne" >> message.txt
+```
+
+Cette distinction entre `>` (écraser) et `>>` (ajouter à la suite) sera
+ importante un peu plus loin, lorsqu'on ajoutera du contenu à des fichiers de
+ séquences, dans une boucle.
+
+### 15. Le pipe `|` : enchaîner des commandes
+
+Le **pipe** (symbole `|`) permet de prendre la sortie d'une commande et de
+ l'envoyer directement comme entrée à une autre commande, sans passer par un
+ fichier intermédiaire. C'est un des outils les plus puissants de la ligne de
+ commande. 
+ 
+Par exemple:
+```bash
+ls | wc -l
+```
+
+Ici, `ls` liste les fichiers du répertoire courant, et au lieu d'afficher
+ cette liste à l'écran, le pipe l'envoie à `wc -l`, qui compte le nombre de
+ lignes reçues, donc le nombre de fichiers.
+
+On peut enchaîner plusieurs pipes à la suite:
+```bash
+ls | sort | head -n 3
+```
+
+Cette commande liste les fichiers (`ls`, les trie par ordre alphabétique
+ (`sort`), puis n'affiche que les 3 premiers (`head -n 3`). Chaque commande de
+ la chaîne fait une seule tâche simple, mais leur combinaison permet de répondre
+ d'effectuer une action plus complexe. Dans ce cas-ci, ça permet d'afficher les
+ trois premiers fichiers en ordre alphabétique dans le répertoire courant.
+
+### 16. Créer de fausses données de séquençage avec `touch`
+
+Pour pratiquer avec des données qui ressemblent à ce qu'on rencontre en
+ bioinformatique, créez quelques fichiers vides qui imitent des fichiers de
+ séquences (format `.fastq.gz`), à l'aide de la commande `touch` vue à la
+ section 5:
+```bash
+touch echantillon1.fastq.gz
+touch echantillon2.fastq.gz
+touch echantillon3.fastq.gz
+```
+
+Vérifiez que les fichiers ont bien été créés avec `ls` :
+```bash
+ls echantillon*.fastq.gz
+```
+
+Le caractère `*` est un caractère joker (_wildcard_) : il remplace n'importe
+ quelle séquence de caractères, et permet donc ici de sélectionner tous les
+ fichiers dont le nom commence par `echantillon` et se termine par
+ `.fastq.gz`, peu importe le chiffre entre les deux.
+
+### 17. Isoler un fichier précis avec `head` et `tail`
+
+Combinés à travers un pipe, `head` et `tail` permettent d'extraire un
+ élément précis d'une liste. Rappelez-vous que `head -n X` garde les `X`
+ premières lignes, et `tail -1` (équivalent à `tail -n 1`) garde seulement la
+ dernière ligne reçue. 
+ 
+En les combinant sur la liste de nos fichiers fictifs:  
+```bash
+ls echantillon*.fastq.gz | head -n 2 | tail -1
+```
+
+`head -n 2` garde les 2 premiers fichiers de la liste, puis `tail -1` ne
+ garde que le dernier de ces 2. Donc, au final, le **2e fichier** de la
+ liste, soit `echantillon2.fastq.gz`. C'est une façon courante de
+ sélectionner le *N-ième* élément d'une liste en ligne de commande, s'il faut
+ par exemple créer une boucle pour analyser chaque fichier dans une liste 1 par
+ 1. C'est exactement ce qu'on va automatiser dans une boucle un peu plus loin.
+
+### 18. La substitution de commande `$(...)`
+
+On a vu à la section 8 qu'une variable peut contenir une valeur qu'on écrit
+ soi-même (`prenom="Étienne"`). Une variable peut aussi contenir le
+ **résultat de l'exécution d'une commande**, grâce à la substitution de 
+ commande, avec la syntaxe `$(...)`:
+```bash
+fichier=$(ls echantillon*.fastq.gz | head -n 2 | tail -1)
+echo "Le fichier sélectionné est : $fichier"
+```
+
+Tout ce qui se trouve entre les parenthèses de `$(...)` est exécuté en
+ premier, et son résultat est ensuite stocké dans la variable — ici
+ `fichier`. C'est l'équivalent de dire : "exécute cette commande, et
+ donne-moi ce qu'elle affiche, pour que je puisse le réutiliser."
+
+### 19. Une variable maison dans une boucle
+
+Plutôt que de choisir manuellement le chiffre à donner à `head -n`, on peut
+ laisser une boucle (vue aux sections 10 et 11) fournir ce chiffre
+ automatiquement, à l'aide d'une variable qu'on définit nous-mêmes. Appelons
+ cette variable `compteur` :
+
+```bash
+for compteur in 1 2 3
+do
+    fichier=$(ls echantillon*.fastq.gz | head -n ${compteur} | tail -1)
+    echo "Tour de boucle ${compteur}: fichier sélectionné = ${fichier}"
+done
+```
+
+À chaque tour de boucle, `compteur` prend une nouvelle valeur (1, puis 2,
+ puis 3), et cette valeur est immédiatement réutilisée dans le pipe
+ `head -n ${compteur}` pour sélectionner un fichier différent à chaque
+ itération. On vient d'automatiser, avec une variable qu'on contrôle
+ entièrement, la sélection qu'on faisait manuellement à la section 17.
+
+### 20. Faire une opération sur chaque fichier
+
+Une fois qu'on sait sélectionner un fichier à chaque tour de boucle, on peut
+ lui appliquer une opération. Par exemple, on peut ajouter du texte à la fin
+ de chaque fichier avec `>>` (section 14), et afficher un message de
+ confirmation avec `echo` :
+
+```bash
+for compteur in 1 2 3
+do
+    fichier=$(ls echantillon*.fastq.gz | head -n ${compteur} | tail -1)
+    echo "ACTG" >> ${fichier}
+    echo "La séquence ACTG a été ajoutée à ${fichier}"
+done
+```
+
+Vérifiez le résultat avec `cat` (section 6) sur l'un des fichiers, par
+ exemple `cat echantillon1.fastq.gz` : vous devriez y voir la ligne `ACTG`
+ qui a été ajoutée par la boucle.
+
+### 21. Assembler le script complet
+
+En combinant tous les éléments vus ci-dessus: variables, pipe, substitution
+ de commande, boucle `for` et redirection, on peut maintenant écrire un
+script complet, comparable à ceux utilisés pour traiter automatiquement
+plusieurs fichiers de séquences sur un serveur de calcul.
+
+Par exemple:
+```bash
+
+# Définir le chemin des fichiers
+READS_PATH="."
+
+# Compter le nombre de fichiers à traiter
+NB_FICHIERS=$(ls ${READS_PATH}/echantillon*.fastq.gz | wc -l)
+
+# Boucle pour faire une opération sur chaque fichier, un par un
+for compteur in $(seq 1 ${NB_FICHIERS})
+do
+    # Sélectionner le fichier correspondant au tour de boucle actuel
+    FICHIER=$(ls ${READS_PATH}/echantillon*.fastq.gz \
+        | head -n ${compteur} | tail -1)
+
+    # Afficher des informations de débogage
+    echo "Traitement du fichier ${compteur}/${NB_FICHIERS}: ${FICHIER}"
+
+    # Exécuter une opération sur le fichier
+    echo "ACTG" >> ${FICHIER}
+
+    echo "Fin du traitement pour le fichier : ${FICHIER}"
+done
+```
+
+Ligne par ligne :
+
+1. `READS_PATH="."`: crée une variable contenant le chemin du dossier où se
+   trouvent les fichiers à traiter (ici, le répertoire courant).
+2. `NB_FICHIERS=$(ls ... | wc -l)`: compte, grâce à un pipe et une
+   substitution de commande, le nombre total de fichiers à traiter.
+3. `for compteur in $(seq 1 ${NB_FICHIERS})`: la commande `seq 1 N`
+   génère la liste des nombres de 1 à `N`; la boucle exécute donc son
+   contenu une fois par fichier, `compteur` prenant successivement chaque
+   valeur.
+4. `FICHIER=$(ls ... | head -n ${compteur} | tail -1)`: reprend la
+   logique des sections 17 à 19 pour sélectionner, à chaque tour de
+   boucle, le fichier correspondant au numéro `compteur`.
+5. `echo "Traitement du fichier ..."`: affiche un message indiquant quel
+   fichier est traité à ce tour de boucle, utile pour vérifier que tout
+   fonctionne comme prévu.
+6. `echo "ACTG" >> ${FICHIER}`: ajoute la séquence `ACTG` à la fin du
+   fichier sélectionné, sans écraser son contenu existant.
+7. Le dernier `echo` confirme que le traitement de ce fichier est
+   terminé.
+
+Ainsi, si ce script est exécuté dans un dossier contenant
+ `echantillon1.fastq.gz`, `echantillon2.fastq.gz` et `echantillon3.fastq.gz`,
+ il traitera automatiquement les trois fichiers l'un après l'autre, sans
+ qu'on ait besoin d'écrire une commande distincte pour chacun. Sur un
+ serveur de calcul, une tâche en tableau (*job array*, par exemple avec
+ SLURM) applique une logique très semblable, sauf que chaque fichier est
+ traité par une tâche séparée plutôt que par un seul tour de boucle, et que
+ le numéro (`compteur` ici) est alors fourni automatiquement par le
+ gestionnaire de tâches plutôt que généré par `seq`. Vous verrez un exemple 
+ de job array dans la section sur l'ordonnanceur SLURM.
+
+En pratiquant ces commandes de base, vous vous familiariserez rapidement
+ avec la ligne de commande et serez prêt à explorer des tâches plus
+ complexes.
+
+
+
+---
+
 ## Liste de commandes très utiles pour le cours
 
 ### 1. **Gestion des fichiers et répertoires**
