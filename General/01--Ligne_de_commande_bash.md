@@ -335,7 +335,7 @@ Les sections précédentes montrent comment exécuter des commandes une à une.
 ### 14. Rediriger une sortie vers un fichier
 
 Par défaut, une commande comme `echo` ou `ls` affiche son résultat à l'écran
- (ce qu'on appelle la **sortie standard**, ou ***stdout*** pour *standard*
+ (ce qu'on appelle la **sortie standard**, ou ***stdout*** pour "*standard*
  *output*"). On peut plutôt rediriger ce résultat vers un fichier avec `>`:
 ```bash
 echo "Bonjour!" > message.txt
