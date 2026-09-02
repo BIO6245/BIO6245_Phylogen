@@ -1,9 +1,9 @@
 # BIO6245 Analyses phylogénétiques
 
-Ce dépôt Github contient les tutoriels des travaux pratiques (T.P.) du cours BIO6245 Analyses 
-phylogénétiques offert par le professeur 
-[Étienne Léveillé-Bourret](https://irbv.umontreal.ca/le-personnel/etienne-leveille/) du département de 
-sciences biologiques de l'Université de Montréal.
+Ce dépôt Github contient les tutoriels des travaux pratiques (T.P.) du cours
+ BIO6245 Analyses phylogénétiques offert par le professeur
+ [Étienne Léveillé-Bourret](https://irbv.umontreal.ca/le-personnel/etienne-leveille/)
+ du département de sciences biologiques de l'Université de Montréal.                              
 
 
 
@@ -15,8 +15,8 @@ Il faut installer les programmes ci-dessous pour le cours:
  alignements de données génétiques.
 - [MEGA](https://www.megasoftware.net/) pour visualiser et analyser des petits
  alignements de données génétiques.  
-- [Geneious](https://www.geneious.com/free-trial) comme MEGA, mais avec plus
- de fonctionalités, notamment pour l'analyse de chromatogrammes.
+- [Mesquite](https://www.mesquiteproject.org/) pour certaines analyses
+ phylogénétiques sur de petits jeux de données.
 - [FigTree](https://github.com/rambaut/figtree/releases) pour visualiser les
  arbres phylogénétiques.  
 - Un bon éditeur de texte. J'aime particulièrement
@@ -24,8 +24,13 @@ Il faut installer les programmes ci-dessous pour le cours:
  [Sublime](https://www.sublimetext.com/) sur Mac et
  [gedit](https://gedit-technology.github.io/apps/gedit/) sur Linux.  
 - Le 
-[VPN de l'Université de Montréal](https://wiki.umontreal.ca/pages/viewpage.action?pageId=127184571)
- pour vous connecter au serveur de calcul à partir de la maison.  
+[VPN de l'Université de Montréal, Cisco ZTA](https://wiki.umontreal.ca/spaces/SIE/pages/127184779/FAQ+VPN#expand-quisadresseCiscoZeroTrustAccessZTA)
+ pour vous connecter au serveur de calcul utilisé dans ce cours.  
+- [Geneious](https://www.geneious.com/free-trial) comme MEGA, mais avec plus
+ de fonctionalités, notamment pour l'analyse de chromatogrammes. Toutefois,
+ ce programme n'est pas gratuit et coûte très cher. Vous pouvez donc
+ optionellement le tester, mais notez que la version d'essai gratuite ne
+ fonctionne que durant 30 jours...
 
 
 ## Connexion et utilisation du serveur de calcul du cours
