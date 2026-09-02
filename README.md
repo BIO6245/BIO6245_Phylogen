@@ -36,22 +36,16 @@ Il faut installer les programmes ci-dessous pour le cours:
 ## Connexion et utilisation du serveur de calcul du cours
 Le serveur de calcul utilisé pour les T.P. est joignable à cette adresse: 
 `aphidzen.irbv.umontreal.ca`. Pour se connecter, il faut être connecté au
- VPN de l'Université de Montréal (Cisco ZTA) et utiliser l'outil ssh
- dans une ligne de commande Unix (ligne de commande native sur Macintosh et
- Linux). Les versions récentes de Windows offrent aussi l'option d'atteindre
- une ligne de commande Unix via le
- [service WSL](https://learn.microsoft.com/fr-fr/windows/wsl/install), qui est
- nécessaire d'installer sur les postes Windows. 
- 
-La connection au VPN doit obligatoirement passer par le nouveau programme de
- VPN utilisé par l'UdeM nommé Cisco  ZTA. Les [instructions d'installation
- sont accessibles ici](https://wiki.umontreal.ca/spaces/SIE/pages/127184779/FAQ+VPN#expand-quisadresseCiscoZeroTrustAccessZTA). Le programme peut être installé sans problème sur
- les versions récentes de Windows et Mac, ainsi que trois versions spécifiques
- de Linux: Ubuntu 26.04 LTS (DEB), Debian 13 (DEB) et Rocky Linux 10.1 (RPM).
- Les autres versions de Linux ne sont pas supportées.
+ VPN de l'Université de Montréal (Cisco ZTA). Les [instructions pour installer 
+ Cisco ZTA sont accessibles ici](https://wiki.umontreal.ca/spaces/SIE/pages/127184779/FAQ+VPN#expand-quisadresseCiscoZeroTrustAccessZTA).
+ Le programme peut être installé sans problème sur les versions récentes de
+ Windows et Mac, ainsi que trois versions spécifiques de Linux: Ubuntu 26.04 LTS
+ (DEB), Debian 13 (DEB) et Rocky Linux 10.1 (RPM). Si vous voulez l'installer
+ sur Linux, il faut demander à votre professeur de vous fournir le fichier
+ d'installation. Les autres versions de Linux ne sont pas supportées.
 
 Une fois connecté au VPN Cisco ZTA et après avoir ouvert une ligne de
- commande Unix, tapez ce code dans la ligne de commande (**remplacez**
+ commande, tapez ce code dans la ligne de commande (**remplacez**
  **"UTILISATEUR" par votre propre nom d'utilisateur**):  
 ```bash
 ssh UTILISATEUR@aphidzen.irbv.umontreal.ca
