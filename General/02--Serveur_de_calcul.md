@@ -1,53 +1,50 @@
 # Connexion et utilisation d'un serveur de calcul via ssh
 
-Ce tutoriel vous guidera à travers la connexion au serveur de calcul utilisé pour les travaux 
-pratiques (T.P.) du cours **BIO6245 Analyses phylogénétiques**. Nous verrons comment se connecter 
-via SSH, naviguer sur le serveur, transférer des fichiers entre votre ordinateur personnel et le 
-serveur à l’aide de `rsync`, et réaliser quelques exercices pour mieux comprendre son fonctionnement.
+Ce tutoriel vous guidera à travers la connexion au serveur de calcul utilisé
+ pour les travaux pratiques (T.P.) du cours **BIO6245 Analyses**
+ **phylogénétiques**. Nous verrons comment se connecter via SSH, naviguer sur
+ le serveur, transférer des fichiers entre votre ordinateur personnel et le 
+ serveur à l’aide de `rsync`, et réaliser quelques exercices pour mieux
+ comprendre son fonctionnement.
 
 
 ## 1. Qu'est-ce que ssh ?
 
-**SSH (Secure Shell)** est un protocole permettant d'établir une connexion sécurisée à distance 
-entre un ordinateur local et un serveur. Cela vous permet d'interagir avec le serveur via une 
-ligne de commande pour effectuer des tâches, telles que l'exécution d'analyses ou la gestion de 
-fichiers.
+**SSH (Secure Shell)** est un protocole permettant d'établir une connexion
+ sécurisée à distance entre un ordinateur local et un serveur. Cela vous permet
+ d'interagir avec le serveur via une ligne de commande pour effectuer des
+ tâches, telles que l'exécution d'analyses ou la gestion de fichiers.
 
 ---
 
 ## 2. Connexion au serveur de calcul
 
-Le serveur de calcul du cours est accessible à l'adresse suivante : **aphidzen.irbv.umontreal.ca**. Pour vous y connecter, vous aurez besoin de l'outil SSH, disponible sur la plupart des systèmes d'exploitation.
-
-### Connexion depuis un système Unix (Mac ou Linux)
-
-Les systèmes Mac et Linux disposent déjà d'une ligne de commande Unix, donc vous pouvez utiliser 
-directement `ssh`:  
+Le serveur de calcul du cours est accessible à l'adresse suivante: 
+ **aphidzen.irbv.umontreal.ca**. Pour vous y connecter, vous aurez besoin de
+ l'outil SSH, disponible sur la plupart des systèmes d'exploitation.
+ 
+Sur la ligne de commande native de votre ordinateur (ou MSYS2 CMRT64 si vous
+ utilisez Windows), tapez:  
 ```bash
 ssh UTILISATEUR@aphidzen.irbv.umontreal.ca
 ```
 
 (Remplacez "UTILISATEUR" par votre nom d'utilisateur.)
 
-### Connexion depuis un système Windows
-
-Windows propose également un environnement Unix via **WSL (Windows Subsystem for Linux)**. Une 
-fois WSL installé, ouvrez une session de terminal Unix et tapez la commande suivante:  
-```bash
-ssh UTILISATEUR@aphidzen.irbv.umontreal.ca
-```
-
 ---
 
 ## 3. Structure du serveur de calcul
 
-Le serveur est organisé en plusieurs partitions, chacune avec une fonction spécifique:  
-- `/home` : Espace personnel de 3 To pour chaque utilisateur. Vous y avez accès via `/home/$USER`, 
-et vos fichiers ne sont pas partagés avec les autres utilisateurs.  
-- `/data` : Espace partagé de 5 To pour entreposer des données. Tous les utilisateurs peuvent y 
-accéder.  
-- `/scratch` : Espace temporaire de 9,2 To pour les données et calculs. Les fichiers ici sont 
-régulièrement supprimés, donc pensez à sauvegarder vos résultats ailleurs.  
+Le serveur est organisé en plusieurs partitions, chacune avec une fonction
+ spécifique:  
+- `/home` : Espace personnel de 3 To pour chaque utilisateur. Vous y avez accès
+ via `/home/$USER`, et vos fichiers ne sont pas partagés avec les autres
+ utilisateurs.  
+- `/data` : Espace partagé de 5 To pour entreposer des données. Tous les
+ utilisateurs peuvent y accéder.  
+- `/scratch` : Espace temporaire de 9,2 To pour les données et calculs. Les
+ fichiers ici sont régulièrement supprimés, donc pensez à sauvegarder vos
+ résultats ailleurs.  
 
 ---
 
@@ -55,35 +52,40 @@ régulièrement supprimés, donc pensez à sauvegarder vos résultats ailleurs.
 
 ### Utilisation de `rsync`
 
-`rsync` est un outil efficace pour synchroniser des fichiers entre votre ordinateur local et un 
-serveur distant via SSH. Il est particulièrement utile lorsque vous avez besoin de transférer de 
-gros fichiers ou de nombreux fichiers en même temps.
+`rsync` est un outil efficace pour synchroniser des fichiers entre votre
+ ordinateur local et un serveur distant via SSH. Il est particulièrement utile
+ lorsque vous avez besoin de transférer de gros fichiers ou de nombreux
+ fichiers en même temps.
 
 #### Télécharger des fichiers depuis le serveur
 
-Si vous souhaitez télécharger un fichier ou un dossier depuis le serveur vers votre ordinateur, 
-utilisez la commande suivante:  
+Si vous souhaitez télécharger un fichier ou un dossier depuis le serveur vers
+ votre ordinateur, utilisez la commande suivante:  
 ```bash
 rsync -avz UTILISATEUR@aphidzen.irbv.umontreal.ca:/chemin/vers/dossier_serveur/fichier /chemin/vers/dossier_local/
 ```
 
 #### Téléverser des fichiers vers le serveur
 
-Pour téléverser des fichiers ou dossiers depuis votre ordinateur local vers le serveur, utilisez 
-cette commande:  
+Pour téléverser des fichiers ou dossiers depuis votre ordinateur local vers le
+ serveur, utilisez cette commande:  
 ```bash
 rsync -avz /chemin/vers/dossier_local/fichier UTILISATEUR@aphidzen.irbv.umontreal.ca:/chemin/vers/dossier_serveur/
 ```
 
-Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans votre chemin avec 
-des "forward slash" (\/). De plus, le chemin "C:/" doit être remplacé par "/mnt/c/". Finalement, 
-notez que les espaces dans les noms des dossiers et fichiers causent problème sur tous les 
-terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans 
-vos noms de fichier, ou soit entourer les espaces par des guillemets simples ('), ou précéder 
-chaque espace par un "backslash" (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier. 
+Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) dans
+ votre chemin avec des "forward slash" (\/). De plus, le chemin "C:/" doit être
+ remplacé par "/mnt/c/". Finalement, notez que les espaces dans les noms des
+ dossiers et fichiers causent problème sur tous les terminal Linux/Mac. Il y a
+ deux solutions pour les espaces: soit ne jamais utiliser d'espaces dans vos
+ noms de fichier, ou soit entourer les espaces par des guillemets simples ('),
+ ou précéder chaque espace par un "backslash" (\\) lorsque vous spécifiez un
+ chemin vers un dossier ou fichier. 
+ 
 Par exemple:  
 - Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
-- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
+- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de'
+ 'travail.txt`  
 - Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
 
 ---
@@ -156,7 +158,8 @@ df -h
 
 ### Exercice 5 : Observer l’utilisation de la mémoire
 
-Utilisez `free -h` pour voir la mémoire utilisée et disponible ainsi que la mémoire **swap**:  
+Utilisez `free -h` pour voir la mémoire utilisée et disponible ainsi que la
+ mémoire **swap**:  
 ```bash
 free -h
 
@@ -179,14 +182,15 @@ free -h
    rsync -avz $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:/home/$CLUSTER_USERNAME/fichier_test .
    ```
    
-   Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\)
-   dans votre chemin avec    des "forward slash" (\/). De plus, le chemin
-   "C:/" doit être remplacé par "/mnt/c/". Finalement, notez que les espaces
-   dans les noms des dossiers et fichiers causent problème sur tous les 
-   terminal Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais
-   utiliser d'espaces dans vos noms de fichier, ou soit entourer les espaces par
-   des guillemets simples ('), ou précéder chaque espace par un "backslash"
-   (\\) lorsque vous spécifiez un chemin vers un dossier ou fichier.
+   Notez que si vous êtes sur Windows, il faut absolument utiliser **MYSYS2**
+   **CMRT64** et remplacer les "backslash" (\\) dans votre chemin avec des
+   "forward slash" (\/). De plus, le chemin   "C:/" doit être remplacé par
+   "/mnt/c/". Finalement, notez que les espaces dans les noms des dossiers et
+   fichiers causent problème sur tous les terminal Linux/Mac. Il y a deux
+   solutions pour les espaces: soit ne jamais utiliser d'espaces dans vos noms
+   de fichier, ou soit entourer les espaces par des guillemets simples ('), ou
+   précéder chaque espace par un "backslash" (\\) lorsque vous spécifiez un
+   chemin vers un dossier ou fichier.
    
    Par exemple:  
    - Le chemin Windows:
@@ -194,5 +198,5 @@ free -h
    - Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
    - Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`
 
-2. **Téléversez un fichier** vers le serveur. Essayez de le faire par vous-même.
- Demandez de l'aide au professeur au besoin.
+2. **Téléversez un fichier** vers le serveur. Essayez de le faire par
+ vous-même. Demandez de l'aide au professeur au besoin.
