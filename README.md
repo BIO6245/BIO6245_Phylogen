@@ -3,8 +3,7 @@
 Ce dépôt Github contient les tutoriels des travaux pratiques (T.P.) du cours
  BIO6245 Analyses phylogénétiques offert par le professeur
  [Étienne Léveillé-Bourret](https://irbv.umontreal.ca/le-personnel/etienne-leveille/)
- du département de sciences biologiques de l'Université de Montréal.                              
-
+ du département de sciences biologiques de l'Université de Montréal.                        
 
 
 ## Programmes à installer pour le cours
@@ -26,6 +25,9 @@ Il faut installer les programmes ci-dessous pour le cours:
 - Le 
 [VPN de l'Université de Montréal, Cisco ZTA](https://wiki.umontreal.ca/spaces/SIE/pages/127184779/FAQ+VPN#expand-quisadresseCiscoZeroTrustAccessZTA)
  pour vous connecter au serveur de calcul utilisé dans ce cours.  
+- Pour les utilisateurs Windows, installez
+ [MSYS2](https://github.com/BIO6245/BIO6245_Phylogen/blob/main/General/01--Ligne_de_commande_bash.md#sur-windows)
+ pour pouvoir envoyer des fichiers sur le serveur de calcul via `rsync`.
 - [Geneious](https://www.geneious.com/free-trial) comme MEGA, mais avec plus
  de fonctionalités, notamment pour l'analyse de chromatogrammes. Toutefois,
  ce programme n'est pas gratuit et coûte très cher. Vous pouvez donc
