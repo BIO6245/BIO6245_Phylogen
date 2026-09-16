@@ -2,24 +2,23 @@
 
 ## Déterminer le nombre de potentiels paralogues
 
-Parfois, certains gènes visés dans une étude HybSeq sont dupliqués dans un ou 
-plusieurs échantillons. Si les gènes ont été dupliqués il y a peu de temps, 
-c'est possible que les deux paralogues issus de cet événement de duplication 
-n'aient pas divergés suffisamment pour être séparés lors de l'analyse. Les 
-lectures Illumina issues de ces deux paralogues seront alors alignés sur la 
-même séquence de référence, et ils seront assemblés comme des contigs 
-différents par HybPiper (car ils ne sont pas exactement identiques).
+Parfois, certains gènes visés dans une étude HybSeq sont dupliqués dans un ou
+ plusieurs échantillons. Si les gènes ont été dupliqués il y a peu de temps,
+ c'est possible que les deux paralogues issus de cet événement de duplication
+ n'aient pas divergés suffisamment pour être séparés lors de l'analyse. Les
+ lectures Illumina issues de ces deux paralogues seront alors alignés sur la
+ même séquence de référence, et ils seront assemblés comme des contigs
+ différents par HybPiper (car ils ne sont pas exactement identiques).
 
-Par défaut, si HybPiper a assemblé plus d'un contig pour un gène, alors il 
-sélectionnera le "meilleur" contig comme étant celui qui a le plus de 
-couverture de séquençage (10X plus de couverture que tous les autres), ou qui 
-est le plus long (>=75% de la séquence ciblée présente). Si plusieurs contigs 
-ont une haute couverture et longueur, alors il est fort probable que ces 
-contigs correspondent à différents haplotypes ou paralogues d'un gène 
-dupliqué.
+Par défaut, si HybPiper a assemblé plus d'un contig pour un gène, alors il
+ sélectionnera le "meilleur" contig comme étant celui qui a le plus de
+ couverture de séquençage (10X plus de couverture que tous les autres), ou qui
+ est le plus long (>=75% de la séquence ciblée présente). Si plusieurs contigs
+ ont une haute couverture et longueur, alors il est fort probable que ces
+ contigs correspondent à différents haplotypes ou paralogues d'un gène dupliqué.
 
-Pour vérifier combien de gènes possèdent des paralogues ou haplotypes dans 
-chaque échantillon, exécuter ces commandes:   
+Pour vérifier combien de gènes possèdent des paralogues ou haplotypes dans
+ chaque échantillon, exécuter ces commandes:  
 ```bash
 WD=/scratch/$USER/HybSeqTest
 TARGETS=/data/hybseqRefs/combined_Mega353_Carex554.fa
@@ -37,27 +36,29 @@ sbatch --job-name=paralog_retriever \
 
 ```
 
-Une fois cette étape terminée, téléchargez le fichier `paralog_report.tsv` sur 
-votre ordinateur local et examinez-le dans Excel.  
-  - Combien de loci sont présents en une seule copie dans tous les échantillons?  
+Une fois cette étape terminée, téléchargez le fichier `paralog_report.tsv` sur
+ votre ordinateur local et examinez-le dans Excel.  
+  - Combien de loci sont présents en une seule copie dans tous les 
+    échantillons?  
 	- Combien de loci contiennent possiblement des paralogues?  
-  - Existe-t-il des loci présentant des paralogues dans chaque échantillon, ce 
-	qui suggérerait une duplication génique ancienne partagée par toutes les 
-	espèces ?  
+  - Existe-t-il des loci présentant des paralogues dans chaque échantillon, ce
+    qui suggérerait une duplication génique ancienne partagée par toutes les 
+    espèces ?  
 
 ---
 
 ## Visualiser les arbres de gènes incluant les potentiels paralogues
 
-HybPiper sélectionne pour chaque locus un contig qu’il considère comme le 
-"meilleur représentant", en se basant sur la couverture, la longueur et la 
-similarité avec la séquence de sonde. Cependant, il est préférable de vérifier 
-manuellement tous les arbres géniques afin de s’assurer qu’aucune erreur n’a été commise par HybPiper.  
+HybPiper sélectionne pour chaque locus un contig qu’il considère comme le
+ "meilleur représentant", en se basant sur la couverture, la longueur et la
+ similarité avec la séquence de sonde. Cependant, il est préférable de vérifier
+ manuellement tous les arbres géniques afin de s’assurer qu’aucune erreur n’a
+ été commise par HybPiper.  
 
-Pour chaque locus, alignez tous les contigs récupérés par *paralog retriever* 
-à l’aide de [MAFFT](https://mafft.cbrc.jp/alignment/software/about.html), puis 
-générez rapidement une phylogénie génique à l’aide de 
-[FastTree](http://www.microbesonline.org/fasttree/):    
+Pour chaque locus, alignez tous les contigs récupérés par *paralog retriever*
+ à l’aide de [MAFFT](https://mafft.cbrc.jp/alignment/software/about.html), puis
+ générez rapidement une phylogénie génique à l’aide de
+ [FastTree](http://www.microbesonline.org/fasttree/):  
 ```bash
 WD=/scratch/$USER/HybSeqTest
 EMAIL=votre.courriel@umontreal.ca
@@ -93,8 +94,8 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES quickParaTree.sbatch
 
 ```
 
-Attendre que cette analyse termine. Une fois terminée, combiner tous ces 
-arbres de gènes en un seul fichier pour faciliter la visualisation:  
+Attendre que cette analyse termine. Une fois terminée, combiner tous ces
+ arbres de gènes en un seul fichier pour faciliter la visualisation:  
 ```bash
 WD=/scratch/$USER/HybSeqTest
 
@@ -126,31 +127,31 @@ echo "end;" >> allTrees.nex
 
 ```
 
-Une fois cela fait, télécharger `allTrees.nex` sur votre machine locale et 
-passer visuellement à travers tous les arbres en utilisant 
-using [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) ou un autre 
-programme de visualisation. Porter particulièrement attention aux loci qui 
-ont été identifiés comme ayant de nombreux potentiels paralogues pour de 
-nombreux échantillons.
+Une fois cela fait, télécharger `allTrees.nex` sur votre machine locale et
+ passer visuellement à travers tous les arbres en utilisant
+ using [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) ou un autre
+ programme de visualisation. Porter particulièrement attention aux loci qui ont
+ été identifiés comme ayant de nombreux potentiels paralogues pour de nombreux
+ échantillons.
 
-  - **Question:** Y a-t-il de l'évidence que des contigs alléliques ont été 
-	assemblés?
+  - **Question:** Y a-t-il de l'évidence que des contigs alléliques ont été
+    assemblés?
 
   - **Question:** Y a-t-il de l'évidence que des paralogues ont été assemblés?
 
-  - **Question:** Comment distinguerait-on des allèles de paralogues dans les 
-	arbres de gènes que vous visualisez?
+  - **Question:** Comment distinguerait-on des allèles de paralogues dans les
+    arbres de gènes que vous visualisez?
 
 ---
 
 ## Éliminer les paralogues avec ParaGone
 
-[ParaGone](https://github.com/chrisjackson-pellicle/ParaGone) est un 
-pipeline populaire pour éliminer les paralogues dans des séquences assemblées 
-avec HybPiper.
+[ParaGone](https://github.com/chrisjackson-pellicle/ParaGone) est un
+ pipeline populaire pour éliminer les paralogues dans des séquences assemblées
+ avec HybPiper.
 
-Exécuter les commandes ci-dessous pour éliminer les paralogues dans vos 
-séquences en utilisant ParaGone:  
+Exécuter les commandes ci-dessous pour éliminer les paralogues dans vos
+ séquences en utilisant ParaGone:  
 ```bash
 SRC_NONINTERACTIVE_CONDA=/opt/miniconda/etc/profile.d
 WD=/scratch/$USER/HybSeqTest
@@ -251,13 +252,13 @@ sbatch --mail-user=$EMAIL paragone.sbatch
 
 ```
 
-Pendant que l'analyse roule, profitez-en pour lire le 
-[wiki de ParaGone](https://github.com/chrisjackson-pellicle/ParaGone/wiki/Tutorial). 
-Vous remarquerez que le pipeline inclue des étapes d'alignement des 
-séquences, de nettoyage de ces séquences, de génération d'arbres de gènes, 
-ainsi que d'extraction des clades de ces arbres correspondant à des paralogues 
-différents. Il existe 4 méthodes différentes à l'étape d'extraction, chacune 
-avec des avantages et inconvénients.
+Pendant que l'analyse roule, profitez-en pour lire le
+ [wiki de ParaGone](https://github.com/chrisjackson-pellicle/ParaGone/wiki/Tutorial). 
+ Vous remarquerez que le pipeline inclue des étapes d'alignement des
+ séquences, de nettoyage de ces séquences, de génération d'arbres de gènes,
+ ainsi que d'extraction des clades de ces arbres correspondant à des paralogues
+ différents. Il existe 4 méthodes différentes à l'étape d'extraction, chacune
+ avec des avantages et inconvénients.
 
 	- **Question**: Quelles sont les 4 méthodes d'extraction?
 
