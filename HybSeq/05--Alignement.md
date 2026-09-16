@@ -9,7 +9,7 @@ aligner ultérieurement :
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
-TARGETS=/data/hybseqRefs/GoFlag_targets.fa
+TARGETS=/data/hybseqRefs/combined_Mega353_Carex554.fa
 
 ## Aller chercher les séquences des exons de chaque échantillon
 mkdir -p $WD/seqs/exon
@@ -28,8 +28,8 @@ nohup hybpiper retrieve_sequences \
 
 ### Éliminer les alignements contenant moins de 4 séquences
 
-Une fois que les séquences ont été récupérées avec HybPiper, retirer les loci représentés 
-par <4 échantillons puisque ces loci ne contiennent pas d'information phylogénétique importante:  
+Une fois que les séquences ont été récupérées avec HybPiper, retirer les loci
+ représentés par <4 échantillons puisque ces loci ne contiennent pas d'information phylogénétique importante:  
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 WD=/scratch/$USER/HybSeqTest
