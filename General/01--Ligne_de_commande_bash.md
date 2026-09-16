@@ -45,7 +45,7 @@ winget install MSYS2.MSYS2
 
 ```
 
-Ensuite, ouvrez l'application **MSYS2 CMRT64**. Cela ouvre une ligne de
+Ensuite, ouvrez l'application **MSYS2 UCRT64**. Cela ouvre une ligne de
  commande qui ressemble à Linux. Vous devrez installer quelques programmes
  en exécutant ces commandes:  
 ```sh

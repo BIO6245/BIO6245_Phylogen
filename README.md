@@ -139,9 +139,10 @@ Tutoriels avec des données HybSeq (Illumina):
   - [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
   - [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
   - [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
-  - [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
-  - [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
-  - [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
+  - [HybSeq/04--Gerer_les_paralogues.md](HybSeq/04--Gerer_les_paralogues.md)  
+  - [HybSeq/05--Alignement.md](HybSeq/05--Alignement.md)  
+  - [HybSeq/06--Filtrage_alignement.md](HybSeq/06--Filtrage_alignement.md)  
+  - [HybSeq/07--Parcimonie.md](HybSeq/07--Parcimonie.md) 
   
 ## T.P. 4: Analyse de parcimonie
 

@@ -124,7 +124,7 @@ généralement un alignement plus probable du point de vue évolutif.
 [BIO6245_Phylogen/Sanger/fichiers/test.nex](fichiers/test.nex).  
 - Chargez cet alignement dans MEGA et effectuez une analyse de parcimonie. Notez le score (le 
 meilleur arbre trouvé devrait être 8 mutations de long).
-- Ouvrez `test.nex` dans le programme AliView et tentez d'ajuster l'alignement à la main.
+- Ouvrez `test.nex` dans le programme AliView ou MEGA et tentez d'ajuster l'alignement à la main.
 - Sauvegardez le nouvel alignement sous le nom de `test2.nex`.
 - Chargez `test2.nex` dans MEGA, ré-effectuez l'analyse de parcimonie. Est-ce que le score s'est 
 amélioré? Notez qu'un score plus bas est meilleur, car ça signifie qu'un plus petit nombre de 

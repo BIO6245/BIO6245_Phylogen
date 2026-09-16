@@ -23,7 +23,7 @@ Le serveur de calcul du cours est accessible à l'adresse suivante:
  **aphidzen.irbv.umontreal.ca**. Pour vous y connecter, vous aurez besoin de
  l'outil SSH, disponible sur la plupart des systèmes d'exploitation.
  
-Sur la ligne de commande native de votre ordinateur (ou MSYS2 CMRT64 si vous
+Sur la ligne de commande native de votre ordinateur (ou MSYS2 UCRT64 si vous
  utilisez Windows), tapez:  
 ```bash
 ssh UTILISATEUR@aphidzen.irbv.umontreal.ca
