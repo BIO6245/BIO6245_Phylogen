@@ -118,24 +118,28 @@ Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
-Avec les données Sanger:  
+Tutoriel sur l'alignement:
+  - [General/06--Alignement_ambiguite.md](General/06--Alignement_ambiguite.md)
+
+Tutoriel sur le téléchargement et l'alignement de données Sanger:  
   - [Sanger/01--Telecharger_donnees.md](Sanger/01--Telecharger_donnees.md)  
   - [Sanger/02--Aligner_sequences.md](Sanger/02--Aligner_sequences.md)  
 
-Avec les données HybSeq:  
-  - [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
-  - [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
-  - [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
-  - [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
+Tutoriel sur le format fastq associé aux données Illumina: 
+  - [General/07--Format_fastq_ligne_commande.md](General/07--Format_fastq_ligne_commande.md)
 
 ## T.P. 3: Analyse de parcimonie
 
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
-Avec les données Sanger:  
+Avec des données Sanger:  
   - [Sanger/03--Parcimonie.md](Sanger/03--Parcimonie.md)  
 
-Avec les données HybSeq:  
+Tutoriels avec des données HybSeq (Illumina):  
+  - [HybSeq/01--Telecharger_donnees.md](HybSeq/01--Telecharger_donnees.md)  
+  - [HybSeq/02--ControleQualite.md](HybSeq/02--ControleQualite.md)  
+  - [HybSeq/03--Assembler_avec_HybPiper.md](HybSeq/03--Assembler_avec_HybPiper.md)  
+  - [HybSeq/04--Alignement.md](HybSeq/04--Alignement.md)  
   - [HybSeq/05--Filtrage_alignement.md](HybSeq/05--Filtrage_alignement.md)  
   - [HybSeq/06--Parcimonie.md](HybSeq/06--Parcimonie.md)  
   

@@ -81,6 +81,8 @@ sudo /opt/miniconda/bin/conda create -y -n bio -c conda-forge biopython
 sudo /opt/miniconda/bin/conda create -y -n ipyrad -c conda-forge -c bioconda ipyrad
 sudo /opt/miniconda/bin/conda install -n ipyrad -c bioconda -c ipyrad structure clumpp
 sudo /opt/miniconda/bin/conda install -n ipyrad -c eaton-lab toyplot
+sudo /opt/miniconda/bin/conda install -n ipyrad -c conda-forge toytree
+sudo /opt/miniconda/bin/conda install -n ipyrad -c bioconda raxml
 
 ## partitionFinder
 sudo /opt/miniconda/bin/conda create -y -n partitionFinder -c conda-forge python=2.7 numpy pandas pytables pyparsing scipy scikit-learn

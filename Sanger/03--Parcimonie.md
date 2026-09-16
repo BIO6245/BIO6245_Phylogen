@@ -125,8 +125,9 @@ Ainsi, pour des ensembles de données comportant 20 taxa ou plus, la méthode
 **branch-and-bound** peut prendre un temps **astronomique** pour explorer toutes les topologies 
 possibles, et la recherche peut ne jamais finir.
 
-Tentez une recherche branch-and-bound avec les 17 premiers taxa de l'alignement, mais en excluant 
-les autres (pour ne pas trop surcharger le programme):  
+Tentez une recherche branch-and-bound avec les 17 premiers taxa de             
+ l'alignement, mais en excluant les autres (pour ne pas trop surcharger le
+ programme):  
 ```
 delete all / clearTrees=yes;
 restore 1-17;
@@ -138,35 +139,55 @@ bandb;
 - **Question**: Combien de temps est-ce que la recherche a pris à finir?  
 - **Question**: Quel est le score du meilleur arbre trouvé?  
 
-Tentez maintenant une recherche avec 18 taxa:
+Tentez maintenant successivement une recherche avec 20, 25, et 30 taxa. Pour
+ chacune, notez le temps que prend la recherche exhaustive.
 ```
 delete all / clearTrees=yes;
-restore 1-18;
+restore 1-20;
+
+bandb;
+
+delete all / clearTrees=yes;
+restore 1-25;
+
+bandb;
+
+delete all / clearTrees=yes;
+restore 1-30;
 
 bandb;
 
 ```
 
-**NOTEZ QUE VOUS POUVEZ EN TOUT TEMPS CESSER CETTE RECHERCHE**, vous n'avez qu'à appuyer sur 
-Ctrl+C pour cesser la recherche du meilleur arbre avec l'algorithme branch-and-bound.
+**NOTEZ QUE VOUS POUVEZ EN TOUT TEMPS CESSER UNE RECHERCHE**, vous n'avez qu'à
+ appuyer sur Ctrl+C pour cesser la recherche du meilleur arbre avec l'algorithme
+ branch-and-bound.
 
 - **Question**: Qu'est-ce qui se passe ici?
-- **Question**: Essayez avec tous les taxa. Combien de temps croyez-vous que ça va prendre?
+
+Essayez avec tous les taxa:
+  ```
+  restore all / clearTrees=yes;
+  
+  bandb;
+  ````
+  
+- **Question**:Combien de temps croyez-vous que ça va prendre?
 
 ---
 
 ## Recherche heuristique
 
-Pour éviter le problème des approches exhaustives avec les alignements contenant de nombreux taxa, 
-vous pouvez utiliser une méthode **heuristique**, qui est plus rapide mais approximative. Elle 
-n'explore pas toutes les topologies d'arbres possibles, mais utilise des raccourcis algorithmiques 
-pour trouver une solution proche de l'optimum. Ainsi, cette approche permet de rapidement avoir un 
-arbre parcimonieux, mais **ne nous assure pas qu'il soit le plus parcimonieux d'entre tous les **
-**arbres possibles**.
+Pour éviter le problème des approches exhaustives avec les alignements contenant
+ de nombreux taxa, vous pouvez utiliser une méthode **heuristique**, qui est
+ plus rapide mais approximative. Elle n'explore pas toutes les topologies
+ d'arbres possibles, mais utilise des raccourcis algorithmiques pour trouver une
+ solution proche de l'optimum. Ainsi, cette approche permet de rapidement avoir
+ un arbre parcimonieux, mais **ne nous assure pas qu'il soit le plus**
+ **parcimonieux d'entre tous les arbres possibles**.
 
-Restorez tous les taxa, pour déterminer le meilleur arbre phylogénétique entre les 26 taxa de 
-l'alignement. Vous pouvez répondre oui (Yes) lorsque le programme demande s'il peut supprimer les 
-arbres en mémoire.  
+Restorez tous les taxa. Vous pouvez répondre oui (Yes) si le programme demande
+ s'il peut supprimer les arbres en mémoire.  
 ```
 restore all / clearTrees=yes;
 
@@ -188,29 +209,42 @@ descr 1;
 
 ```
 
-- **Question**: Examinez un autre arbre parmi les meilleurs. Quelle est la commande pour le faire? 
-En quoi cet autre arbre est différent?  
+- **Question**: Examinez un autre arbre parmi les meilleurs. Quelle est la
+ commande pour le faire? En quoi cet autre arbre est différent?  
 
-Si on supprime la moitié des positions dans l'alignement, on a moins de caractères pour informer 
-les relations phylogénétiques entre les espèces. La conséquence de ce manque d'information est 
-qu'il y aura plus d'arbres parcimonieux, étant donné qu'il y a plus d'incertitude sur la position 
-de certains taxa (si vous ne comprenez pas pourquoi, demandez au prof de vous expliquer...).
+Consensus strict de tous les meilleurs arbres:
+```
+contree / strict=yes majrule=no;
+```
 
-Essayez de faire une recherche heuristique avec seulement la moitié des données génétiques (13 
-caractères sur les 20 de l'alignement):  
+Si on supprime la moitié des positions dans l'alignement, on a moins de
+ caractères pour informer les relations phylogénétiques entre les espèces. La
+ conséquence de ce manque d'information est qu'il y aura plus d'arbres
+ parcimonieux, étant donné qu'il y a plus d'incertitude sur la position
+ de certains taxa (si vous ne comprenez pas pourquoi, demandez au prof de vous
+ expliquer...).
+
+Essayez de faire une recherche heuristique avec seulement la moitié des données
+ génétiques (13 caractères sur les 20 de l'alignement), puis faites un consensus
+ strict:  
 ```
 exclude all;
 include 1-13;
 
 hs addseq=random nreps=100 multre=yes nchuck=5 chucklen=1;
 
+descr 1;
+
+contree / strict=yes majrule=no;
 ```
 
-- **Question**: Quelle est la conséquence d'avoir diminué la taille de l'alignement sur le nombre 
-d'arbres parcimonieux trouvés?  
-- **Questions**: Quel est le score des meilleurs arbres dans ce cas-ci? Pourquoi le score est plus 
-petit que celui des meilleurs arbres de la matrice complète? Est-ce que ça signifie que c'est 
-préférable d'avoir une plus petite matrice?  
+- **Question**: Quelle est la conséquence d'avoir diminué la taille de
+  l'alignement sur le nombre d'arbres parcimonieux trouvés?  
+- **Question**: Quel est le score des meilleurs arbres dans ce cas-ci? Pourquoi
+  le score est plus petit que celui des meilleurs arbres de la matrice complète?
+  Est-ce que ça signifie que c'est préférable d'avoir une plus petite matrice?
+- **Question**: Quel est l'effet sur le consensus strict de tous les meilleurs
+  arbres? Comment expliquer cet effet?
 
 ---
 
@@ -223,7 +257,9 @@ Si vous voulez quitter PAUP\*, il suffit d'exécuter la commande `quit;`.
 
 ## Exercices
 
-1. **Changer le hors-groupe** et ré-exécuter une recherche heuristique. Comparez les résultats.  
-2. **Exclure différents taxa** et observer comment cela affecte la topologie de l'arbre.
-3. **Comparez les temps d'exécution** entre les recherches branch-and-bound et heuristiques pour 
-différents nombres de taxa.  
+1. **Changer le hors-groupe** et ré-exécuter une recherche heuristique. Comparez
+  les résultats.  
+2. **Exclure différents taxa** et observer comment cela affecte la topologie de
+  l'arbre.
+3. **Comparez les temps d'exécution** entre les recherches branch-and-bound et
+  heuristiques pour différents nombres de taxa.  
