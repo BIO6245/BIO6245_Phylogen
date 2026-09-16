@@ -1,6 +1,27 @@
 # Alignement des séquences
 
-## Loci nucléaires assemblés par HybPiper
+## 
+
+Si vous avez déjà suivi les étapes impliquant **Paragone** dans le tutoriel
+ précédent sur la gestion des paralogues, vous devriez déjà avoir des séquences
+ alignées en sortie de **Paragone**.
+ 
+Vérifiez que ces séquences sont bien présentes en lançant cette commande dans
+ le serveur de calcul:
+ `ls /scratch/$USER/HybSeqTest/paragone/26_MO_final_alignments_trimmed/*.fasta`.
+ 
+Si vous voyez une liste de fichiers .fasta, alors ça signifie que vous avez
+ déjà des alignements prêts pour les prochaines étapes de l'analyse, et vous
+ pouvez directement continuer avec le prochain tutoriel (Filtrage de
+ l'alignement).
+
+---
+
+## Aligner les séquences sans gérer les paralogues
+
+Si vous voulez aligner directement les séquences obtenues par HybPiper, sans
+ faire la gestion fine des paralogues comme expliqué dans le tutoriel précédent
+ sur la gestion des paralogues, il est possible de suivre les étapes ci-dessous.
 
 ### Récupérer les séquences assemblées par HybPiper
 
