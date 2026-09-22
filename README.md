@@ -144,12 +144,15 @@ Tutoriels avec des données HybSeq (Illumina):
   - [HybSeq/06--Filtrage_alignement.md](HybSeq/06--Filtrage_alignement.md)  
   - [HybSeq/07--Parcimonie.md](HybSeq/07--Parcimonie.md) 
   
-## T.P. 4: Analyse de parcimonie
+## T.P. 4: Congruence et support
 
-Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
+Pour ce T.P., faites le tutoriels suivant:  
 
 Avec les données Sanger:  
   - [Sanger/04--Congruence_support.md](Sanger/04--Congruence_support.md)  
+
+Ensuite, terminez les tutoriels du T.P. 3 si vous n'avez pas eu le temps de les
+ terminer.
 
 ## T.P. 5: Distance et modèles de substitution
 
