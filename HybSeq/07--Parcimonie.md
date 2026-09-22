@@ -1,14 +1,15 @@
 # Analyse de parcimonie sur les données concaténées
 
-Les données HybSeq utilisées ici correspondent à quelques centaines de gènes nucléaires récupérés 
-dans sept espèces différentes de fougères du genre *Dryopteris* et d'un genre apparenté, 
-*Polystichum*. Tous ces gènes ont une histoire évolutive différente. Toutefois, si l'ensemble de 
-ces gènes est analysé en bloc, la phylogénie estimée devrait représenter une bonne 
-approximation de l'arbre d'espèces. 
+Les données HybSeq utilisées ici correspondent à quelques centaines de gènes
+ nucléaires récupérés des espèces différentes de *Carex*. Tous ces gènes ont une
+ histoire évolutive différente. Toutefois, si l'ensemble de ces gènes est
+ analysé en bloc, la phylogénie estimée devrait représenter une bonne
+ approximation de l'arbre d'espèces.
 
-Cette approche est nommée "analyse par concaténation", car elle procède tout d'abord par la 
-combinaison (=concaténation) des alignements des différents gènes en une seule matrice, suivi de 
-l'analyse de cette matrice "concaténée" comme si c'était l'alignement d'un seul très gros gène.
+Cette approche est nommée "analyse par concaténation", car elle procède tout
+ d'abord par la combinaison (=concaténation) des alignements des différents
+ gènes en une seule matrice, suivi de l'analyse de cette matrice "concaténée"
+ comme si c'était l'alignement d'un seul très gros gène.
 
 Ici, nous allons effectuer une analyse de parcimonie sur la matrice concaténée.
 
@@ -16,9 +17,9 @@ Ici, nous allons effectuer une analyse de parcimonie sur la matrice concaténée
 
 ## Concaténer les alignements
 
-Nous avons des alignements bruts et des alignements filtrés. Les deux seront concaténés pour créer 
-deux matrices différentes, de façon évaluer si la filtration a un effet sur le résultat avec ce 
-jeu de données.
+Nous avons des alignements bruts et des alignements filtrés. Les deux seront
+ concaténés pour créer deux matrices différentes, de façon évaluer si la
+ filtration a un effet sur le résultat avec ce jeu de données.
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
@@ -27,59 +28,10 @@ EMAIL=votre.courriel@umontreal.ca
 
 
 ###
-## Concaténer les alignements bruts, avant filtrage
-###
-
-ALIGN_PATH=$WD/seqs/exon/align
-
-mkdir -p $ALIGN_PATH/concat
-cd $ALIGN_PATH/concat
-
-## Créer un alignement concaténé en format phyml avec catfasta2phyml
-TIME="0-3:00:00"
-sbatch \
-  --job-name=catfasta2phyml \
-  --output=catfasta2phyml.log \
-  --mail-user=$EMAIL \
-  --nodes=1 \
-  --time=$TIME \
-  --cpus-per-task=1 \
-  --mem-per-cpu=8G \
-  --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
-  --concatenate $ALIGN_PATH/*.fasta \
-  1> raw_concat.phy \
-  2> raw_concat.partitions"
-
-## Créer un alignement concaténé en format fasta avec catfasta2phyml
-EMAIL=etienne.leveille-bourret@umontreal.ca
-TIME="0-3:00:00"
-sbatch \
-  --job-name=catfasta2phyml \
-  --output=catfasta2phyml.log \
-  --mail-user=$EMAIL \
-  --nodes=1 \
-  --time=$TIME \
-  --cpus-per-task=1 \
-  --mem-per-cpu=8G \
-  --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
-  --fasta \
-  --concatenate $ALIGN_PATH/*.fasta \
-  1> raw_concat.fasta \
-  2> /dev/null
-  
-  wait
-  
-  clustalw \
-  -convert \
-  -infile=raw_concat.fasta \
-  -output=nexus \
-  -outfile=raw_concat.nex"
-
-###
 ## Concaténer les alignements après filtrage
 ###
 
-ALIGN_PATH=$WD/seqs/exon/align/trimal
+ALIGN_PATH=$WD/align/taper/trimal
 
 mkdir -p $WD/seqs/exon/align/concat
 cd $WD/seqs/exon/align/concat
@@ -95,14 +47,12 @@ sbatch \
   --cpus-per-task=1 \
   --mem-per-cpu=8G \
   --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
-  --concatenate $ALIGN_PATH/*.fasta \
-  1> filtered_concat.phy \
-  2> filtered_concat.partitions"
+      --concatenate $ALIGN_PATH/*.fasta \
+      1> filtered_concat.phy \
+      2> filtered_concat.partitions"
 
 ## Créer un alignement concaténé en format fasta avec catfasta2phyml
 ## Puis créer un alignement concaténé en format nexus avec clustalW
-EMAIL=etienne.leveille-bourret@umontreal.ca
-TIME="0-3:00:00"
 sbatch \
   --job-name=catfasta2phyml \
   --output=catfasta2phyml.log \
@@ -112,18 +62,18 @@ sbatch \
   --cpus-per-task=1 \
   --mem-per-cpu=8G \
   --wrap="$SRC/catfasta2phyml/catfasta2phyml.pl \
-  --fasta \
-  --concatenate $ALIGN_PATH/*.fasta \
-  1> filtered_concat.fasta \
-  2> /dev/null
-  
-  wait
-  
-  clustalw \
-  -convert \
-  -infile=filtered_concat.fasta \
-  -output=nexus \
-  -outfile=filtered_concat.nex"
+      --fasta \
+      --concatenate $ALIGN_PATH/*.fasta \
+      1> filtered_concat.fasta \
+      2> /dev/null
+    
+    wait
+    
+    clustalw \
+      -convert \
+      -infile=filtered_concat.fasta \
+      -output=nexus \
+      -outfile=filtered_concat.nex"
 
 
 

@@ -117,6 +117,11 @@ sbatch --mail-user=$EMAIL TAPER.sbatch
   avoir effacé les résultats de la dernière exécution). Est-ce que ça fait une
   différence?
 
+Regardez à l'intérieur d'un des alignements filtrés par TAPER avec la commande
+ `more *.fasta` pour vérifier que tout est beau. Vérifiez aussi que tous les
+ alignements ont été filtrés avant de continuer à la prochaine étape avec la
+ commande `ls *.fasta`. 
+
 ---
 
 ## Filtrer les régions avec trop de caractères indéterminés avec TrimAl
@@ -198,6 +203,11 @@ sbatch --mail-user=$EMAIL --array=1-$NFILES trimal.sbatch
 Vous pouvez modifier ces paramètres, ou même avoir une liste complète de toutes
  les options en exécutant `/opt/trimAl_1.5.0/trimal -h`
 
+Regardez à l'intérieur d'un des alignements filtrés par trimAl avec la commande
+ `more *.fasta` pour vérifier que tout est beau. Vérifiez aussi que tous les
+ alignements ont été filtrés avant de continuer à la prochaine étape avec la
+ commande `ls *.fasta`. 
+
 ---
 
 ## Conserver uniquement les alignements filtrés avec >4 séquences
@@ -226,4 +236,5 @@ for i in $(ls *.fasta)
 
 ```
 
-
+Regardez si certains alignements ont été supprimés à cause du manque de
+ séquences en exécutant `more filter_min4_after_trimal.log`.
