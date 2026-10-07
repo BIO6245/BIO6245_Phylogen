@@ -162,8 +162,8 @@ Avec les données Sanger:
   - [Sanger/05--Selection_modele_distance.md](Sanger/05--Selection_modele_distance.md)
 
 Avec les données HybSeq:  
-  - [HybSeq/07--Selection_modele.md](HybSeq/07--Selection_modele.md)
-  - [HybSeq/08--Distance.md](HybSeq/08--Distance.md)
+  - [HybSeq/08--Selection_modele.md](HybSeq/08--Selection_modele.md)
+  - [HybSeq/09--Distance.md](HybSeq/09--Distance.md)
   
 ## T.P. 6: Maximum de vraisemblance
 
