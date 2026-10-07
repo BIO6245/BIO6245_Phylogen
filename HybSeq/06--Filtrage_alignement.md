@@ -172,7 +172,7 @@ GENENAME=\$(basename \$ALIGNIN .fasta)
 ## lancer trimAl
 $SRC/trimAl_1.5.0/trimal \\
   -in \$ALIGNIN \\
-  -out ./trimal/\$GENENAME.fasta \\
+  -out \$GENENAME.fasta \\
   -w $WINDOW_SIZE \\
   -gapthreshold $MIN_NONGAP_PERCENT \\
   -simthreshold $MIN_SIMILARITY \\
