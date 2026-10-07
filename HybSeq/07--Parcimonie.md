@@ -17,9 +17,10 @@ Ici, nous allons effectuer une analyse de parcimonie sur la matrice concaténée
 
 ## Concaténer les alignements
 
-Nous avons des alignements bruts et des alignements filtrés. Les deux seront
- concaténés pour créer deux matrices différentes, de façon évaluer si la
- filtration a un effet sur le résultat avec ce jeu de données.
+Nous avons des alignements bruts et des alignements filtrés. Nous allons concaténer ici
+ uniquement les alignements filtrés, mais répétez toutes ces étapes et les analyses de
+ parcimonie subséquente sur les alignements bruts, pour vérifier comment le filtrage affecte
+ l'arbre optimal qui est estimé par l'analyse de parcimonie.
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC=/opt
@@ -73,9 +74,6 @@ sbatch \
       -infile=filtered_concat.fasta \
       -output=nexus \
       -outfile=filtered_concat.nex"
-
-
-
 
 ```
 
