@@ -1,31 +1,31 @@
 # Maximum de vraisemblance
 
-Ce tutoriel vous guidera dans l’utilisation d'**IQ-Tree** et de **RAxML** pour l'analyse de 
-maximum de vraisemblance (*maximum likelihood*) sur une matrice de données concaténées provenant 
-d'un seul gène. Il assume qu'on sait déjà quel est le meilleur modèle de substitution.
+Ce tutoriel vous guidera dans l’utilisation d'**IQ-Tree** et de **RAxML** pour
+ l'analyse de maximum de vraisemblance (*maximum likelihood*) sur une matrice de
+ données concaténées provenant d'un seul gène. Il assume qu'on sait déjà quel 
+ est le meilleur modèle de substitution.
 
 ---
 
 ## Maximum de vraisemblance dans IQ-Tree
 
-**IQ-Tree** permet de faire des analyses de maximum de vraisemblance sur à peu près n'importe quel 
-modèle d'évolution et de partitionnement imaginable. Cette flexibilité vient avec un coût: il est 
-plus lent que RAxML, particulièrement avec les jeux de données qui sont un peu plus grands.
+**IQ-Tree** permet de faire des analyses de maximum de vraisemblance sur à peu
+ près n'importe quel modèle d'évolution et de partitionnement imaginable. Cette
+ flexibilité vient avec un coût: il est plus lent que RAxML, particulièrement
+ avec les jeux de données qui sont un peu plus grands.
 
 Prérequis:
-- Avoir un fichier en format phylip (.phy) ou nexus (.nex) contenant l'alignement d'un seul gène;
-- Avoir un fichier associé qui donne les informations sur les partitions optimales 
-(déterminées lors de notre sélection de modèle);  
-- Connaître le modèle le plus approprié pour chacune de nos partitions;
-- Il suffit d'avoir suivi les instructions du 
-[tutoriel sur la sélection de modèle](Sanger/05--Selection_modele-distance.md) pour avoir ces 
-fichiers.  
+  - Avoir un fichier en format phylip (.phy) ou nexus (.nex) contenant l'alignement d'un seul gène;
+  - Avoir un fichier associé qui donne les informations sur les partitions optimales (déterminées lors de notre sélection de modèle);  
+  - Connaître le modèle le plus approprié pour chacune de nos partitions;
+  - Il suffit d'avoir suivi les instructions du 
+  [tutoriel sur la sélection de modèle](Sanger/05--Selection_modele-distance.md)
+  pour avoir ces fichiers.  
 
-Les fichiers d'intérêt sont donc `partitions.txt.best_scheme.nex` et `test.phy`, dans votre dossier
-`/home/$USER`.
+Les fichiers d'intérêt sont donc `partitions.txt.best_scheme.nex` et `test.nex`, dans votre dossier `/home/$USER`.
 
-- **Question**: Examinez ces fichiers à l'aider de la commande `more`, et assurez-vous que vous 
-comprenez comment ils sont formattés.  
+- **Question**: Examinez ces fichiers à l'aider de la commande `more`, et
+ assurez-vous que vous comprenez comment ils sont formattés.  
 
 Une fois cela fait, voici du code pour faire une analyse de maximum de vraisemblance avec 
 **IQ-Tree**:  
@@ -47,8 +47,8 @@ TIME="0-12:00:00"
 mkdir -p $WD
 cd $WD
 
-ln $ALIGNMENT $OUTPUT_PREFIX.phy
-ln $PARTITIONS $OUTPUT_PREFIX.nex
+ln $ALIGNMENT $OUTPUT_PREFIX.nex
+ln $PARTITIONS $OUTPUT_PREFIX.part
 
 ## Exécuter ce batchfile en mode non-intéractif sur SLURM
 sbatch \
@@ -59,93 +59,99 @@ sbatch \
   --time=$TIME \
   --cpus-per-task=4 \
   --mem-per-cpu=2G \
-  --wrap="$SRC_IQ/iqtree2 -s $OUTPUT_PREFIX.phy -p $OUTPUT_PREFIX.nex -nt 4 -b $BOOTSTRAP_REPS"
+  --wrap="$SRC_IQ/iqtree2 -s $OUTPUT_PREFIX.nex -p $OUTPUT_PREFIX.part -nt 4 -b $BOOTSTRAP_REPS"
 
 ```
+
+Suivez le progrès de l'analyse avec la commande 
+ `tail -f iqtree_search_bootstrap.log`.
 
 ### Description des paramètres dans l'analyse IQ-Tree
 
 Voici une description ajustée des paramètres utilisés dans le code IQ-Tree:
 
-1. **`SRC_IQ`** : Chemin vers le binaire IQ-TREE sur le système, défini ici comme 
-`/opt/iqtree-2.3.6-Linux-intel/bin`.
+  1. **`SRC_IQ`** : Chemin vers le binaire IQ-TREE sur le système, défini ici comme `/opt/iqtree-2.3.6-Linux-intel/bin`.
 
-2. **`WD`** : Répertoire de travail où les résultats seront sauvegardés. Dans cet exemple, il 
-s'agit de `/home/$USER/test_iqtree`.
+  2. **`WD`** : Répertoire de travail où les résultats seront sauvegardés. Dans cet exemple, il s'agit de `/home/$USER/test_iqtree`.
 
-3. **`ALIGNMENT`** : Chemin vers le fichier d'alignement en entrée, spécifié ici comme 
-`/home/$USER/test.nex`.
+  3. **`ALIGNMENT`** : Chemin vers le fichier d'alignement en entrée, spécifié ici comme `/home/$USER/test.nex`.
 
-4. **`PARTITIONS`** : Fichier de partitions indiquant les modèles de substitution optimaux pour 
-chaque partition. Ce fichier est situé à `/home/$USER/partitions.txt.best_scheme.nex`.
+  4. **`PARTITIONS`** : Fichier de partitions indiquant les modèles de substitution optimaux pour chaque partition. Ce fichier est situé à
+  `/home/$USER/partitions.txt.best_scheme.nex`.
 
-5. **`OUTPUT_PREFIX`** : Préfixe pour les fichiers de sortie, défini comme `test` dans cet exemple, 
-ce qui signifie que les fichiers de sortie porteront ce préfixe.
+  5. **`OUTPUT_PREFIX`** : Préfixe pour les fichiers de sortie, défini comme `test` dans cet exemple, ce qui signifie que les fichiers de sortie porteront
+  ce préfixe.
 
-6. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à exécuter, fixé ici à 100, pour évaluer la 
-robustesse des branches de l’arbre.
+  6. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à exécuter, fixé ici à
+  100, pour évaluer la robustesse des branches de l’arbre.
 
-7. **`EMAIL`** : Adresse courriel de l’utilisateur pour recevoir des notifications une fois le 
-travail terminé.
+  7. **`EMAIL`** : Adresse courriel de l’utilisateur pour recevoir des
+  notifications une fois le travail terminé.
 
-8. **`TIME`** : Durée maximale allouée pour le travail sur SLURM, ici configurée pour 12 heures.
+  8. **`TIME`** : Durée maximale allouée pour le travail sur SLURM, ici
+  configurée pour 12 heures.
 
-9. **`-s $OUTPUT_PREFIX.phy`** : Paramètre indiquant le fichier d’alignement à utiliser dans 
-l’analyse.
+  9. **`-s $OUTPUT_PREFIX.phy`** : Paramètre indiquant le fichier d’alignement à
+  utiliser dans l’analyse.
 
-10. **`-p $OUTPUT_PREFIX.nex`** : Paramètre spécifiant le fichier de partitions pour l’analyse.
+  10. **`-p $OUTPUT_PREFIX.nex`** : Paramètre spécifiant le fichier de
+  partitions pour l’analyse.
 
-11. **`-nt 4`** : Utilisation de 4 threads pour accélérer l’analyse IQ-Tree.
+  11. **`-nt 4`** : Utilisation de 4 threads pour accélérer l’analyse IQ-Tree.
 
-12. **`-b $BOOTSTRAP_REPS`** : Effectue 100 réplicats bootstrap pour estimer la robustesse des 
-branches de l’arbre phylogénétique.
+  12. **`-b $BOOTSTRAP_REPS`** : Effectue 100 réplicats bootstrap pour estimer 
+  la robustesse des branches de l’arbre phylogénétique.
 
 ### Fichiers de sortie de IQ-Tree
 
 Voici les descriptions ajustées des fichiers de sortie générés par IQ-Tree:
 
 1. **`test.treefile`** :
-   - Ce fichier contient l’arbre de maximum de vraisemblance inféré par IQ-Tree avec les longueurs 
-   de branches et la topologie optimisées selon le modèle choisi. C'est le résultat principal de 
-   l’analyse phylogénétique.
+   - Ce fichier contient l’arbre de maximum de vraisemblance inféré par IQ-Tree
+   avec les longueurs de branches et la topologie optimisées selon le modèle
+   choisi. C'est le résultat principal de l’analyse phylogénétique.
 
 2. **`test.log`** :
-   - Un journal d’exécution détaillé de l’analyse, incluant les paramètres utilisés, les modèles de 
-   substitution appliqués à chaque partition et des statistiques sur la convergence de l’arbre.
+   - Un journal d’exécution détaillé de l’analyse, incluant les paramètres
+   utilisés, les modèles de substitution appliqués à chaque partition et des
+   statistiques sur la convergence de l’arbre.
 
 3. **`test.iqtree`** :
-   - Ce fichier présente les détails de l’analyse finale, comme la log-vraisemblance de l’arbre, 
-   les informations sur les partitions et les modèles de substitution. Il est essentiel pour 
-   examiner la reproductibilité de l’analyse.
+   - Ce fichier présente les détails de l’analyse finale, comme la
+   log-vraisemblance (log-likelihood) de l’arbre, les informations sur les
+   partitions et les modèles de substitution. Il est essentiel pour examiner la
+   reproductibilité de l’analyse.
 
 4. **`test.bionj`** :
-   - Un arbre initial de type NJ (Neighbor-Joining) utilisé comme point de départ pour optimiser 
-   l’arbre de maximum de vraisemblance final.
+   - Un arbre initial de type NJ (Neighbor-Joining) utilisé comme point de départ pour optimiser l’arbre de maximum de vraisemblance final.
 
 5. **`test.model.gz`** :
-   - Un fichier compressé contenant les informations sur les modèles de substitution pour chaque 
-   partition, utile pour réutiliser les modèles dans des analyses similaires ou approfondir 
-   l’examen des paramètres.
+   - Un fichier compressé contenant les informations sur les modèles de
+   substitution pour chaque partition, utile pour réutiliser les modèles dans
+   des analyses similaires ou approfondir l’examen des paramètres.
 
 6. **`test.ckp.gz`** :
-   - Un fichier de checkpoint permettant de reprendre l’analyse en cas d’interruption. IQ-TREE peut 
-   utiliser ce fichier pour continuer à partir de l’endroit où l’analyse s'est arrêtée.
+   - Un fichier de checkpoint permettant de reprendre l’analyse en cas
+   d’interruption. IQ-TREE peut utiliser ce fichier pour continuer à partir de
+   l’endroit où l’analyse s'est arrêtée.
 
 7. **`test.splits.nex`** :
-   - Ce fichier contient les informations sur les clades supportés par les réplicats bootstrap. Il 
-   peut être visualisé dans des logiciels de phylogénie comme SplitsTree.
+   - Ce fichier contient les informations sur les clades supportés par les
+   réplicats bootstrap. Il peut être visualisé dans des logiciels de phylogénie
+   comme SplitsTree.
 
 8. **`test.bootstrap`** :
-   - Les arbres bootstrap générés pour estimer la robustesse des branches de l’arbre final. Chaque 
-   arbre correspond à un réplicat bootstrap distinct.
+   - Les arbres bootstrap générés pour estimer la robustesse des branches de
+   l’arbre final. Chaque arbre correspond à un réplicat bootstrap distinct.
 
 9. **`test.contree`** :
-   - L’arbre de consensus basé sur les réplicats bootstrap, avec les valeurs de support des 
-   branches. Il fournit un aperçu de la stabilité des relations observées dans l’arbre ML.
+   - L’arbre de consensus basé sur les réplicats bootstrap, avec les valeurs de
+   support des branches. Il fournit un aperçu de la stabilité des relations
+   observées dans l’arbre ML.
 
 10. **`iqtree.search_bootstrap.log`** :
-   - Un journal SLURM contenant les informations sur l’exécution, comme le temps, les ressources 
-   utilisées, et les messages d’erreurs éventuels.
+   - Un journal SLURM contenant les informations sur l’exécution, comme le
+   temps, les ressources utilisées, et les messages d’erreurs éventuels.
 
 ---
 
@@ -157,19 +163,34 @@ Voici les descriptions ajustées des fichiers de sortie générés par IQ-Tree:
 
 ## Maximum de vraisemblance dans RAxML
 
-**RAxML** est moins flexible que IQ-Tree, mais très efficace à ce qu'il fait le mieux: estimer très 
-rapidement un arbre de maximum de vraisemblance en utilisant un modèle GTR ou GTR+Gamma. Il est 
-aussi rapide pour le calcul de support bootstrap. Ces caractéristiques en font le programme 
-d'analyse de maximum de vraisemblance le plus populaire à ce jour.
+**RAxML** est moins flexible que IQ-Tree, mais très efficace à ce qu'il fait le
+ mieux: estimer très rapidement un arbre de maximum de vraisemblance en
+ utilisant un modèle GTR ou GTR+Gamma. Il est aussi rapide pour le calcul de
+ support bootstrap. Ces caractéristiques en font le programme d'analyse de
+ maximum de vraisemblance le plus populaire à ce jour.
 
-Prérequis: les mêmes que pour l'analyse de maximum de vraisemblance avec IQ-Tree.
+Prérequis: les mêmes que pour l'analyse de maximum de vraisemblance avec
+ IQ-Tree.
 
-**RAxML** ne fonctionne qu'avec des fichiers de type phylip (`.phy`) en entrée. En conséquence, il faut tout d'abord 
-transformer le fichier de type nexus (`.nex`) en fichier de type phylip. Nous allons faire ça avec la fonction `export` de 
-PAUP\*. 
+**RAxML** ne fonctionne qu'avec des fichiers de type phylip (`.phy`) en entrée.
+ En conséquence, il faut tout d'abord transformer le fichier de type nexus 
+ (`.nex`) si ce n'est pas déjà fait. Heureusement, l'analyse avec IQ-TREE
+ devrait avoir déjà produit un fichier `.phy`, mais si ce n'est pas le cas, on
+ peut faire la conversion dans PAUP\*: 
 ```bash
 SRC_PAUP=/opt/
+WD=/home/$USER
 
+$SRC_PAUP/paup*
+```
+
+Puis, dans la ligne de commande de PAUP\*:  
+```paup
+exec test.nex
+
+export format=RelPHYLIP file=test.phy interleaved=yes charsperline=80;
+
+quit;
 
 ```
 
@@ -177,14 +198,14 @@ Ensuite, on lance l'analyse RAxML.
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
 SRC_RAXML=/opt/RAxML-8.2.12
-WD=/scratch/$USER/HybSeqTest/trees/exon/align/concat/raxml
-ALIGNMENT=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.phy
-PARTITIONS=/scratch/$USER/HybSeqTest/seqs/exon/align/concat/filtered_concat.partitions.best_scheme
+WD=/home/$USER/test_raxml
+ALIGNMENT=/home/$USER/test.phy
+PARTITIONS=/home/$USER/partitions.txt.best_scheme
 MODEL=GTRCAT
 OUTPUT_PREFIX=test
 BOOTSTRAP_REPS=100
 EMAIL=votre.courriel@umontreal.ca
-TIME="0-12:00:00"
+TIME="0-2:00:00"
 
 ###
 ## Maximum de vraisemblance avec RAxML
@@ -195,9 +216,9 @@ cd $WD
 
 ln $ALIGNMENT $OUTPUT_PREFIX.phy
 cp $PARTITIONS $OUTPUT_PREFIX.part
-sed -i 's/DNAF,/DNA,/g' $OUTPUT_PREFIX.part
+sed -i 's/ASC_DNA,/DNA,/g' $OUTPUT_PREFIX.part
 
-## Exécuter ce batchfile en mode non-intéractif sur SLURM
+## Envoyer l'analyse RAxML sur SLURM
 sbatch \
   --job-name=raxml \
   --output=raxml.log \
@@ -207,9 +228,8 @@ sbatch \
   --cpus-per-task=4 \
   --mem-per-cpu=2G \
   --wrap="$SRC_RAXML/raxmlHPC-PTHREADS-SSE3 \
-    $ARGUMENTS_FOR_RAXML \
 	-f a \
-    -T 4 \
+  -T 4 \
 	-p 1234 \
 	-x 1234 \
 	-m $MODEL \
@@ -219,6 +239,9 @@ sbatch \
 	-n $OUTPUT_PREFIX"
 
 ```
+
+Suivre le progrès en exécutant `tail -f raxml.log`. Comparez la vitesse de
+ l'analyse RAxML avec celle de IQ-TREE (par réplicat bootstrap)...
 
 ### Description des paramètres dans l'analyse RAxML
 
@@ -291,18 +314,25 @@ sbatch \
    partition.
    
 3. **Analyse de bootstrap** :
-   - Expliquez le rôle du bootstrap dans une analyse de maximum de vraisemblance. Pourquoi est-il 
-   nécessaire d'effectuer des réplicats bootstrap ?
-   - Que représente une valeur bootstrap élevée dans un arbre phylogénétique ? Proposez un seuil 
-   pour considérer une branche comme statistiquement significative.
+   - Expliquez le rôle du bootstrap dans une analyse de maximum de
+   vraisemblance. Pourquoi est-il nécessaire d'effectuer des réplicats
+   bootstrap?
+   
+   - Que représente une valeur bootstrap élevée dans un arbre phylogénétique?
+   Proposez un seuil pour considérer une branche comme statistiquement 
+   significative.
    
 4. **Parallélisation des tâches** :
-   - Pourquoi est-il avantageux d'utiliser plusieurs threads (`-nt 4`) dans une analyse IQ-TREE ? 
-   Comment la parallélisation affecte-t-elle la durée de l'analyse ?
+   - Pourquoi est-il avantageux d'utiliser plusieurs threads (`-nt 4`) dans une
+   analyse IQ-TREE? Comment la parallélisation affecte-t-elle la durée de
+   l'analyse?
    
 5. **Pratique** :
-   - Modifiez le script SLURM pour augmenter le nombre de réplicats bootstrap à 500. Quelle est 
-   l'impact de cette modification sur le temps d'exécution prévu ?
-   - Utilisez les fichiers de sortie `*.log` pour vérifier si l'analyse s'est terminée avec succès. 
-   Quels indicateurs vous permettent de confirmer cela ?
+   - Modifiez le script SLURM pour augmenter le nombre de réplicats bootstrap à 500. Quelle est l'impact de cette modification sur le temps d'exécution
+   prévu?
    
+   - Utilisez les fichiers de sortie `*.log` pour vérifier si l'analyse s'est
+   terminée avec succès. Quels indicateurs vous permettent de confirmer cela?
+   Vous pouvez en tout temps annuler une analyse envoyée sur SLURM avec la
+   commande `scancel $NUMERO`, où $NUMERO correspond à votre numéro de tâche
+   (JOBID).

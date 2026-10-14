@@ -1,41 +1,45 @@
 # Sélection des modèles, partitions et arbres de distance
 
-Ce tutoriel vous guidera dans l’utilisation de **PAUP\*** et **IQ-Tree** pour la sélection des 
-modèles de substitution, le partitionnement des données, et l’estimation d’arbres de distance. 
-Il vous fournira des exemples concrets de commandes et d’explications pour chaque étape.
+Ce tutoriel vous guidera dans l’utilisation de **PAUP\*** et **IQ-Tree** pour la
+ sélection des modèles de substitution, le partitionnement des données, et
+ l’estimation d’arbres de distance. Il vous fournira des exemples concrets de
+ commandes et d’explications pour chaque étape.
 
 ---
 
 ## Sélection des modèles et du partitionnement dans IQ-Tree
 
-**IQ-Tree** offre une approche rapide et flexible pour la sélection de modèles et le 
-partitionnement. Il permet de tester plusieurs partitions et modèles pour chaque partition.
+**IQ-Tree** offre une approche rapide et flexible pour la sélection de modèles
+ et le partitionnement. Il permet de tester plusieurs partitions et modèles pour
+ chaque partition.
 
-Le fichier [`test.nex`](fichiers/test.nex) contient les données provenant de deux gènes 
-nucléaires, le premier gène étant représenté par 13 nucléotides (positions 1 à 13 dans 
-l'alignement), et le deuxième par 6 nucléotides (positions 14 à 20). Les deux gènes encodent des 
-protéines, donc leurs nucléotides sont organisés en codons de 3 nucléotides, et chaque codon peut 
-évoluer à une vitesse différente, étant donné que les mutations ont plus de chance de changer 
-l'acide aminé encode si elles surviennent dans les nucléotides en première position d'un codon, et 
-moins d'influence si elles surviennent en 3e position.
+Le fichier [`test.nex`](fichiers/test.nex) contient les données provenant de
+ deux gènes nucléaires, le premier gène étant représenté par 13 nucléotides
+ (positions 1 à 13 dans l'alignement), et le deuxième par 6 nucléotides
+ (positions 14 à 20). Les deux gènes encodent des protéines, donc leurs
+ nucléotides sont organisés en codons de 3 nucléotides, et chaque codon peut
+ évoluer à une vitesse différente, étant donné que les mutations ont plus de
+ chance de changer l'acide aminé encode si elles surviennent dans les
+ nucléotides en première position d'un codon, et moins d'influence si elles
+ surviennent en 3e position.
 
-Nous allons donc partitionner l'alignement par gène et par position dans les codons, et déterminer 
-automatiquement quel est le ou les modèles et le ou les partitions qui sont les mieux supportées 
-avec l'aide de **IQ-Tree**
+Nous allons donc partitionner l'alignement par gène et par position dans les
+ codons, et déterminer automatiquement quel est le ou les modèles et le ou les
+ partitions qui sont les mieux supportées avec l'aide de **IQ-Tree**
 
 ### Étapes à suivre pour l'analyse IQ-Tree
 
-**IQ-Tree** dispose d'une fonction intégrée pour tester plusieurs modèles de substitution de 
-séquences.
+**IQ-Tree** dispose d'une fonction intégrée pour tester plusieurs modèles de substitution de séquences.
 
-1. Assurez-vous d'avoir déjà **transféré le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis 
-votre ordinateur local vers le serveur de calcul à l'aide de la commande `rsync`.
+1. Assurez-vous d'avoir déjà **transféré le fichier Nexus** 
+ [`test.nex`](fichiers/test.nex) depuis votre ordinateur local vers le serveur
+ de calcul à l'aide de la commande `rsync`.
 
 2. **Connectez-vous au serveur**.  
 
-3. Créer un fichier de partitions nommé `partitions.txt` qui contient les informations sur le 
-partitionnement naturel de vos données (par exemple, avec l'aide de la commande 
-`nano partitions.txt`). Le fichier doit contenir ceci:  
+3. Créer un fichier de partitions nommé `partitions.txt` qui contient les
+ informations sur le partitionnement naturel de vos données (par exemple, avec
+ l'aide de la commande `nano partitions.txt`). Le fichier doit contenir ceci:  
    ```
    DNA, gene1_codon1 = 1-13\3
    DNA, gene1_codon2 = 2-13\3
@@ -45,7 +49,7 @@ partitionnement naturel de vos données (par exemple, avec l'aide de la commande
    DNA, gene2_codon3 = 16-20\3
    ```
 
-4. Exécuter IQ-Tree avec partitionnement :
+4. Exécuter IQ-Tree avec partitionnement:
    ```bash
    ## Ajuster les variables ci-dessous de façon appropriée
    SRC_IQ=/opt/iqtree-2.3.6-Linux-intel/bin
@@ -71,37 +75,34 @@ partitionnement naturel de vos données (par exemple, avec l'aide de la commande
 	   -nt $THREADS"
    
    ```
-   - la ligne débutant par `SRC_IQ=` initialise une variable qui indique où se trouve le programme 
-   **IQ-Tree**.
+   
+   - la ligne débutant par `SRC_IQ=` initialise une variable qui indique où se< trouve le programme **IQ-Tree**.
    - `-p partitions.txt` : Spécifie dans quel fichier se trouve les partitions.
-   - `-m TESTMERGEONLY` : Sélectionne automatiquement le meilleur modèle pour chaque partition et 
-   fusionne les partitions similaires pour déterminer le meilleur modèle de partitionnement.
+   - `-m TESTMERGEONLY` : Sélectionne automatiquement le meilleur modèle pour
+   chaque partition et fusionne les partitions similaires pour déterminer le
+   meilleur modèle de partitionnement.
 
 5. Examiner le rapport de l'analyse en exécutant la commande `more partitions.txt.iqtree`.
    
    - **Question**: Quel est le meilleur partitionnement des données?
-   - **Question**: Quel est le meilleur modèle pour chacune des partitions? Inclut-il un courbe 
-   gamma de variation des taux évolutifs?
-
----
-
-## Sélection de modèles et partitions avec PartitionFinder
-
-!!! À faire (voir analyse PrimConv pour exemple à suivre) !!!
+   - **Question**: Quel est le meilleur modèle pour chacune des partitions?
+   Inclut-il un courbe gamma de variation des taux évolutifs?
 
 ---
 
 ## Estimation d'arbres de distance dans PAUP\*
 
-**PAUP\*** demeure un des programmes les plus polyvalents pour l'estimation de matrices de 
-distance variées et l'estimation d'arbres de distance avec des algorithmes standards comme le 
-*Unweighted Pair Group Mean Averaging* (UPGMA) et le *Neighbor-Joining* (NJ). Toutefois, notez 
-que PAUP\* ne permet pas de spécifier de partitions.
+**PAUP\*** demeure un des programmes les plus polyvalents pour l'estimation de
+ matrices de distance variées et l'estimation d'arbres de distance avec des
+ algorithmes standards comme le *Unweighted Pair Group Mean Averaging* (UPGMA)
+ et le *Neighbor-Joining* (NJ). Toutefois, notez que PAUP\* ne permet pas de
+ spécifier de partitions.
 
 ### Chargement du fichier d'alignement Nexus dans PAUP\*
 
-1. Assurez-vous d'avoir déjà **transféré le fichier Nexus** [`test.nex`](fichiers/test.nex) depuis 
-votre ordinateur local vers le serveur de calcul à l'aide de la commande `rsync`.
+1. Assurez-vous d'avoir déjà **transféré le fichier Nexus** 
+ [`test.nex`](fichiers/test.nex) depuis votre ordinateur local vers le serveur
+ de calcul à l'aide de la commande `rsync`.
 
 2. **Connectez-vous au serveur**.  
 
@@ -133,22 +134,26 @@ votre ordinateur local vers le serveur de calcul à l'aide de la commande `rsync
 
 ### Utilisation de PAUP* pour estimer des arbres de distance
 
-1. Calculer une matrice de distance en utilisant le modèle "Felsenstein 1984" (`distance=F84`) et 
-en assumant aucune variation de taux entre les sites (`rates=equal`):  
+1. Calculer une matrice de distance en utilisant le modèle "Felsenstein 1984" 
+ (`distance=F84`) et en assumant aucune variation de taux entre les sites 
+ (`rates=equal`):  
    ```paup
    dset distance=F84 rates=equal;
    showdist;
    
    ```
-   - **Question**: Quelles sont les espèces les plus semblables? Quelle est leur distance?
-   - **Question**: Quelles sont les espèces les moins semblables? Quelle est leur distance?
+   - **Question**: Quelles sont les espèces les plus semblables? Quelle est leur
+   distance?
+   - **Question**: Quelles sont les espèces les moins semblables? Quelle est
+   leur distance?
 
-2. Essayez de recalculer les distance en utilisant un modèle différent, si possible le meilleur 
-modèle sélectionné par **IQ-Tree**. Pour voir les options de modèle disponibles dans PAUP\*, 
-exécutez la commande `dset ?` ou allez voir dans le manuel en ligne...
+2. Essayez de recalculer les distance en utilisant un modèle différent, si
+ possible le meilleur modèle sélectionné par **IQ-Tree**. Pour voir les options
+ de modèle disponibles dans PAUP\*, exécutez la commande `dset ?` ou allez voir
+ dans le manuel en ligne...
 
-   - **Question**: Est-ce que la distance entre les espèces a changé par rapport au modèle 
-   précédent?
+   - **Question**: Est-ce que la distance entre les espèces a changé par rapport
+   au modèle précédent?
 
 3. Estimer l'arbre avec les algorithmes Neighbor-Joining (NJ) ou UPGMA:  
    ```paup
@@ -171,12 +176,13 @@ exécutez la commande `dset ?` ou allez voir dans le manuel en ligne...
    
    - **Question**: Remarquez-vous des changements?
 
-5. Il est aussi possible de chercher le meilleur arbre avec des algorithmes exacts 
-(commande `bandb`) ou heuristiques (commande `hsearch`) en utilisant le critère de distance pour 
-sélectionner le meilleur arbre. C'est la méthode des "moindres carrés" (least-squares). Dans ce 
-cas, PAUP\* sélectionne l'arbre qui représente le mieux les distances entre chaque paire d'espèce 
-en comparant la matrice des distances originales aux distances "phénétiques" calculées le long 
-des branches de l'arbre. Voici comment faire:  
+5. Il est aussi possible de chercher le meilleur arbre avec des algorithmes
+ exacts (commande `bandb`) ou heuristiques (commande `hsearch`) en utilisant le
+ critère de distance pour sélectionner le meilleur arbre. C'est la méthode des
+ "moindres carrés" (least-squares). Dans ce cas, PAUP\* sélectionne l'arbre qui
+ représente le mieux les distances entre chaque paire d'espèce en comparant la
+ matrice des distances originales aux distances "phénétiques" calculées le long
+ des branches de l'arbre. Voici comment faire:  
    ```paup
    set criterion=distance;
    dset objective=lsfit;
@@ -185,16 +191,17 @@ des branches de l'arbre. Voici comment faire:
    
    ```
    
-   - `set criterion=distance` indique qu'on veut chercher les meilleurs arbres en fonction de la 
-   distance, plutôt que la parcimonie.
-   - `dset objective=lsfit` indique qu'on veut utiliser le *least-squares fit* (moindres carrés de 
-   la différence entre les distances originales de la matrice et les distances calculées le long 
-   des branches de l'arbre.
+   - `set criterion=distance` indique qu'on veut chercher les meilleurs arbres
+   en fonction de la distance, plutôt que la parcimonie.
+   - `dset objective=lsfit` indique qu'on veut utiliser le *least-squares fit*
+   (moindres carrés de la différence entre les distances originales de la
+   matrice et les distances calculées le long des branches de l'arbre.
    
    - **Question**: Comment cet arbre se compare aux précédents?
    
-6. Finalement, PAUP\* permet aussi de chercher le meilleur arbre en utilisant le critère 
-"d'évolution minimale" (*Minimum Evolution* ou *ME*). Voici comment faire:  
+6. Finalement, PAUP\* permet aussi de chercher le meilleur arbre en utilisant le
+ critère "d'évolution minimale" (*Minimum Evolution* ou *ME*). Voici comment
+ faire:  
    ```paup
    set criterion=distance;
    dset objective=me;
