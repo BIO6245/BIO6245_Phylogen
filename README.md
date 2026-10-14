@@ -173,7 +173,7 @@ Avec les données Sanger:
   - [Sanger/06--Vraisemblance.md](Sanger/06--Vraisemblance.md)
 
 Avec les données HybSeq:  
-  - [HybSeq/09--Vraisemblance.md](HybSeq/09--Vraisemblance.md)
+  - [HybSeq/10--Vraisemblance.md](HybSeq/10--Vraisemblance.md)
 
 ## T.P. 7: Analyse phylogénétique Bayesienne
 
