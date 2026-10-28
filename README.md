@@ -119,6 +119,7 @@ Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:
 Pour ce T.P., faites les tutoriels suivants, dans cet en ordre:  
 
 Tutoriel sur l'alignement:
+  - [General/05--Formats_fichiers_alignement.md](General/05--Formats_fichiers_alignement.md)
   - [General/06--Alignement_ambiguite.md](General/06--Alignement_ambiguite.md)
 
 Tutoriel sur le téléchargement et l'alignement de données Sanger:  

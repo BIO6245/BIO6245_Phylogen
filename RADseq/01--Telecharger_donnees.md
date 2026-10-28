@@ -20,42 +20,13 @@ SRA
 4. Cliquer sur *Send to -> File -> Accession list*  
 5. Cliquer sur *Send to -> File -> RunInfo*  
 
-Il faut ensuite transférer les fichiers `SraRunInfo.csv` et 
-`SraAccList.csv` sur le serveur. Pour ce faire, vous pouvez utiliser 
-plusieurs approches. L'approche que je préconise est d'envoyer les fichiers 
-avec la commande `rsync`, qui doit être **executée à partir de votre **
-**machine locale, non pas du serveur**. En d'autres mots, il faut ouvrir un 
-terminal Unix à partir de votre ordinateur, ne pas vous connecter au 
-serveur. À partir de votre ordinateur, tapez les lignes ci-dessous, en 
-modifiant de façon appropriée les variables qui indiquent le chemin vers 
-les fichiers enregistrés sur votre ordinateur et le chemin d'arrivée sur le 
-serveur de calcul:  
-```bash
-## Rouler le code ci-dessous à partir de votre machine locale
-
-## Ajuster les variables ci-dessous de façon appropriée
-CLUSTER_USERNAME=testetudiant
-LOCAL=/mnt/c/Users/Etienne/Downloads
-REMOTE=/home/$CLUSTER_USERNAME
-
-
-rsync --progress $LOCAL/SraAccList.csv $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
-rsync --progress $LOCAL/SraRunInfo.csv $CLUSTER_USERNAME@aphidzen.irbv.umontreal.ca:$REMOTE/
-
-```
-
-Notez que si vous êtes sur Windows, il faut remplacer les "backslash" (\\) 
-dans votre chemin avec des "forward slash" (\/). De plus, le chemin "C:/" 
-doit être remplacé par "/mnt/c/". Finalement, notez que les espaces dans 
-les noms des dossiers et fichiers causent problème sur tous les terminal 
-Linux/Mac. Il y a deux solutions pour les espaces: soit ne jamais utiliser 
-d'espaces dans vos noms de fichier, ou soit entourer les espaces par des 
-guillemets simples ('), ou précéder chaque espace par un "backslash" (\\) 
-lorsque vous spécifiez un chemin vers un dossier ou fichier.  
-Par exemple:  
-- Le chemin Windows: `C:\Users\Moi\Documents\BIO 6245\ficher de travail.txt`  
-- Doit être remplacé par: `/mnt/c/Users/Moi/Documents/BIO' '6245/fichier' 'de' 'travail.txt`  
-- Ou bien par: `/mnt/c/Users/Moi/Documents/BIO\ 6245/fichier\ de\ travail.txt`  
+Il faut ensuite transférer les fichiers `SraRunInfo.csv` et
+ `SraAccList.csv` sur le serveur. Pour ce faire, vous pouvez utiliser
+ plusieurs approches. L'approche que je préconise est d'envoyer les fichiers
+ avec la commande `rsync`, qui doit être **executée à partir de votre **
+ **machine locale, non pas du serveur**. Allez voir la section 6 du tutoriel<
+ sur le serveur de calcul dans le dossier "Général" pour apprendre comment
+ téléverser des fichiers sur le serveur avec `rsync`. 
 
 ---
 

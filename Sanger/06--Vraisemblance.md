@@ -36,7 +36,7 @@ WD=/home/$USER/test_iqtree
 ALIGNMENT=/home/$USER/test.nex
 PARTITIONS=/home/$USER/partitions.txt.best_scheme.nex
 OUTPUT_PREFIX=test
-BOOTSTRAP_REPS=100
+BOOTSTRAP_REPS=20
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
 
@@ -83,7 +83,7 @@ Voici une description ajustée des paramètres utilisés dans le code IQ-Tree:
   ce préfixe.
 
   6. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à exécuter, fixé ici à
-  100, pour évaluer la robustesse des branches de l’arbre.
+  20, pour évaluer la robustesse des branches de l’arbre.
 
   7. **`EMAIL`** : Adresse courriel de l’utilisateur pour recevoir des
   notifications une fois le travail terminé.
@@ -99,7 +99,7 @@ Voici une description ajustée des paramètres utilisés dans le code IQ-Tree:
 
   11. **`-nt 4`** : Utilisation de 4 threads pour accélérer l’analyse IQ-Tree.
 
-  12. **`-b $BOOTSTRAP_REPS`** : Effectue 100 réplicats bootstrap pour estimer 
+  12. **`-b $BOOTSTRAP_REPS`** : Effectue 20 réplicats bootstrap pour estimer 
   la robustesse des branches de l’arbre phylogénétique.
 
 ### Fichiers de sortie de IQ-Tree
@@ -155,12 +155,6 @@ Voici les descriptions ajustées des fichiers de sortie générés par IQ-Tree:
 
 ---
 
-
-!!! Le code ci-dessous n'est pas terminé !!!
-!!! En attendant, vous pouvez suivre le tutoriel sur le maximum de vraisemblance dans le dossier HybSeq !!!
-!!! Ce tutoriel vous montrera comment utiliser RAxML (c'est la même chose que pour les données Sanger) !!!
-
-
 ## Maximum de vraisemblance dans RAxML
 
 **RAxML** est moins flexible que IQ-Tree, mais très efficace à ce qu'il fait le
@@ -203,7 +197,7 @@ ALIGNMENT=/home/$USER/test.phy
 PARTITIONS=/home/$USER/partitions.txt.best_scheme
 MODEL=GTRCAT
 OUTPUT_PREFIX=test
-BOOTSTRAP_REPS=100
+BOOTSTRAP_REPS=20
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-2:00:00"
 
@@ -245,69 +239,100 @@ Suivre le progrès en exécutant `tail -f raxml.log`. Comparez la vitesse de
 
 ### Description des paramètres dans l'analyse RAxML
 
-1. **`SRC_RAXML`** : Indique l'emplacement du programme RAxML (version 8.2.12) sur le système. Cela permet de spécifier le chemin exact pour exécuter RAxML.
+1. **`SRC_RAXML`** : Indique l'emplacement du programme RAxML (version 8.2.12)
+  sur le système. Cela permet de spécifier le chemin exact pour exécuter RAxML.
 
-2. **`WD`** : Répertoire de travail où les fichiers de sortie seront enregistrés. Ici, il s'agit de `/scratch/$USER/HybSeqTest/trees/exon/align/concat/raxml`.
+2. **`WD`** : Répertoire de travail où les fichiers de sortie seront
+ enregistrés. Ici, il s'agit de
+ `/scratch/$USER/HybSeqTest/trees/exon/align/concat/raxml`.
 
-3. **`ALIGNMENT`** : Fichier d'alignement au format **PHYLIP** contenant la concaténation de tous les loci. Ce fichier est essentiel pour construire l'arbre de maximum de vraisemblance.
+3. **`ALIGNMENT`** : Fichier d'alignement au format **PHYLIP** contenant la
+ concaténation de tous les loci. Ce fichier est essentiel pour construire
+ l'arbre de maximum de vraisemblance.
 
-4. **`PARTITIONS`** : Fichier de partitions optimales, contenant les informations sur la manière dont les données sont partitionnées en différents blocs et le modèle de substitution associé à chaque partition. Ce fichier est copié et modifié pour être compatible avec RAxML (via `sed`).
+4. **`PARTITIONS`** : Fichier de partitions optimales, contenant les
+ informations sur la manière dont les données sont partitionnées en différents
+ blocs et le modèle de substitution associé à chaque partition. Ce fichier est
+ copié et modifié pour être compatible avec RAxML (via `sed`).
 
 5. **`MODEL`** : Modèle de substitution utilisé dans l'analyse. Ici, le modèle **GTRCAT** (une variante du modèle GTR avec approximation CAT pour la distribution du taux de substitution parmi les sites) est utilisé, car il est plus rapide et convient bien pour les grandes analyses phylogénétiques.
 
-6. **`OUTPUT_PREFIX`** : Préfixe utilisé pour nommer les fichiers de sortie générés par RAxML. Ici, le préfixe est `Dryopteris`, donc tous les fichiers de sortie commenceront par ce nom.
+6. **`OUTPUT_PREFIX`** : Préfixe utilisé pour nommer les fichiers de sortie
+ générés par RAxML. Ici, le préfixe est `test`, donc tous les fichiers de sortie
+ commenceront par ce nom.
 
-7. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à effectuer pour évaluer la robustesse des branches de l'arbre. Ici, 100 réplicats sont spécifiés.
+7. **`BOOTSTRAP_REPS`** : Nombre de réplicats bootstrap à effectuer pour évaluer
+ la robustesse des branches de l'arbre. Ici, 20 réplicats sont spécifiés.
 
-8. **`EMAIL`** : Adresse e-mail de l'utilisateur pour recevoir des notifications à la fin de l'exécution du travail (ou en cas d'erreur).
+8. **`EMAIL`** : Adresse e-mail de l'utilisateur pour recevoir des notifications
+ à la fin de l'exécution du travail (ou en cas d'erreur).
 
-9. **`TIME`** : Temps maximum alloué pour l'exécution du travail. Ici, 12 heures ont été allouées.
+9. **`TIME`** : Temps maximum alloué pour l'exécution du travail. Ici, 12 heures
+ ont été allouées.
 
-10. **`-f a`** : Option pour indiquer que RAxML doit exécuter à la fois une analyse de maximum de vraisemblance (ML) et une analyse bootstrap en une seule exécution.
+10. **`-f a`** : Option pour indiquer que RAxML doit exécuter à la fois une
+ analyse de maximum de vraisemblance (ML) et une analyse bootstrap en une seule
+ exécution.
 
-11. **`-T 4`** : Indique le nombre de threads à utiliser pour cette analyse. Ici, 4 threads sont spécifiés pour accélérer l'exécution.
+11. **`-T 4`** : Indique le nombre de threads à utiliser pour cette analyse.
+ Ici, 4 threads sont spécifiés pour accélérer l'exécution.
 
-12. **`-p 1234`** : Graine pour le générateur de nombres aléatoires utilisé dans la recherche de l'arbre ML. Cela permet de rendre l'analyse reproductible.
+12. **`-p 1234`** : Graine pour le générateur de nombres aléatoires utilisé dans
+ la recherche de l'arbre ML. Cela permet de rendre l'analyse reproductible.
 
-13. **`-x 1234`** : Graine pour le générateur de nombres aléatoires utilisé dans l'analyse bootstrap. Cela garantit que les réplicats bootstrap sont reproductibles.
+13. **`-x 1234`** : Graine pour le générateur de nombres aléatoires utilisé dans
+ l'analyse bootstrap. Cela garantit que les réplicats bootstrap sont
+ reproductibles.
 
 14. **`-m $MODEL`** : Spécifie le modèle de substitution choisi (ici, GTRCAT).
 
-15. **`-# $BOOTSTRAP_REPS`** : Définit le nombre de réplicats bootstrap à exécuter (100 dans cet exemple).
+15. **`-# $BOOTSTRAP_REPS`** : Définit le nombre de réplicats bootstrap à
+ exécuter (100 dans cet exemple).
 
-16. **`-s $OUTPUT_PREFIX.phy`** : Indique le fichier d'alignement à utiliser pour l'analyse.
+16. **`-s $OUTPUT_PREFIX.phy`** : Indique le fichier d'alignement à utiliser
+ pour l'analyse.
 
 17. **`-q $OUTPUT_PREFIX.part`** : Spécifie le fichier de partitions à utiliser.
 
-18. **`-n $OUTPUT_PREFIX`** : Définit le nom des fichiers de sortie, qui commenceront par le préfixe `Dryopteris`.
+18. **`-n $OUTPUT_PREFIX`** : Définit le nom des fichiers de sortie, qui
+ commenceront par le préfixe `test`.
 
 ### Fichiers de sortie de RAxML
 
-1. **`RAxML_info.Dryopteris`** : Fichier d'information qui contient un résumé de l'analyse, y compris les paramètres utilisés, le modèle de substitution, les partitions, et des détails sur les réplicats bootstrap.
+1. **`RAxML_info.test`** : Fichier d'information qui contient un résumé de
+ l'analyse, y compris les paramètres utilisés, le modèle de substitution, les
+ partitions, et des détails sur les réplicats bootstrap.
 
-2. **`RAxML_bestTree.Dryopteris`** : Contient l'arbre de maximum de vraisemblance optimal trouvé par RAxML.
+2. **`RAxML_bestTree.test`** : Contient l'arbre de maximum de vraisemblance
+ optimal trouvé par RAxML.
 
-3. **`RAxML_bootstrap.Dryopteris`** : Ce fichier contient les 100 réplicats bootstrap générés lors de l'analyse.
+3. **`RAxML_bootstrap.test`** : Ce fichier contient les 100 réplicats bootstrap
+ générés lors de l'analyse.
 
-4. **`RAxML_bipartitions.Dryopteris`** : Arbre de consensus des réplicats bootstrap avec les valeurs de support bootstrap annotées sur chaque branche.
+4. **`RAxML_bipartitions.test`** : Arbre de consensus des réplicats bootstrap
+ avec les valeurs de support bootstrap annotées sur chaque branche.
 
-5. **`RAxML_bipartitionsBranchLabels.Dryopteris`** : Semblable à `RAxML_bipartitions.Dryopteris`, mais avec des étiquettes supplémentaires pour les branches internes, représentant les valeurs bootstrap.
+5. **`RAxML_bipartitionsBranchLabels.test`** : Semblable à
+ `RAxML_bipartitions.test`, mais avec des étiquettes supplémentaires pour les
+ branches internes, représentant les valeurs bootstrap.
 
-6. **`raxml.log`** : Fichier journal qui enregistre toutes les étapes du calcul et toute erreur éventuelle pendant l'exécution.
+6. **`raxml.log`** : Fichier journal qui enregistre toutes les étapes du calcul
+ et toute erreur éventuelle pendant l'exécution.
 
 ---
 
 ## Questions et exercices
 
 1. **Interprétation des fichiers d'entrée** :
-   - Examinez les fichiers `filtered_concat.partitions.best_scheme.nex` et `filtered_concat.phy` à 
-   l'aide de la commande `more`. Expliquez comment ils sont structurés et leur rôle dans l'analyse.
+   - Examinez les fichiers `filtered_concat.partitions.best_scheme.nex` et
+   `filtered_concat.phy` à l'aide de la commande `more`. Expliquez comment ils
+   sont structurés et leur rôle dans l'analyse.
 
 2. **Examen du résultat** :
-   - Téléchargez le fichier de sortie `*.nex.contree` et `*.nex.treefile` qui contiennent les 
-   résultats phylogénétiques de l'analyse. Examinez-les dans **FigTree**. Comment se 
-   comparent-ils avec les résultats des analyses de distance et de parcimonie sur le même jeu 
-   de données?
+   - Téléchargez le fichier de sortie `*.nex.contree` et `*.nex.treefile` qui
+   contiennent les résultats phylogénétiques de l'analyse. Examinez-les dans
+   **FigTree**. Comment se comparent-ils avec les résultats des analyses de
+   distance et de parcimonie sur le même jeu de données?
 
 2. **Optimisation du modèle de substitution** :
    - Expliquez pourquoi il est important de sélectionner le bon modèle de substitution pour chaque 

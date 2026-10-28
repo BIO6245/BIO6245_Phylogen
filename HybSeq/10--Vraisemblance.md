@@ -28,7 +28,7 @@ Prérequis:
 
 Les fichiers d'intérêt sont donc `filtered_concat.partitions.best_scheme.nex` et
  `filtered_concat.phy`, dans votre dossier 
- `/scratch/$USER/HybSeqTest/seqs/exon/align/concat`.
+ `/scratch/$USER/HybSeqTest/align/taper/trimal/concat/`.
 
 - **Question**: Examinez ces fichiers à l'aider de la commande `more`, et
  assurez-vous que vous comprenez comment ils sont formattés.  

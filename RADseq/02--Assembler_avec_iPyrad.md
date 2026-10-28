@@ -1,11 +1,11 @@
 # Assemblage avec ipyrad
 
-**iPyRAD** est un logiciel utilisé en phylogénie pour analyser des données 
-génomiques issues de méthodes comme le RADseq, ddRAD, 3RAD, GBS, DartSeq et 
-toutes les autres méthodes basées sur la sélection de loci avec des 
-enzymes de digestion. Il assemble des séquences brutes en loci homologues 
-entre individus ou espèces, corrige les erreurs et produit des jeux de données 
-prêts pour l'inférence phylogénétique avec des outils comme IQ-TREE ou RAxML.
+**iPyRAD** est un logiciel utilisé en phylogénie pour analyser des données
+ génomiques issues de méthodes comme le RADseq, ddRAD, 3RAD, GBS, DartSeq et 
+ toutes les autres méthodes basées sur la sélection de loci avec des 
+ enzymes de digestion. Il assemble des séquences brutes en loci homologues 
+ entre individus ou espèces, corrige les erreurs et produit des jeux de données 
+ prêts pour l'inférence phylogénétique avec des outils comme IQ-TREE ou RAxML.
 
 ---
 
@@ -14,16 +14,16 @@ prêts pour l'inférence phylogénétique avec des outils comme IQ-TREE ou RAxML
 ### Préparation du fichier de configuration (params)
 
 Les paramètres contenus dans un fichier de configuration (params) influencent 
-les actions réalisées à chaque étape d’un assemblage avec iPyRAD. Les valeurs 
-par défaut proposées sont généralement adaptées à la plupart des assemblages. 
-Cependant, il est toujours nécessaire de modifier au moins quelques paramètres 
-(par exemple, pour spécifier l’emplacement de vos données), et souvent, de 
-nombreux paramètres devront être ajustés. L’une des fonctionnalités principales 
-d’iPyRAD est la possibilité d’assembler facilement votre jeu de données en 
-testant différentes configurations de paramètres.
+ les actions réalisées à chaque étape d’un assemblage avec iPyRAD. Les valeurs 
+ par défaut proposées sont généralement adaptées à la plupart des assemblages. 
+ Cependant, il est toujours nécessaire de modifier au moins quelques paramètres 
+ (par exemple, pour spécifier l’emplacement de vos données), et souvent, de 
+ nombreux paramètres devront être ajustés. L’une des fonctionnalités principales
+ d’iPyRAD est la possibilité d’assembler facilement votre jeu de données en 
+ testant différentes configurations de paramètres.
 
 En premier, il faut générer un fichier de paramètres avec les valeurs par 
-défaut:  
+ défaut:  
 ```bash
 WD=/scratch/$USER/RADseq_test_Salix
 NAME=test_Salix
@@ -41,22 +41,22 @@ more params-$NAME.txt
 
 ```
 
-Maintenant, vous pouvez examiner le contenu de ce fichier de paramètres 
-en exécutant la commande `more params-test.txt` ou `cat params-test.txt`. 
-Essayez de déterminer ce que chaque paramètre influence dans l'assemblage.  
+Maintenant, vous pouvez examiner le contenu de ce fichier de paramètres en
+ exécutant la commande `more params-test.txt` ou `cat params-test.txt`.
+ Essayez de déterminer ce que chaque paramètre influence dans l'assemblage.  
 
-Ensuite, lisez les instructions détaillées sur le site d'iPyrad pour mieux 
-comprendre comment choisir les valeurs de tous les paramètres 
-([https://ipyrad.readthedocs.io/en/master/6-params.html](https://ipyrad.readthedocs.io/en/master/6-params.html)). 
-Vous pouvez aussi en discuter avec le professeur de votre cours.  
+Ensuite, lisez les instructions détaillées sur le site d'iPyrad pour mieux
+ comprendre comment choisir les valeurs de tous les paramètres
+ ([https://ipyrad.readthedocs.io/en/master/6-params.html](https://ipyrad.readthedocs.io/en/master/6-params.html)).
+ Vous pouvez aussi en discuter avec le professeur de votre cours.  
 
-Pour modifier les paramètres, vous pouvez soit modifier ce fichier de 
-paramètres manuellement, par exemple en utilisant l'outil `nano` 
-(`nano params-test.txt`).  
+Pour modifier les paramètres, vous pouvez soit modifier ce fichier de
+ paramètres manuellement, par exemple en utilisant l'outil `nano`
+ (`nano params-test.txt`).  
 
-Alternativement, vous pouvez modifier le script à l'aide de l'outil `sed`, qui 
-a l'avantage d'être plus facile à répliquer sans erreur. Pour ce faire, roulez 
-le code ci-dessous:  
+Alternativement, vous pouvez modifier le script à l'aide de l'outil `sed`, qui
+ a l'avantage d'être plus facile à répliquer sans erreur. Pour ce faire, roulez
+ le code ci-dessous:  
 ```bash
 WD=/scratch/$USER/RADseq_test_Salix
 SORTEDREADS=/data/testdata/RADseq_Salix/*.fastq.gz
@@ -121,12 +121,13 @@ sbatch --mail-user=$EMAIL --time=$TIME ipyrad_assemble.sbatch
 
 ```
 
-Une fois la tâche envoyée, vous pouvez faire le suivi en exécutant 
-`tail -f ipyrad_assemble.out`. Pendant que l'analyse roule, continuez à lire 
-les explications sur le [site web d'iPyrad](https://ipyrad.readthedocs.io/en/master/4-data.html).  
+Une fois la tâche envoyée, vous pouvez faire le suivi en exécutant
+ `tail -f ipyrad_assemble.out`. Pendant que l'analyse roule, continuez à lire
+ les explications sur le
+ [site web d'iPyrad](https://ipyrad.readthedocs.io/en/master/4-data.html).  
 
-Lorsque cette tâche sera terminée, le résultat pourra directement être analysé 
-à l'aide d'algorithmes d'estimation phylogénétique.  
+Lorsque cette tâche sera terminée, le résultat pourra directement être analysé
+ à l'aide d'algorithmes d'estimation phylogénétique.  
 
 ---
 
