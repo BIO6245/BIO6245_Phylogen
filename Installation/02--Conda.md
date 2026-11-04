@@ -76,6 +76,9 @@ sudo /opt/miniconda/bin/conda create -y -n paragone -c bioconda -c conda-forge p
 
 ## biopython
 sudo /opt/miniconda/bin/conda create -y -n bio -c conda-forge biopython
+sudo /opt/miniconda/bin/conda install -n bio -c conda-forge -c bioconda bowtie2
+sudo /opt/miniconda/bin/conda install -n bio -c conda-forge -c bioconda spades bbmap
+sudo /opt/miniconda/bin/conda install -n bio -c conda-forge -c bioconda ragtag "minimap2>=2.24"
 
 ## ipyrad
 sudo /opt/miniconda/bin/conda create -y -n ipyrad -c conda-forge -c bioconda ipyrad
@@ -112,7 +115,8 @@ run_treeshrink.py -h
 ## getOrganelle
 sudo /opt/miniconda/bin/conda create -y -n getOrganelle -c bioconda getorganelle
 conda activate getOrganelle
-get_organelle_config.py --add embplant_pt,embplant_mt
+get_organelle_config.py --add embplant_pt,embplant_mt,embplant_nr
+sudo /opt/miniconda/bin/conda install -n getOrganelle -c conda-forge -c bioconda bowtie2 spades bbmap ragtag "minimap2>=2.24"
 
 ## WhatsHap
 sudo /opt/miniconda/bin/conda create -n whatshap -c bioconda -c conda-forge whatshap=2.8

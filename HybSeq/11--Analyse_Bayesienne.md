@@ -3,7 +3,7 @@
 ## Analyse bayesienne dans MrBayes
 
 Prérequis:
-- Avoir un fichier en format phylip (.phy) contenant la concaténation de tous
+- Avoir un fichier en format nexus (.nex) contenant la concaténation de tous
  les loci;  
 - Avoir un fichier associé qui donne les informations sur les partitions
  optimales (déterminées lors de notre sélection de modèle);  
