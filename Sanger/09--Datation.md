@@ -60,7 +60,7 @@ Chaque partie est présentée dans **BEAST 2** (interface BEAUti) puis dans
 ## Le jeu de données
 
 On utilisera le jeu de données des **Osmundaceae** (fougères royales) de
- Grimm et al. (2015, *Systematic Biology* 64: 396-405). Ces auteurs ont
+ [Grimm et al. (2015)](https://doi.org/10.1093/sysbio/syu108). Ces auteurs ont
  justement comparé la calibration des noeuds dans BEAST et la datation avec
  les fossiles comme feuilles dans MrBayes. Les fichiers proviennent du
  [tutoriel *Total-Evidence* de Taming the BEAST](https://taming-the-beast.org/tutorials/Total-Evidence-Tutorial/)
@@ -77,17 +77,14 @@ Le nom de chaque unité se termine par son âge approximatif en millions
  d'années (Ma), par ex. `Todea_tidwellii_135`. Les espèces actuelles ont un
  âge de 0.
 
-Les fichiers à télécharger (aussi disponibles dans le dossier "Sanger/fichiers"
- du Github du cours):  
-
+Les fichiers à télécharger sont dans le dossier "Sanger/fichiers" du Github du
+ cours:  
 | Fichier | Contenu | Utilisé dans |
 |---|---|---|
 | `Osmundaceae_actuelles.nex` | ADN des 13 espèces actuelles séquencées | Partie 1 (BEAST et MrBayes) |
-| [`Osmundaceae_dna.nex`](https://raw.githubusercontent.com/bethany-j-allen/Total-Evidence-Tutorial/main/data/Osmundaceae_dna.nex) | ADN des 33 unités (`?` pour les fossiles) | Partie 2 (BEAST) |
-| [`Osmundaceae_morph.nex`](https://raw.githubusercontent.com/bethany-j-allen/Total-Evidence-Tutorial/main/data/Osmundaceae_morph.nex) | Morphologie des 33 unités | Partie 2 (BEAST) |
+| `Osmundaceae_dna.nex` | ADN des 33 unités (`?` pour les fossiles) | Partie 2 (BEAST) |
+| `Osmundaceae_morph.nex` | Morphologie des 33 unités | Partie 2 (BEAST) |
 | `Osmundaceae_TED.nex` | ADN + morphologie dans une seule matrice | Partie 2 (MrBayes) |
-| `datation_noeuds_mb.nex` | Commandes MrBayes de la partie 1 | Partie 1 (MrBayes) |
-| `datation_feuilles_mb.nex` | Commandes MrBayes de la partie 2 | Partie 2 (MrBayes) |
 
 Les fichiers `Osmundaceae_actuelles.nex` et `Osmundaceae_TED.nex` ont été
  créés à partir des deux fichiers de Taming the BEAST: le premier ne garde que
@@ -108,7 +105,10 @@ Les fichiers `Osmundaceae_actuelles.nex` et `Osmundaceae_TED.nex` ont été
 Dans cette partie, on n'utilise que les 13 espèces actuelles séquencées.
  Dans les Osmundaceae, la racine sépare le clade *Todea*/*Leptopteris* du
  clade *Osmunda* au sens large (incluant *O. cinnamomea*, parfois placé dans
- le genre *Osmundastrum*). On place deux calibrations:
+ le genre *Osmundastrum*). Pour visualiser l'arbre, voir l'étude de Grimm
+ et al. (2015).
+ 
+On place deux calibrations sur les noeuds ancestraux de l'arbre:
 
 | Noeud | Fossile utilisé | Distribution | Paramètres (Ma) |
 |---|---|---|---|
@@ -125,6 +125,8 @@ Justification:
  *O. cinnamomea* elle-même. La lignée d'*O. cinnamomea* existait donc il y a
  au moins **72 Ma**, et sa séparation d'avec les autres *Osmunda* est au
  moins aussi vieille.
+- Le fossile le plus ancien de *O. pulchella*, daté d'environ **185 Ma**, n'est
+  pas utilisé ici car sa position phylogénétique n'est pas certaine.
 
 > **Note**: Ces calibrations sont **simplifiées pour l'enseignement**. Elles
 > s'inspirent des fossiles du jeu de données, mais ne reproduisent pas
@@ -154,33 +156,28 @@ Avec ces valeurs, l'âge médian de la calibration est de 72 + e<sup>M</sup>
  réaliste qu'une calibration uniforme pour représenter l'information
  fournie par un fossile?
 
-### 1A. Calibration des noeuds dans BEAST 2
+### Calibration des noeuds dans BEAST 2
 
 #### Préparer l'analyse dans BEAUti
 
 1. Ouvrez **BEAUti** avec le modèle par défaut (`File > Template > Standard`).
- Si vous venez de faire le tutoriel sur \*BEAST, assurez-vous de ne plus être
- dans le modèle StarBeast3.
+  Si vous venez de faire le tutoriel sur \*BEAST, assurez-vous de ne plus être
+  dans le modèle StarBeast3.
 
 2. **Importer les données**: `File > Import Alignment`, puis choisir
- `Osmundaceae_actuelles.nex`. L'onglet *Partitions* devrait indiquer
- 13 taxons et 8628 sites.
+  `Osmundaceae_actuelles.nex`. L'onglet *Partitions* devrait indiquer
+  13 taxons et 8628 sites.
 
 3. **Onglet *Site Model***: choisir le modèle **HKY**, mettre
- *Gamma Category Count* à **4**, et cocher *estimate* pour *Kappa* et
- *Frequencies* (ou choisir *Estimated* dans le menu *Frequencies*).
+  *Gamma Category Count* à **4**, et cocher *estimate* pour *Kappa* et
+  *Frequencies* (ou choisir *Estimated* dans le menu *Frequencies*).
 
 4. **Onglet *Clock Model***: choisir **Relaxed Clock Log Normal**. Vérifiez
- que la case *estimate* du taux d'horloge est cochée. Si elle est grisée,
- décochez `Mode > Automatic set clock rate` dans le menu.
+  que la case *estimate* du taux d'horloge est cochée. Si elle est grisée,
+  décochez `Mode > Automatic set clock rate` dans le menu.
 
-5. **Onglet *Priors***:
+5. **Ajouter le prior sur la topologie de l'arbre***:
     - Pour **Tree.t**, choisir **Birth Death Model**.
-    - Pour le taux moyen de l'horloge (`ucldMean.c:...` ou `clockRate.c:...`
-   selon la version), choisir une distribution **Log Normal** avec
-   **M = -7** et **S = 1**. Cela correspond à un taux d'environ 0,001
-   substitution/site/Ma, un ordre de grandeur raisonnable pour l'ADN
-   plastidial. Les âges étant en Ma, le taux est exprimé par Ma.
 
 6. **Ajouter la calibration log-normale** (*Osmunda* s.l.):
     - Cliquer sur **+ Add Prior** au bas de l'onglet *Priors*. Si une fenêtre
@@ -205,18 +202,46 @@ Avec ces valeurs, l'âge médian de la calibration est de 72 + e<sup>M</sup>
     - Choisir la distribution **Uniform**, puis **Lower = 129** et
    **Upper = 360**.
 
+
+8. **Ajouter une probabilité a priori sur le taux de mutation**: Comme les
+  calibrations sont en millions d'années avant le présent (Ma), il faut aussi
+  que l'analyse prenne en compte et estime le taux de mutations pour être
+  capable de relier les données génétiques de l'ADN à l'âge de divergence des
+  noeuds de l'arbre. Pour ce faire, on doit placer une probabilité a priori sur
+  le taux d'évolution qui a du sens basé sur les études précédentes.
+    - Pour le taux moyen de l'horloge moléculaire (`ucldMean.c:...` ou
+    `clockRate.c:...` selon la version), choisir une distribution **Log Normal**
+    avec **M = -7** et **S = 1**. Cela correspond à un taux d'environ 0,001
+    substitution/site/Ma, un ordre de grandeur raisonnable pour l'ADN
+    plastidial. Les âges étant en Ma, le taux est exprimé par Ma. Pour 
+    déterminer le taux à utiliser comme "prior" pour vos propres analyses, vous
+    devez consulter la littérature sur les taux de mutation dans votre groupe
+    (plantes, animaux, bactéries...) pour votre génome à l'étude (nucléaire, 
+    mitochondrial...) et inscrire un "prior" qui a du sens selon ce qui a déjà
+    été trouvé dans les études précédentes. 
+    - Cliquer sur le petit bouton à droite de celui qui permet de sélectionner
+    une distribution Log Normale pour le prior ("initial = [0.1] [0.0,Inf]").
+    Changer la valeur de départ de la chaîne MCMC à la même valeur que le taux
+    de mutation moyen que vous avez mis comme prior (0,001), de façon à ce que
+    la chaîne débute avec une valeur probable.
+    - **Attention!** Il n'est pas possible de placer ce prior sur le taux de
+    l'horloge moléculaire/taux de mutation avant d'avoir créé une première
+    calibration fossile, car ça ne sert à rien d'estimer le taux de mutation
+    si l'arbre n'est pas calibré avec des fossiles.
+
 8. **Onglet *MCMC***:
     - *Chain Length*: **10 000 000**.
     - Ouvrir *tracelog* et *treelog* et mettre *Log Every* à **1000** pour
    les deux.
-    - Sauvegarder: `File > Save As` → `Osmundaceae_noeuds.xml`.
 
-9. **Analyse de l'a priori seulement**:
+9. **Sauvegarder le fichier**: `File > Save As` → `Osmundaceae_noeuds.xml`.
+
+10. **Analyse de l'a priori seulement**:
     - Toujours dans l'onglet *MCMC*, cocher **Sample From Prior**.
     - Sauvegarder sous un autre nom: `File > Save As` →
-   `Osmundaceae_noeuds_prior.xml`. Les fichiers de sortie de cette analyse
-   porteront le même préfixe et n'écraseront donc pas ceux de l'analyse
-   principale.
+    `Osmundaceae_noeuds_prior.xml`. Les fichiers de sortie de cette analyse
+    porteront le même préfixe et n'écraseront donc pas ceux de l'analyse
+    principale.
 
 #### Lancer l'analyse
 
@@ -235,133 +260,206 @@ Vous pouvez aussi lancer les deux analyses sur le serveur de calcul, avec le
 1. **Tracer**: ouvrir `Osmundaceae_noeuds.log` et
  `Osmundaceae_noeuds_prior.log`.
     - Vérifiez la convergence (traces stationnaires, ESS > 200) comme dans le
-   tutoriel sur MrBayes.
+    tutoriel sur MrBayes.
     - Les âges des noeuds calibrés apparaissent dans des colonnes comme
-   `mrca.age(OsmundaSL)` et `mrca.age(racine)` (le nom exact peut varier
-   légèrement). La hauteur de l'arbre (`TreeHeight`) correspond à l'âge de la
-   racine.
+    `mrca.age(OsmundaSL)` et `mrca.age(racine)` (le nom exact peut varier
+    légèrement). La hauteur de l'arbre (`TreeHeight`) correspond à l'âge de la
+    racine.
     - Sélectionnez les deux fichiers en même temps, puis l'onglet
-   *Marginal Density*, pour superposer la distribution **a priori**
-   (*sample from prior*) et la distribution **a posteriori** de chaque âge.
+    *Marginal Density*, pour superposer la distribution **a priori**
+    (*sample from prior*) et la distribution **a posteriori** de chaque âge.
 
 2. **TreeAnnotator**: choisir un *burn-in* de 10 %, l'option
- **Maximum clade credibility tree** et **Median heights**. Fichier d'entrée:
- `Osmundaceae_noeuds.trees` (ou le fichier `.trees` produit par votre
- analyse). Fichier de sortie: `Osmundaceae_noeuds_MCC.tre`.
+  **Maximum clade credibility tree** et **Median heights**. Fichier d'entrée:
+  `Osmundaceae_noeuds.trees` (ou le fichier `.trees` produit par votre
+  analyse). Fichier de sortie: `Osmundaceae_noeuds_MCC.tre`.
 
 3. **FigTree**: ouvrir `Osmundaceae_noeuds_MCC.tre`.
     - Cocher *Node Bars* et choisir `height_95%_HPD` pour afficher les
-   intervalles de crédibilité des âges.
+    intervalles de crédibilité des âges.
     - Cocher *Scale Axis*, puis *Reverse axis* dans ses options, pour avoir
-   une échelle de temps en Ma avant le présent.
+    une échelle de temps en Ma avant le présent.
     - Cocher *Node Labels* et choisir `height_median` pour afficher les âges.
 
 - **Question**: L'a priori effectif sur l'âge d'*Osmunda* s.l. (analyse
- *sample from prior*) ressemble-t-il à la log-normale que vous avez
- spécifiée? Sinon, pourquoi?
+  *sample from prior*) ressemble-t-il à la log-normale que vous avez
+  spécifiée? Si non, pourquoi?
 - **Question**: Pour quels noeuds la distribution a posteriori est-elle
- très différente de l'a priori? Qu'est-ce que cela indique sur
- l'information apportée par les séquences d'ADN?
+  très différente de l'a priori? Qu'est-ce que cela indique sur
+  l'information apportée par les séquences d'ADN?
 
-### 1B. Calibration des noeuds dans MrBayes
+---
 
-Toutes les commandes ci-dessous sont regroupées dans le fichier
- `datation_noeuds_mb.nex`. Lisez d'abord les explications, puis lancez
- l'analyse.
+### Calibration des noeuds dans MrBayes
 
-1. **Charger les données et choisir le modèle de substitution** (HKY+G),
- comme dans le tutoriel sur MrBayes:
-```MrBayes
-execute Osmundaceae_actuelles.nex
-lset nst=2 rates=gamma
-```
+Commencez par téléverser les fichiers de données `Osmundaceae_actuelles.nex` et
+ `Osmundaceae_TED.nex` sur le serveur de calcul. Ensuite, naviguez vers le
+ dossier où vous avez placé ces fichiers, lancez MrBayes avec la commande `mb`,
+ puis exécuter les commandes ci-dessous.
+ 
+**!!! Attention !!!** Dans certaines lignes de commande, MrBayes n'accepte pas
+ plus qu'une ligne de commande à la fois. Même lorsque c'est le cas, il ne
+ renvoi pas d'avertissement. En conséquence, lorsque vous exécutez les commandes
+ ci-dessous, assurez-vous de copier et coller une seule ligne à la fois pour
+ vous assurer que toutes les commandes seront bel et bien exécutées, même si
+ un bloc de code contient plus d'une ligne de commande.
 
-2. **Définir le clade calibré et contraindre sa monophylie**. Dans MrBayes,
- une calibration ne peut être placée que sur un noeud défini par une
- contrainte:
-```MrBayes
-constraint OsmundaSL = Osmunda_cinnamomea Osmunda_claytoniana Osmunda_banksiaefolia Osmunda_javanica Osmunda_vachellii Osmunda_japonica Osmunda_lancea Osmunda_regalis
-prset topologypr = constraint(OsmundaSL)
-```
+1. **Charger les données**: 
+  ```MrBayes
+  execute Osmundaceae_actuelles.nex;
+  ```
+  
+2. **choisir le modèle de substitution** (HKY+G):
+  ```MrBayes
+  lset nst=2 rates=gamma;
+  ```
 
-3. **Demander un arbre ultramétrique** (horloge moléculaire) avec un a priori
- de naissance-mort. `sampleprob` est la proportion des espèces actuelles du
- groupe incluses dans l'analyse (13 sur environ 28):
-```MrBayes
-prset brlenspr = clock:birthdeath
-prset samplestrat = random sampleprob = 0.46
-```
+3. **Définir le clade calibré et contraindre sa monophylie**. Dans MrBayes,
+  une calibration ne peut être placée que sur un noeud défini par une
+  contrainte:
+  ```MrBayes
+  constraint OsmundaSL = Osmunda_cinnamomea Osmunda_claytoniana Osmunda_banksiaefolia Osmunda_javanica Osmunda_vachellii Osmunda_japonica Osmunda_lancea Osmunda_regalis;
+  prset topologypr = constraint(OsmundaSL);
+  ```
 
-4. **Calibrer la racine** (uniforme) et le noeud *Osmunda* s.l.
- (log-normale décalée). Dans MrBayes, l'âge de la racine se règle avec
- `treeagepr`, et les autres noeuds avec `calibrate`. La commande
- `prset nodeagepr = calibrated` active les calibrations:
-```MrBayes
-prset treeagepr = uniform(129, 360)
-calibrate OsmundaSL = offsetlognormal(72, 150, 40)
-prset nodeagepr = calibrated
-```
+4. **Demander un arbre ultramétrique** (horloge moléculaire) avec un a priori
+  de naissance-mort. `sampleprob` est la proportion des espèces actuelles du
+  groupe incluses dans l'analyse (13 sur environ 28):
+  ```MrBayes
+  prset brlenspr = clock:birthdeath;
+  prset samplestrat = random sampleprob = 0.46;
+  ```
 
-5. **Choisir l'horloge relâchée et l'a priori sur le taux**. Le modèle `igr`
- (*independent gamma rates*) permet à chaque branche d'avoir son propre taux.
- Attention: par défaut, MrBayes fixe le taux d'horloge à 1, ce qui n'a pas
- de sens quand les âges sont en Ma. Il faut donc toujours le changer:
-```MrBayes
-prset clockvarpr = igr
-prset clockratepr = lognorm(-7, 1)
-showmodel
-```
+5. **Calibrer la racine** (uniforme) et le noeud *Osmunda* s.lat.
+  (log-normale décalée). Dans MrBayes, l'âge de la racine se règle avec
+  `treeagepr`, et les autres noeuds avec `calibrate`. La commande
+  `prset nodeagepr = calibrated` active les calibrations:
+  ```MrBayes
+  prset treeagepr = uniform(129, 360);
+  calibrate OsmundaSL = offsetlognormal(72, 150, 40);
+  prset nodeagepr = calibrated;
+  ```
 
-6. **Lancer la MCMC** et résumer les résultats:
-```MrBayes
-mcmcp ngen=2000000 samplefreq=1000 printfreq=10000 diagnfreq=10000 nchains=4 nruns=2 filename=osm_noeuds
-mcmc
-sump
-sumt
-```
+6. **Choisir l'horloge relâchée et l'a priori sur le taux**. Le modèle `igr`
+  (*independent gamma rates*) permet à chaque branche d'avoir son propre taux.
+  Attention: par défaut, MrBayes fixe le taux d'horloge (taux de mutation
+  moyen) à 1, ce qui n'a pas de sens quand les âges sont en Ma. Il faut donc
+  toujours le changer. Les mêmes paramètres sont utilisés que dans l'analyse
+  BEAST ci-haut:  
+  ```MrBayes
+  prset clockvarpr = igr;
+  prset clockratepr = lognorm(-7, 1);
+  ```
+
+7. **Montrer le modèle**:
+  ```MrBayes
+  showmodel;
+  ```
+
+8. **Ajuster les paramètres MCMC**:
+  ```MrBayes
+  mcmcp ngen=2000000 samplefreq=1000 printfreq=10000 diagnfreq=10000 nchains=4 nruns=2 filename=osm_noeuds;
+  ```
+
+9. **Lancer la chaîne MCMC**:
+  ```MrBayes
+  mcmc;
+  ```
+  
+10. Lorsque terminé, **analyser les résultats de la chaîne**:
+  ```MrBayes
+  sump;
+  sumt;
+  ```
 
 Pour lancer tout le fichier de commandes en mode non interactif sur le
  serveur de calcul (plus pratique pour une longue analyse):
 ```bash
 ## Ajuster les variables ci-dessous de façon appropriée
-WD=/home/$USER/datation
+WD=/scratch/$USER/test_datation/MrBayes_nodeOnly
+DATA=/home/$USER/Osmundaceae_actuelles.nex
 EMAIL=votre.courriel@umontreal.ca
 TIME="0-12:00:00"
+CPUS=8
+MEM_PER_CPU=1G
 
+## Créer et naviguer vers le dossier de travail
+mkdir -p $WD
 cd $WD
 
-## 8 processus MPI: 2 analyses indépendantes x 4 chaînes
+## Créer un lien vers l'alignement qui sera analysé
+ln -s $DATA infile.nex
+
+## Créer un fichier contenant les commandes à exécuter dans MrBayes
+echo "#NEXUS
+
+begin mrbayes;
+  set autoclose=yes nowarn=yes;
+  execute infile.nex;
+
+  lset nst=2 rates=gamma;
+
+  constraint OsmundaSL = Osmunda_cinnamomea Osmunda_claytoniana
+    Osmunda_banksiaefolia Osmunda_javanica Osmunda_vachellii
+    Osmunda_japonica Osmunda_lancea Osmunda_regalis;
+  prset topologypr = constraint(OsmundaSL);
+
+  prset brlenspr = clock:birthdeath;
+  prset samplestrat = random sampleprob = 0.46;
+
+  prset treeagepr = uniform(129, 360);
+
+  calibrate OsmundaSL = offsetlognormal(72, 150, 40);
+  prset nodeagepr = calibrated;
+
+  prset clockvarpr = igr;
+  prset clockratepr = lognorm(-7, 1);
+
+  showmodel;
+
+  mcmcp ngen=2000000 samplefreq=1000 printfreq=10000 diagnfreq=10000
+    nchains=4 nruns=2 filename=osm_noeuds;
+  mcmc;
+
+  sump;
+  sumt;
+  
+end;
+" > mrbayes_node_dating.commands
+
+
+## Lancer la tâche sur SLURM
 sbatch \
-  --job-name=mb_noeuds \
-  --output=mb_noeuds.log \
+  --job-name=mb_node_dating \
+  --output=mb_node_dating.log \
   --mail-user=$EMAIL \
   --nodes=1 \
-  --ntasks=8 \
+  --ntasks=$CPUS \
   --time=$TIME \
-  --mem-per-cpu=1G \
-  --wrap="mpirun.openmpi -np 8 /opt/MrBayes-mpi/src/mb-mpi datation_noeuds_mb.nex"
+  --mem-per-cpu=$MEM_PER_CPU \
+  --wrap="mpirun.openmpi -np $CPUS /opt/MrBayes-mpi/src/mb-mpi mrbayes_node_dating.commands"
+
 ```
-Les fichiers `datation_noeuds_mb.nex` et `Osmundaceae_actuelles.nex` doivent
- être dans le dossier `$WD`. L'analyse prend quelques minutes.
+
 
 #### Analyser les résultats
 
 - `sump` affiche les statistiques des paramètres. Vérifiez la convergence
- (ESS, PSRF près de 1,0), comme dans le tutoriel sur MrBayes. Vous pouvez
- aussi ouvrir les fichiers `osm_noeuds.run*.p` dans **Tracer**.
+  (ESS, PSRF près de 1,0), comme dans le tutoriel sur MrBayes. Vous pouvez
+  aussi ouvrir les fichiers `osm_noeuds.run*.p` dans **Tracer**.
 - `sumt` produit l'arbre consensus `osm_noeuds.con.tre`. Pour les arbres avec
- horloge, ce fichier contient l'âge de chaque noeud. Ouvrez-le dans
- **FigTree** et affichez `age_median` (*Node Labels*) et `age_95%HPD`
- (*Node Bars*).
+  horloge, ce fichier contient l'âge de chaque noeud. Ouvrez-le dans
+  **FigTree** et affichez `age_median` (*Node Labels*) et `age_95%HPD`
+  (*Node Bars*).
 - Pour obtenir l'a priori effectif dans MrBayes, ajoutez la commande
- `mcmcp data=no` avant `mcmc`, avec un autre nom de fichier
- (`filename=osm_noeuds_prior`). MrBayes échantillonne alors seulement l'a
- priori.
+  `mcmcp data=no` avant `mcmc`, avec un autre nom de fichier
+  (`filename=osm_noeuds_prior`). MrBayes échantillonne alors seulement l'a
+  priori.
 
 - **Question**: Les âges obtenus avec MrBayes sont-ils semblables à ceux de
- BEAST? Quelles différences de modèle entre les deux analyses pourraient
- expliquer les écarts (forme de l'horloge relâchée, a priori sur l'arbre,
- etc.)?
+  BEAST? Quelles différences de modèle entre les deux analyses pourraient
+  expliquer les écarts (forme de l'horloge relâchée, a priori sur l'arbre,
+  etc.)?
 
 ---
 
@@ -374,21 +472,23 @@ La calibration des noeuds n'utilise qu'une petite partie de l'information
  faut décider d'avance la position. L'approche des fossiles comme feuilles:
 
 - inclut **tous** les fossiles disponibles, comme des feuilles d'âge connu;
-- estime leur **position** dans l'arbre à partir de leurs **caractères
- morphologiques** (modèle **Mk/Mkv** de Lewis 2001), plutôt que de l'imposer;
+- estime leur **position** dans l'arbre à partir de leurs **caractères**
+  **morphologiques** (modèle **Mk/Mkv** de Lewis 2001), plutôt que de l'imposer;
 - tient compte de l'**incertitude** sur l'âge de chaque fossile (un intervalle
- stratigraphique plutôt qu'une valeur fixe);
+  stratigraphique plutôt qu'une valeur fixe);
 - remplace les calibrations arbitraires par un modèle explicite, le processus
- de **naissance-mort fossilisé** (FBD), dont les paramètres sont estimés:
- taux de spéciation, d'extinction, de fossilisation (échantillonnage des
- fossiles), et proportion des espèces actuelles échantillonnées (**rho**).
+  de **fossilized birth-death** (FBD), dont les paramètres sont estimés:
+  taux de spéciation, d'extinction, de fossilisation (échantillonnage des
+  fossiles), et proportion des espèces actuelles échantillonnées (**rho**).
 
 Le modèle FBD permet aussi qu'un fossile soit un **ancêtre échantillonné**
  (*sampled ancestor*): un fossile situé directement sur une branche, sans
  descendance propre, qui représente l'ancêtre d'autres espèces de l'arbre.
 
-Ici, on utilise les 33 unités: l'ADN des espèces actuelles, la morphologie de
- toutes les unités et l'âge des 18 fossiles:
+Ici, on utilise les 33 échantillons pour l'analyse phylogénétique et de
+ datation: l'ADN des espèces actuelles, la morphologie de tous les échantillons
+ et l'âge des 18 échantillons fossiles (celui des échantillons vivant est de
+ "0"):
 
 | Fossile | Âge (Ma) | Fossile | Âge (Ma) |
 |---|---|---|---|
@@ -402,7 +502,7 @@ Ici, on utilise les 33 unités: l'ADN des espèces actuelles, la morphologie de
 | *O. arnoldii* | 56–66 | *O. liaoningensis* | 153–165 |
 | *O. wangii* | 153–165 | *O. plumites* | 153–165 |
 
-### 2A. Fossiles comme feuilles dans BEAST 2
+### Fossiles comme feuilles dans BEAST 2
 
 Cette section résume le
  [tutoriel *Total-Evidence* de Taming the BEAST](https://taming-the-beast.org/tutorials/Total-Evidence-Tutorial/),
@@ -532,7 +632,7 @@ Cette analyse est plus longue que celle de la partie 1: utilisez de
  fossiles est-elle souvent beaucoup plus incertaine que celle des espèces
  actuelles?
 
-### 2B. Fossiles comme feuilles dans MrBayes
+### Fossiles comme feuilles dans MrBayes
 
 Toutes les commandes sont regroupées dans le fichier
  `datation_feuilles_mb.nex`. Contrairement à BEAST, MrBayes lit l'ADN et la
@@ -540,175 +640,262 @@ Toutes les commandes sont regroupées dans le fichier
  `Osmundaceae_TED.nex` et repérez la ligne
  `FORMAT DATATYPE=MIXED(DNA:1-8628,STANDARD:8629-8653)`.
 
-1. **Charger les données et définir deux partitions**:
-```MrBayes
-execute Osmundaceae_TED.nex
-charset ADN = 1-8628
-charset morpho = 8629-8653
-partition donnees = 2: ADN, morpho
-set partition = donnees
-```
+**!!! Attention !!!** Comme précédemment, MrBayes peut ne pas être en mesure
+ d'exécuter plus d'une ligne de commande à la fois. Il est donc préférable
+ de copier et coller dans la console intéractive de MrBayes les commandes une 
+ à une, même lorsqu'elles sont présentées comme un bloc de plusieurs commandes.
 
-2. **Modèles de substitution**: HKY+G pour l'ADN, et Mkv pour la morphologie.
- L'option `coding=variable` est l'équivalent de répondre « Yes » à la
- question sur les caractères variables dans BEAUti:
-```MrBayes
-lset applyto=(1) nst=2 rates=gamma
-lset applyto=(2) coding=variable rates=equal
-unlink statefreq=(all) tratio=(all) shape=(all)
-prset applyto=(all) ratepr=variable
-```
+Ouvrez MrBayes en exécutant `mb` dans le dossier qui contient le fichier
+ `Osmundaceae_TED.nex`, puis exécutez ces commandes une à une.
+
+1. **Charger les données**
+  ```MrBayes
+  execute Osmundaceae_TED.nex;
+  ```
+
+2. **définir deux partitions**:
+  ```MrBayes
+  charset ADN = 1-8628;
+  charset morpho = 8629-8653;
+  partition donnees = 2: ADN, morpho;
+  set partition = donnees;
+  ```
+
+3. **Modèles de substitution**: HKY+G pour l'ADN, et Mkv pour la morphologie.
+  L'option `coding=variable` est l'équivalent de répondre « Yes » à la
+  question sur les caractères variables dans BEAUti:
+  ```MrBayes
+  lset applyto=(1) nst=2 rates=gamma;
+  lset applyto=(2) coding=variable rates=equal;
+  unlink statefreq=(all) tratio=(all) shape=(all);
+  prset applyto=(all) ratepr=variable;
+  ```
  La dernière commande permet à chaque partition d'évoluer à sa propre vitesse
  relative.
 
-3. **Donner un âge à chaque fossile**. Ici, `calibrate` s'applique à des
- **feuilles** plutôt qu'à des noeuds. Les espèces actuelles, sans
- calibration, ont automatiquement un âge de 0. On définit aussi un groupe
- `fossiles`, qui servira au moment du résumé (seules les premières lignes
- sont montrées; voir le fichier pour la liste complète):
-```MrBayes
-taxset fossiles = Todea_tidwellii_135 Osmunda_cinnamomea_Neogene_USA_16 ...
-calibrate Todea_tidwellii_135 = uniform(129, 140) Osmunda_cinnamomea_Neogene_USA_16 = fixed(16) ...
-prset nodeagepr = calibrated
-```
+4. **Donner un âge à chaque fossile**. Ici, `calibrate` s'applique à des
+  **feuilles** plutôt qu'à des noeuds. Les espèces actuelles, sans
+  calibration, ont automatiquement un âge de 0. On définit aussi un groupe
+  `fossiles`, qui servira au moment du résumé:
+  ```MrBayes
+  taxset fossiles = Todea_tidwellii_135 Osmunda_cinnamomea_Neogene_USA_16     Osmunda_cinnamomea_Neogene_Japan_13 Osmunda_cinnamomea_Cretaceous_Canada_80 Osmunda_precinnamomea_60 Osmunda_chengii_150 Osmunda_bromeliaefolia_12 Osmunda_arnoldii_60 Osmunda_dowkeri_58 Osmunda_ilianensis_5 Osmunda_oregonensis_36 Osmunda_pluma_60 Osmunda_shimokawaensis_13 Osmunda_wehrii_16 Osmunda_pulchella_184 Osmunda_liaoningensis_160 Osmunda_wangii_160 Osmunda_plumites_160;
+  
+  calibrate Todea_tidwellii_135 = uniform(129, 140) Osmunda_cinnamomea_Neogene_USA_16 = fixed(16) Osmunda_cinnamomea_Neogene_Japan_13 = uniform(12, 14) Osmunda_cinnamomea_Cretaceous_Canada_80 = uniform(72, 83) Osmunda_precinnamomea_60 = uniform(56, 66) Osmunda_chengii_150 = uniform(145, 160) Osmunda_bromeliaefolia_12 = uniform(11, 14) Osmunda_arnoldii_60 = uniform(56, 66) Osmunda_dowkeri_58 = uniform(56, 59) Osmunda_ilianensis_5 = uniform(4, 6) Osmunda_oregonensis_36 = uniform(34, 40) Osmunda_pluma_60 = uniform(56, 66) Osmunda_shimokawaensis_13 = uniform(12, 14) Osmunda_wehrii_16 = fixed(16) Osmunda_pulchella_184 = uniform(183, 185) Osmunda_liaoningensis_160 = uniform(153, 165) Osmunda_wangii_160 = uniform(153, 165) Osmunda_plumites_160 = uniform(153, 165);
+  
+  prset nodeagepr = calibrated;
+  ```
 
-4. **A priori FBD sur l'arbre**:
-```MrBayes
-prset brlenspr = clock:fossilization
-prset samplestrat = random sampleprob = 0.536
-prset speciationpr = exp(10)
-prset extinctionpr = beta(1, 1)
-prset fossilizationpr = beta(1, 1)
-prset treeagepr = uniform(185, 360)
-```
+5. **A priori FBD sur l'arbre**:
+  ```MrBayes
+  prset brlenspr = clock:fossilization;
+  prset samplestrat = random sampleprob = 0.536;
+  prset speciationpr = exp(10);
+  prset extinctionpr = beta(1, 1);
+  prset fossilizationpr = beta(1, 1);
+  prset treeagepr = uniform(185, 360);
+  ```
     - `clock:fossilization` active le modèle FBD.
-    - `sampleprob` correspond au **rho** de BEAST.
+    - `sampleprob` correspond au **rho** de BEAST, la proportion des espèces
+    du groupe qui a été échantillonné (par rapport à la diversité totale
+    connue).
     - Dans MrBayes, `speciationpr` porte sur le taux de diversification
-   nette (spéciation − extinction), `extinctionpr` sur l'extinction
-   relative (extinction / spéciation), et `fossilizationpr` sur la
-   proportion de fossilisation.
-    - Attention: dans MrBayes, `treeagepr` porte sur l'âge de la **racine**,
-   alors que l'a priori *OriginFBD* de BEAST porte sur l'**origine**, qui est
-   plus vieille. La borne minimale de 185 Ma correspond au plus vieux fossile
-   (*O. pulchella*, 183–185 Ma).
+    nette (spéciation − extinction), `extinctionpr` sur l'extinction
+    relative (extinction / spéciation), et `fossilizationpr` sur la
+    proportion de fossilisation. On attribue des distributions de probabilités
+    a priori assez neutres (plates) sur ces paramètres, car ils sont inconnus.
+    - Attention: dans MrBayes, `treeagepr` porte sur l'âge de la couronne
+    de la **racine**, alors que l'a priori *OriginFBD* de BEAST porte sur 
+    l'**origine**, qui est plus vieille. La borne minimale de 185 Ma correspond
+    au plus vieux fossile (*O. pulchella*, 183–185 Ma).
 
-5. **Horloge** (stricte, comme dans l'analyse BEAST):
-```MrBayes
-prset clockvarpr = strict
-prset clockratepr = lognorm(-7, 1)
-showmodel
-```
+6. **Horloge** (stricte, comme dans l'analyse BEAST):
+  ```MrBayes
+  prset clockvarpr = strict;
+  prset clockratepr = lognorm(-7, 1);
+  showmodel;
+  ```
 
-6. **MCMC et résumés**:
-```MrBayes
-mcmcp ngen=5000000 samplefreq=1000 printfreq=10000 diagnfreq=10000 nchains=4 nruns=2 filename=osm_feuilles
-mcmc
-sump
-sumt
-delete fossiles
-sumt output=osm_feuilles_actuelles
-```
- Le deuxième `sumt`, après `delete fossiles`, résume les mêmes arbres sans
+7. **Ajuster les paramètres MCMC**:
+  ```MrBayes
+  mcmcp ngen=5000000 samplefreq=1000 printfreq=10000 diagnfreq=10000 nchains=4 nruns=2 filename=osm_feuilles;
+  ```
+
+8. **Lancer la chaîne MCMC**:
+  ```MrBayes
+  mcmc;
+  ```
+
+9. **Analyser les résultats**:
+  ```MrBayes
+  sump;
+  sumt;
+  delete fossiles;
+  sumt output=osm_feuilles_actuelles;
+  ```
+Le deuxième `sumt`, après `delete fossiles`, résume les mêmes arbres sans
  les fossiles. On obtient un arbre daté des espèces actuelles seulement,
  directement comparable à celui de la partie 1. Lors de ce résumé, MrBayes
  peut afficher un avertissement indiquant qu'un caractère morphologique est
  exclu: sans les fossiles, ce caractère devient invariable. C'est sans
  conséquence pour le résumé des arbres.
 
-Pour lancer l'analyse sur le serveur, utilisez le même script SLURM que dans
- la partie 1B, en remplaçant le nom du fichier de commandes par
- `datation_feuilles_mb.nex` (et `--job-name=mb_feuilles`). Prévoyez quelques
- heures de calcul.
+Pour lancer l'analyse sur le serveur, utilisez le même code SLURM que dans
+ la partie de la datation des noeuds avec MrBayes, en ajustant quelques lignes.
+ Voici le code à exécuter pour cela:  
+```bash
+## Ajuster les variables ci-dessous de façon appropriée
+WD=/scratch/$USER/test_datation/MrBayes_tipDating
+DATA=/home/$USER/Osmundaceae_TED.nex
+EMAIL=votre.courriel@umontreal.ca
+TIME="0-12:00:00"
+CPUS=8
+MEM_PER_CPU=1G
+
+## Créer et naviguer vers le dossier de travail
+mkdir -p $WD
+cd $WD
+
+## Créer un lien vers l'alignement qui sera analysé
+ln -s $DATA infile.nex
+
+## Créer un fichier contenant les commandes à exécuter dans MrBayes
+echo "#NEXUS
+
+begin mrbayes;
+  set autoclose=yes nowarn=yes;
+  execute infile.nex;
+
+  charset ADN = 1-8628;
+  charset morpho = 8629-8653;
+  partition donnees = 2: ADN, morpho;
+  set partition = donnees;
+
+  lset applyto=(1) nst=2 rates=gamma;
+  lset applyto=(2) coding=variable rates=equal;
+  unlink statefreq=(all) tratio=(all) shape=(all);
+  prset applyto=(all) ratepr=variable;
+
+  taxset fossiles = Todea_tidwellii_135 Osmunda_cinnamomea_Neogene_USA_16
+    Osmunda_cinnamomea_Neogene_Japan_13
+    Osmunda_cinnamomea_Cretaceous_Canada_80 Osmunda_precinnamomea_60
+    Osmunda_chengii_150 Osmunda_bromeliaefolia_12 Osmunda_arnoldii_60
+    Osmunda_dowkeri_58 Osmunda_ilianensis_5 Osmunda_oregonensis_36
+    Osmunda_pluma_60 Osmunda_shimokawaensis_13 Osmunda_wehrii_16
+    Osmunda_pulchella_184 Osmunda_liaoningensis_160 Osmunda_wangii_160
+    Osmunda_plumites_160;
+
+  calibrate
+    Todea_tidwellii_135 = uniform(129, 140)
+    Osmunda_cinnamomea_Neogene_USA_16 = fixed(16)
+    Osmunda_cinnamomea_Neogene_Japan_13 = uniform(12, 14)
+    Osmunda_cinnamomea_Cretaceous_Canada_80 = uniform(72, 83)
+    Osmunda_precinnamomea_60 = uniform(56, 66)
+    Osmunda_chengii_150 = uniform(145, 160)
+    Osmunda_bromeliaefolia_12 = uniform(11, 14)
+    Osmunda_arnoldii_60 = uniform(56, 66)
+    Osmunda_dowkeri_58 = uniform(56, 59)
+    Osmunda_ilianensis_5 = uniform(4, 6)
+    Osmunda_oregonensis_36 = uniform(34, 40)
+    Osmunda_pluma_60 = uniform(56, 66)
+    Osmunda_shimokawaensis_13 = uniform(12, 14)
+    Osmunda_wehrii_16 = fixed(16)
+    Osmunda_pulchella_184 = uniform(183, 185)
+    Osmunda_liaoningensis_160 = uniform(153, 165)
+    Osmunda_wangii_160 = uniform(153, 165)
+    Osmunda_plumites_160 = uniform(153, 165);
+  prset nodeagepr = calibrated;
+
+  prset brlenspr = clock:fossilization;
+  prset samplestrat = random sampleprob = 0.536;
+  prset speciationpr = exp(10);
+  prset extinctionpr = beta(1, 1);
+  prset fossilizationpr = beta(1, 1);
+  prset treeagepr = uniform(185, 360);
+
+  prset clockvarpr = strict;
+  prset clockratepr = lognorm(-7, 1);
+
+  showmodel;
+
+  mcmcp ngen=5000000 samplefreq=1000 printfreq=10000 diagnfreq=10000
+    nchains=4 nruns=2 filename=osm_feuilles;
+  mcmc;
+
+  sump;
+  sumt;
+
+  delete fossiles;
+  sumt output=osm_feuilles_actuelles;
+  
+end;
+" > mrbayes_tip_dating.commands
+
+
+## Lancer la tâche sur SLURM
+sbatch \
+  --job-name=mb_tip_dating \
+  --output=mb_tip_dating.log \
+  --mail-user=$EMAIL \
+  --nodes=1 \
+  --ntasks=$CPUS \
+  --time=$TIME \
+  --mem-per-cpu=$MEM_PER_CPU \
+  --wrap="mpirun.openmpi -np $CPUS /opt/MrBayes-mpi/src/mb-mpi mrbayes_tip_dating.commands"
+
+```
 
 #### Analyser les résultats
 
-- Comme dans la partie 1B: `sump`, Tracer et FigTree (`age_median`,
- `age_95%HPD`).
+- Comme dans la partie sur la datation des noeuds: examiner le résultat de
+  `sump`, Tracer et FigTree (`age_median`, `age_95%HPD`).
 - `osm_feuilles.con.tre` contient l'arbre avec les fossiles, et
- `osm_feuilles_actuelles.con.tre` l'arbre des espèces actuelles seulement.
-- MrBayes permet aussi les ancêtres échantillonnés: les fossiles qui
- tombent directement sur une branche apparaissent avec une longueur de
- branche nulle.
+  `osm_feuilles_actuelles.con.tre` l'arbre des espèces actuelles seulement.
+- MrBayes permet aussi d'estimer si certains fossiles pourraient être des
+  ancêtres directs des espèces vivantes dans le présent: les fossiles qui
+  sont sur une branche de longueur 0 sont des ancêtres directs.
 
 ### Fichiers de sortie de MrBayes
 
 En plus des fichiers déjà décrits dans le tutoriel sur MrBayes:
 
 1. **`*.con.tre`**: pour une analyse avec horloge, l'arbre consensus contient
- pour chaque noeud l'âge moyen (`age_mean`), l'âge médian (`age_median`) et
- l'intervalle de crédibilité à 95 % (`age_95%HPD`), en Ma.
+  pour chaque noeud l'âge moyen (`age_mean`), l'âge médian (`age_median`) et
+  l'intervalle de crédibilité à 95 % (`age_95%HPD`), en Ma.
 
 2. **`*.run*.p`**: en plus des paramètres habituels, ces fichiers contiennent
- le taux de l'horloge (`clockrate`) et, selon le modèle, la variance de
- l'horloge relâchée (`igrvar`), les paramètres du modèle de naissance-mort
- (`net_speciation`, `relative_extinction`, `relative_fossilization`) et,
- pour le modèle FBD, la proportion de fossiles qui sont des ancêtres
- échantillonnés (`prop_ancfossil`). La colonne `TH` est la hauteur de
- l'arbre en substitutions par site (et non en Ma).
+  le taux de l'horloge (`clockrate`) et, selon le modèle, la variance de
+  l'horloge relâchée (`igrvar`), les paramètres du modèle de naissance-mort
+  (`net_speciation`, `relative_extinction`, `relative_fossilization`) et,
+  pour le modèle FBD, la proportion de fossiles qui sont des ancêtres
+  échantillonnés (`prop_ancfossil`). La colonne `TH` est la hauteur de
+  l'arbre en substitutions par site (et non en Ma).
 
 3. **`osm_feuilles_actuelles.*`**: les résumés produits après
- `delete fossiles`.
+  `delete fossiles`.
 
 ---
 
 ## Questions et exercices
 
 1. **Comparaison des approches**:
-   - Comparez l'âge de la racine et celui d'*Osmunda* s.l. dans les quatre
+   - Comparez l'âge de la racine et celui d'*Osmunda* s.lat. dans les quatre
    analyses (noeuds/feuilles × BEAST/MrBayes). Présentez-les dans un tableau
    avec leurs intervalles à 95 %.
    - Laquelle des deux approches donne les âges les plus vieux, et les
    intervalles les plus larges? Comparez vos résultats à ceux de Grimm et
-   al. (2015) et proposez une explication aux différences.
+   al. (2015).
 
-2. **Sensibilité aux calibrations**:
-   - Dans la partie 1, remplacez la calibration log-normale par une
-   calibration uniforme entre 72 et 360 Ma. Comment l'âge d'*Osmunda* s.l.
-   et sa précision changent-ils?
-   - Que se passe-t-il si on retire complètement la calibration de la
-   racine?
-
-3. **L'importance de l'a priori**:
-   - Pour chaque analyse, comparez l'a priori effectif (analyse sans
-   données) à l'a posteriori pour l'âge de la racine. Les données
+2. **L'importance de l'a priori**:
+   - Pour chaque analyse de datation des noeuds, comparez l'a priori effectif
+   (analyse sans données) à l'a posteriori pour l'âge de la racine. Les données
    moléculaires apportent-elles beaucoup d'information sur les âges, ou
    sont-ils surtout déterminés par les calibrations?
 
-4. **Les fossiles**:
-   - Dans la partie 2, comparez l'âge a posteriori des fossiles qui avaient
-   un intervalle d'âge avec leur intervalle d'origine. Les données
-   permettent-elles de préciser leur âge?
+3. **Les fossiles**:
+   - Dans la partie sur la datation avec les fossiles comme feuilles, comparez
+   l'âge a posteriori des fossiles qui avaient un intervalle d'âge avec leur
+   intervalle d'origine. Les données permettent-elles de préciser leur âge?
    - Le fossile *O. pulchella* a d'abord été décrit dans le genre *Osmunda*,
    puis transféré dans *Osmundastrum* (le groupe d'*O. cinnamomea*). Où se
    place-t-il dans votre arbre? Comment ce genre d'incertitude sur la
    position d'un fossile affecte-t-il la calibration des noeuds?
-
-5. **Horloge stricte ou relâchée**:
-   - Dans la partie 2, refaites l'analyse MrBayes avec une horloge relâchée
-   (`prset clockvarpr = igr`). Le modèle plus complexe change-t-il les âges
-   estimés?
-
----
-
-## Références
-
-- Grimm GW, Kapli P, Bomfleur B, McLoughlin S, Renner SS. 2015. Using more
- than the oldest fossils: dating Osmundaceae with three Bayesian clock
- approaches. *Systematic Biology* 64: 396-405.
-- Heath TA, Huelsenbeck JP, Stadler T. 2014. The fossilized birth-death
- process for coherent calibration of divergence-time estimates. *PNAS* 111:
- E2957-E2966.
-- Lewis PO. 2001. A likelihood approach to estimating phylogeny from discrete
- morphological character data. *Systematic Biology* 50: 913-925.
-- Parham JF et al. 2012. Best practices for justifying fossil calibrations.
- *Systematic Biology* 61: 346-359.
-- Ronquist F et al. 2012. A total-evidence approach to dating with fossils,
- applied to the early radiation of the Hymenoptera. *Systematic Biology* 61:
- 973-999.
-- Zhang C, Stadler T, Klopfstein S, Heath TA, Ronquist F. 2016.
- Total-evidence dating under the fossilized birth-death process.
- *Systematic Biology* 65: 228-249.
-- Tutoriel *Total-Evidence* de Taming the BEAST:
- <https://taming-the-beast.org/tutorials/Total-Evidence-Tutorial/>
-- Zhang C. Molecular clock dating using MrBayes (tutoriel):
- <https://arxiv.org/abs/1603.05707>
