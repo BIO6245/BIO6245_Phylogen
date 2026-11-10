@@ -1,0 +1,78 @@
+#NEXUS
+
+[ Datation avec fossiles comme feuilles (FBD, total evidence) ]
+[ Executer dans MrBayes avec:  execute datation_feuilles_mb.nex ]
+
+begin mrbayes;
+  set autoclose=yes nowarn=yes;
+  execute Osmundaceae_TED.nex;
+
+  [ Deux partitions: ADN et morphologie ]
+  charset ADN = 1-8628;
+  charset morpho = 8629-8653;
+  partition donnees = 2: ADN, morpho;
+  set partition = donnees;
+
+  [ ADN: HKY+G; morphologie: Mkv (caracteres variables seulement) ]
+  lset applyto=(1) nst=2 rates=gamma;
+  lset applyto=(2) coding=variable rates=equal;
+  unlink statefreq=(all) tratio=(all) shape=(all);
+  prset applyto=(all) ratepr=variable;
+
+  [ Liste des fossiles, pour pouvoir les retirer au moment du resume ]
+  taxset fossiles = Todea_tidwellii_135 Osmunda_cinnamomea_Neogene_USA_16
+    Osmunda_cinnamomea_Neogene_Japan_13
+    Osmunda_cinnamomea_Cretaceous_Canada_80 Osmunda_precinnamomea_60
+    Osmunda_chengii_150 Osmunda_bromeliaefolia_12 Osmunda_arnoldii_60
+    Osmunda_dowkeri_58 Osmunda_ilianensis_5 Osmunda_oregonensis_36
+    Osmunda_pluma_60 Osmunda_shimokawaensis_13 Osmunda_wehrii_16
+    Osmunda_pulchella_184 Osmunda_liaoningensis_160 Osmunda_wangii_160
+    Osmunda_plumites_160;
+
+  [ Age des fossiles (Ma): uniforme entre les bornes stratigraphiques ]
+  calibrate
+    Todea_tidwellii_135 = uniform(129, 140)
+    Osmunda_cinnamomea_Neogene_USA_16 = fixed(16)
+    Osmunda_cinnamomea_Neogene_Japan_13 = uniform(12, 14)
+    Osmunda_cinnamomea_Cretaceous_Canada_80 = uniform(72, 83)
+    Osmunda_precinnamomea_60 = uniform(56, 66)
+    Osmunda_chengii_150 = uniform(145, 160)
+    Osmunda_bromeliaefolia_12 = uniform(11, 14)
+    Osmunda_arnoldii_60 = uniform(56, 66)
+    Osmunda_dowkeri_58 = uniform(56, 59)
+    Osmunda_ilianensis_5 = uniform(4, 6)
+    Osmunda_oregonensis_36 = uniform(34, 40)
+    Osmunda_pluma_60 = uniform(56, 66)
+    Osmunda_shimokawaensis_13 = uniform(12, 14)
+    Osmunda_wehrii_16 = fixed(16)
+    Osmunda_pulchella_184 = uniform(183, 185)
+    Osmunda_liaoningensis_160 = uniform(153, 165)
+    Osmunda_wangii_160 = uniform(153, 165)
+    Osmunda_plumites_160 = uniform(153, 165);
+  prset nodeagepr = calibrated;
+
+  [ A priori: processus de naissance-mort fossilise (FBD) ]
+  prset brlenspr = clock:fossilization;
+  prset samplestrat = random sampleprob = 0.536;
+  prset speciationpr = exp(10);
+  prset extinctionpr = beta(1, 1);
+  prset fossilizationpr = beta(1, 1);
+  prset treeagepr = uniform(185, 360);
+
+  [ Horloge stricte (comme dans le tutoriel BEAST) ]
+  prset clockvarpr = strict;
+  prset clockratepr = lognorm(-7, 1);
+
+  showmodel;
+
+  mcmcp ngen=5000000 samplefreq=1000 printfreq=10000 diagnfreq=10000
+    nchains=4 nruns=2 filename=osm_feuilles;
+  mcmc;
+
+  sump;
+  sumt;
+
+  [ Arbre resume sans les fossiles ]
+  delete fossiles;
+  sumt output=osm_feuilles_actuelles;
+end;

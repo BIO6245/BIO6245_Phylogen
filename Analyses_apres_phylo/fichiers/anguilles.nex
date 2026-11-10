@@ -1,0 +1,216 @@
+#NEXUS
+
+BEGIN TAXA;
+	DIMENSIONS NTAX=61;
+	TAXLABELS
+		Moringua_edwardsi
+		Kaupichthys_nuchalis
+		Gorgasia_taiwanensis
+		Heteroconger_hassi
+		Venefica_proboscidea
+		Anguilla_rostrata
+		Anguilla_anguilla
+		Anguilla_bicolor
+		Anguilla_japonica
+		Serrivomer_beanii
+		Nemichthys_scolopaceus
+		Kaupichthys_hyoproroides
+		Dysomma_anguillare
+		Simenchelys_parasitica
+		Gnathophis_longicauda
+		Facciolella_gilbertii
+		Nettastoma_melanurum
+		Gavialiceps_taeniola
+		Uroconger_lepturus
+		Bathyuroconger_vicinus
+		Rhynchoconger_flavus
+		Saurenchelys_fierasfer
+		Myrophis_vafer
+		Conger_verreaxi
+		Conger_wilsoni
+		Conger_myriaster
+		Conger_japonicus
+		Scolecenchelys_breviceps
+		Myrichthys_maculosus
+		Ophichthus_zophochir
+		Ophichthus_serpentinus
+		Myrichthys_breviceps
+		Brachysomophis_crocodilinus
+		Pisodonophis_cancrivorus
+		Ichthyapus_ophioneus
+		Myrichthys_magnificus
+		Oxyconger_leptognathus
+		Gymnothorax_moringa
+		Gymnothorax_castaneus
+		Gymnothorax_pseudothyrsoideus
+		Rhinomuraena_quaesita
+		Gymnothorax_reticularis
+		Gymnothorax_kidako
+		Gymnothorax_flavimarginatus
+		Uropterygius_micropterus
+		Scuticaria_tigrina
+		Congresox_talabonoides
+		Muraenesox_bagio
+		Muraenesox_cinereus
+		Cynoponticus_ferox
+		Ariosoma_anago
+		Parabathymyrus_macrophthalmus
+		Ariosoma_balearicum
+		Poeciloconger_kapala
+		Ariosoma_shiroanago
+		Serrivomer_sector
+		Paraconger_notialis
+		Moringua_javanica
+		Elops_saurus
+		Megalops_cyprinoides
+		Albula_vulpes
+	;
+END;
+
+BEGIN CHARACTERS;
+	TITLE Alimentation;
+	DIMENSIONS NCHAR=1;
+	FORMAT DATATYPE=STANDARD SYMBOLS="0 1" MISSING=? GAP=-;
+	CHARSTATELABELS
+		1 mode_alimentation / morsure succion
+	;
+	MATRIX
+	Moringua_edwardsi	0
+	Kaupichthys_nuchalis	0
+	Gorgasia_taiwanensis	1
+	Heteroconger_hassi	1
+	Venefica_proboscidea	0
+	Anguilla_rostrata	1
+	Anguilla_anguilla	1
+	Anguilla_bicolor	1
+	Anguilla_japonica	1
+	Serrivomer_beanii	0
+	Nemichthys_scolopaceus	0
+	Kaupichthys_hyoproroides	0
+	Dysomma_anguillare	0
+	Simenchelys_parasitica	1
+	Gnathophis_longicauda	1
+	Facciolella_gilbertii	0
+	Nettastoma_melanurum	0
+	Gavialiceps_taeniola	0
+	Uroconger_lepturus	1
+	Bathyuroconger_vicinus	0
+	Rhynchoconger_flavus	1
+	Saurenchelys_fierasfer	0
+	Myrophis_vafer	0
+	Conger_verreaxi	1
+	Conger_wilsoni	1
+	Conger_myriaster	1
+	Conger_japonicus	1
+	Scolecenchelys_breviceps	1
+	Myrichthys_maculosus	1
+	Ophichthus_zophochir	1
+	Ophichthus_serpentinus	1
+	Myrichthys_breviceps	1
+	Brachysomophis_crocodilinus	0
+	Pisodonophis_cancrivorus	0
+	Ichthyapus_ophioneus	0
+	Myrichthys_magnificus	1
+	Oxyconger_leptognathus	0
+	Gymnothorax_moringa	0
+	Gymnothorax_castaneus	0
+	Gymnothorax_pseudothyrsoideus	0
+	Rhinomuraena_quaesita	0
+	Gymnothorax_reticularis	0
+	Gymnothorax_kidako	0
+	Gymnothorax_flavimarginatus	0
+	Uropterygius_micropterus	0
+	Scuticaria_tigrina	0
+	Congresox_talabonoides	1
+	Muraenesox_bagio	0
+	Muraenesox_cinereus	0
+	Cynoponticus_ferox	0
+	Ariosoma_anago	1
+	Parabathymyrus_macrophthalmus	1
+	Ariosoma_balearicum	1
+	Poeciloconger_kapala	1
+	Ariosoma_shiroanago	1
+	Serrivomer_sector	0
+	Paraconger_notialis	1
+	Moringua_javanica	0
+	Elops_saurus	1
+	Megalops_cyprinoides	1
+	Albula_vulpes	1
+	;
+END;
+
+BEGIN CHARACTERS;
+	TITLE Taille;
+	DIMENSIONS NCHAR=1;
+	FORMAT DATATYPE=CONTINUOUS;
+	CHARSTATELABELS
+		1 log_longueur_max
+	;
+	MATRIX
+	Moringua_edwardsi	2.7081
+	Kaupichthys_nuchalis	2.7726
+	Gorgasia_taiwanensis	4.3054
+	Heteroconger_hassi	3.6889
+	Venefica_proboscidea	4.6052
+	Anguilla_rostrata	5.0239
+	Anguilla_anguilla	3.9120
+	Anguilla_bicolor	4.7875
+	Anguilla_japonica	5.0106
+	Serrivomer_beanii	4.3567
+	Nemichthys_scolopaceus	4.8675
+	Kaupichthys_hyoproroides	3.4012
+	Dysomma_anguillare	3.9512
+	Simenchelys_parasitica	4.1109
+	Gnathophis_longicauda	3.6533
+	Facciolella_gilbertii	4.1109
+	Nettastoma_melanurum	4.3477
+	Gavialiceps_taeniola	4.1698
+	Uroconger_lepturus	3.9512
+	Bathyuroconger_vicinus	4.4773
+	Rhynchoconger_flavus	5.0106
+	Saurenchelys_fierasfer	3.9120
+	Myrophis_vafer	3.8286
+	Conger_verreaxi	5.2983
+	Conger_wilsoni	5.0106
+	Conger_myriaster	4.6052
+	Conger_japonicus	4.9416
+	Scolecenchelys_breviceps	4.0943
+	Myrichthys_maculosus	4.6052
+	Ophichthus_zophochir	4.4773
+	Ophichthus_serpentinus	4.2195
+	Myrichthys_breviceps	4.6250
+	Brachysomophis_crocodilinus	4.7875
+	Pisodonophis_cancrivorus	4.6821
+	Ichthyapus_ophioneus	3.8067
+	Myrichthys_magnificus	4.3567
+	Oxyconger_leptognathus	4.0943
+	Gymnothorax_moringa	5.2983
+	Gymnothorax_castaneus	5.0106
+	Gymnothorax_pseudothyrsoideus	4.3820
+	Rhinomuraena_quaesita	4.8675
+	Gymnothorax_reticularis	4.0943
+	Gymnothorax_kidako	4.5163
+	Gymnothorax_flavimarginatus	5.4806
+	Uropterygius_micropterus	3.4012
+	Scuticaria_tigrina	4.7875
+	Congresox_talabonoides	5.5215
+	Muraenesox_bagio	5.2983
+	Muraenesox_cinereus	5.3936
+	Cynoponticus_ferox	5.2983
+	Ariosoma_anago	4.0943
+	Parabathymyrus_macrophthalmus	3.8501
+	Ariosoma_balearicum	3.5553
+	Poeciloconger_kapala	4.0943
+	Ariosoma_shiroanago	3.6889
+	Serrivomer_sector	4.3307
+	Paraconger_notialis	4.1384
+	Moringua_javanica	4.7875
+	Elops_saurus	4.6052
+	Megalops_cyprinoides	5.0106
+	Albula_vulpes	4.6444
+	;
+END;
+
+BEGIN TREES;
+	TREE anguilles = [&R] ((Moringua_edwardsi:85.62618561,((((Kaupichthys_nuchalis:59.08822024,((Gorgasia_taiwanensis:1.327566935,Heteroconger_hassi:1.327566935):57.49940879,(Venefica_proboscidea:44.65436052,((((Anguilla_rostrata:6.027710328,Anguilla_anguilla:6.027710328):10.0360445,(Anguilla_bicolor:11.83522957,Anguilla_japonica:11.83522957):4.228525255):15.145997,Serrivomer_beanii:31.20975183):7.726409266,((Nemichthys_scolopaceus:28.58503593,Kaupichthys_hyoproroides:28.58503593):3.690188926,(Dysomma_anguillare:22.91897503,Simenchelys_parasitica:22.91897502):9.356249841):6.660936241):5.718199424):14.1726152):0.2612445229):7.642085787,(((Gnathophis_longicauda:49.17234326,((Facciolella_gilbertii:12.77457712,Nettastoma_melanurum:12.77457712):28.6631336,((Gavialiceps_taeniola:29.9155294,((Uroconger_lepturus:16.74380238,Bathyuroconger_vicinus:16.74380238):5.797571834,Rhynchoconger_flavus:22.54137421):7.374155181):5.044438385,Saurenchelys_fierasfer:34.95996779):6.477742938):7.734632528):9.032629715,((((Myrophis_vafer:6.204793528,(Conger_verreaxi:3.516555662,Conger_wilsoni:3.516555662):2.688237866):27.93394837,((Conger_myriaster:9.527511504,Conger_japonicus:9.527511504):7.403367067,Scolecenchelys_breviceps:16.93087857):17.20786333):14.06138615,((((Myrichthys_maculosus:12.89223268,(Ophichthus_zophochir:9.818727927,Ophichthus_serpentinus:9.818727927):3.07350476):8.949741592,(Myrichthys_breviceps:10.40352637,Brachysomophis_crocodilinus:10.40352637):11.4384479):5.616744734,Pisodonophis_cancrivorus:27.45871901):8.243604497,Ichthyapus_ophioneus:35.7023235):12.49780454):6.419142089,(Myrichthys_magnificus:21.31432739,Oxyconger_leptognathus:21.31432739):33.30494274):3.585702826):2.572211391,((((((Gymnothorax_moringa:23.41594606,Gymnothorax_castaneus:23.41594606):5.604799738,((Gymnothorax_pseudothyrsoideus:12.18988328,((Rhinomuraena_quaesita:6.977032861,Gymnothorax_reticularis:6.977032861):4.685955035,Gymnothorax_kidako:11.6629879):0.5268953837):5.32445005,Gymnothorax_flavimarginatus:17.51433334):11.50641247):4.476649608,(Uropterygius_micropterus:14.79071602,Scuticaria_tigrina:14.79071602):18.7066794):9.766889387,((Congresox_talabonoides:13.87294385,(Muraenesox_bagio:6.29551164,Muraenesox_cinereus:6.29551164):7.577432206):12.01920418,Cynoponticus_ferox:25.89214803):17.37213677):4.663560081,((Ariosoma_anago:14.59133965,Parabathymyrus_macrophthalmus:14.59133965):17.5091625,(Ariosoma_balearicum:17.15293939,(Poeciloconger_kapala:5.605032554,Ariosoma_shiroanago:5.605032554):11.54790684):14.94756277):15.82734273):4.78162335,Serrivomer_sector:52.70946823):8.067716127):5.953121679):1.997770954,Paraconger_notialis:68.72807699):10.05263617,Moringua_javanica:78.78071317):6.845472457):13.37381436,((Elops_saurus:30.49876819,Megalops_cyprinoides:30.49876819):25.91122814,Albula_vulpes:56.40999634):42.59000365);
+END;
