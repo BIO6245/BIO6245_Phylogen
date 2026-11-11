@@ -195,3 +195,17 @@ Avec les données Sanger:
 
 Avec les données HybSeq:    
   - [HybSeq/12--Arbre_despeces.md](HybSeq/11--Arbre_despeces.md)
+  
+## T.P. 9: Datation et utilisations d'une phylogénie pour tester des hypothèses
+
+Pour ce T.P., faites les tutoriels suivants:
+
+  - [Sanger/09--Datation.md](Sanger/09--Datation.md)
+  
+  - [Analyses_apres_phylo/01--Etats_ancestraux.md](Analyses_apres_phylo/01--Etats_ancestraux.md)
+  
+  - [Analyses_apres_phylo/02--Modeles_evolutifs.md](Analyses_apres_phylo/02--Modeles_evolutifs.md)
+  
+  - [Analyses_apres_phylo/03--Biogeographie_historique.md](Analyses_apres_phylo/03--Biogeographie_historique.md)
+  
+  

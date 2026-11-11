@@ -529,72 +529,72 @@ Sur le serveur de calcul, il faut aussi installer ces modules dans votre
 
 #### Préparer l'analyse dans BEAUti
 
-1. **Importer l'ADN**: `File > Import Alignment` → `Osmundaceae_dna.nex`
- (33 taxons, 8628 sites).
+1. **Importer l'ADN**: `File > Import Alignment`, choisir `Osmundaceae_dna.nex`
+  (33 taxons, 8628 sites).
 
-2. **Importer la morphologie**: `File > Add Morphological Data` →
- `Osmundaceae_morph.nex`. À la question sur le conditionnement sur les
- caractères variables seulement (Mkv), répondre **Yes**: les caractères
- invariables ne sont presque jamais codés dans une matrice morphologique
- (biais de détermination, *ascertainment bias*). BEAUti crée deux partitions
- morphologiques: une pour les caractères à 2 états et une pour ceux à 3 états.
+2. **Importer la morphologie**: `File > Add Morphological Data`, choisir
+  `Osmundaceae_morph.nex`. À la question sur le conditionnement sur les
+  caractères variables seulement (Mkv), répondre **Yes**: les caractères
+  invariables ne sont presque jamais codés dans une matrice morphologique
+  (biais de détermination, *ascertainment bias*). BEAUti crée deux partitions
+  morphologiques: une pour les caractères à 2 états et une pour ceux à 3 états.
 
 3. **Onglet *Partitions***: les trois partitions doivent partager **un seul
- arbre**. Dans la colonne *Tree*, renommer l'arbre de la partition d'ADN
- `tree`, puis choisir `tree` pour les deux partitions morphologiques. Garder
- les deux horloges par défaut (une pour l'ADN, une pour la morphologie).
+  arbre**. Dans la colonne *Tree*, renommer l'arbre de la partition d'ADN
+  `tree`, puis choisir `tree` pour les deux partitions morphologiques. Garder
+  les deux horloges par défaut (une pour l'ADN, une pour la morphologie).
 
 4. **Onglet *Tip Dates***: cocher **Use tip dates**. Choisir
- *numerically as… year* et **Before the present**, puis cliquer sur
- **Auto-configure**. Choisir *use everything*, l'option **after last** et le
- caractère `_`, puis **OK**. BEAUti lit l'âge de chaque unité à la fin de son
- nom. Ce sont des âges **initiaux**; l'incertitude sera ajoutée à l'étape 8.
+  *numerically as… year* et **Before the present**, puis cliquer sur
+  **Auto-configure**. Choisir *use everything*, l'option **after last** et le
+  caractère `_`, puis **OK**. BEAUti lit l'âge de chaque unité à la fin de son
+  nom. Ce sont des âges **initiaux**; l'incertitude sera ajoutée à l'étape 8.
 
 5. **Onglet *Site Model***:
     - ADN: **HKY**, *Gamma Category Count* = **4**, *Kappa* et
-   *Frequencies* estimés.
+    *Frequencies* estimés.
     - Partitions morphologiques: garder **Lewis Mk** et mettre
-   *Gamma Category Count* à **0** (un seul taux par partition).
+    *Gamma Category Count* à **0** (un seul taux par partition).
 
 6. **Onglet *Clock Model***: garder une **Strict Clock** estimée pour l'ADN
- et pour la morphologie. Avec si peu de caractères morphologiques, un modèle
- d'horloge plus complexe serait difficile à estimer.
+  et pour la morphologie. Avec si peu de caractères morphologiques, un modèle
+  d'horloge plus complexe serait difficile à estimer.
 
 7. **Onglet *Priors***:
     - **Tree.t**: choisir **Fossilized Birth-Death Model**.
     - **rho**: **0.536** (15 espèces actuelles échantillonnées sur environ
-   28 espèces acceptées).
+    28 espèces acceptées).
     - Taux d'horloge de l'ADN et de la morphologie (`clockRate.c:...`):
-   **Exponential** de moyenne 1,0.
+    **Exponential** de moyenne 1,0.
     - **OriginFBD**: **Uniform** entre **230** et **360** Ma, avec une valeur
-   initiale de **250** (bouton *initial =*). L'origine est le début du
-   processus, sur la branche qui mène à la racine: elle est donc plus vieille
-   que la racine elle-même.
+    initiale de **250** (bouton *initial =*). L'origine est le début du
+    processus, sur la branche qui mène à la racine: elle est donc plus vieille
+    que la racine elle-même.
     - **diversificationRateFBD**: **Exponential** de moyenne 1,0.
     - **samplingProportionFBD**: **Exponential** de moyenne **0.1**, valeur
-   initiale 0.1.
+    initiale 0.1.
     - **turnoverFBD**: garder l'a priori uniforme par défaut.
 
 8. **Ajouter l'incertitude sur l'âge des fossiles**. Pour chaque fossile avec
- un intervalle d'âge:
+  un intervalle d'âge:
     - Cliquer sur **+ Add Prior** et choisir
-   **Sampled Ancestors MRCA Prior**.
+    **Sampled Ancestors MRCA Prior**.
     - Nommer le groupe (par ex. `tidwellii`), y mettre **un seul taxon**
-   (`Todea_tidwellii_135`), puis **OK**.
+    (`Todea_tidwellii_135`), puis **OK**.
     - Choisir la distribution **Uniform**, avec les bornes du tableau
-   ci-dessus (ici **129** et **140**).
+    ci-dessus (ici **129** et **140**).
     - Cocher **Tipsonly**: l'a priori porte sur l'âge de la feuille, et non
-   sur celui de son ancêtre.
+    sur celui de son ancêtre.
 
-   Répétez pour les 16 fossiles qui ont un intervalle d'âge. Les deux
+Répétez pour les 16 fossiles qui ont un intervalle d'âge. Les deux
  fossiles avec un âge fixe (16 Ma) n'ont pas besoin d'a priori: ils
  garderont leur âge initial. C'est une étape répétitive; le tutoriel de
  Taming the BEAST fournit un script R (`add_age_uncertainty.R`) pour
  l'automatiser dans le fichier XML.
 
 9. **Onglet *MCMC***: *Chain Length* = **30 000 000**. Sauvegarder sous
- `Osmundaceae_FBD.xml`. Cocher ensuite **Sample From Prior** et sauvegarder
- sous `Osmundaceae_FBD_prior.xml`.
+  `Osmundaceae_FBD.xml`. Cocher ensuite **Sample From Prior** et sauvegarder
+  sous `Osmundaceae_FBD_prior.xml`.
 
 #### Lancer l'analyse
 
@@ -609,28 +609,28 @@ Cette analyse est plus longue que celle de la partie 1: utilisez de
 #### Analyser les résultats
 
 1. **Tracer**: ouvrir le fichier `.log` de l'analyse et celui de l'analyse
- *sample from prior*.
+  *sample from prior*.
     - Vérifier la convergence (ESS > 200).
     - Comparer a priori et a posteriori (*Marginal Density*) pour les âges
-   des fossiles, les paramètres du modèle FBD et les taux d'horloge.
+    des fossiles, les paramètres du modèle FBD et les taux d'horloge.
 
 2. **TreeAnnotator**: *burn-in* de 10 %, **Maximum clade credibility tree**,
- **Median heights**, sur le fichier `.trees` de l'analyse. Un avertissement
- sur les ancêtres échantillonnés est normal.
+  **Median heights**, sur le fichier `.trees` de l'analyse. Un avertissement
+  sur les ancêtres échantillonnés est normal.
 
 3. **Visualiser l'arbre**: FigTree n'affiche pas bien les ancêtres
- échantillonnés (branches de longueur nulle). Utilisez plutôt
- [IcyTree](https://icytree.org) dans un navigateur:
+  échantillonnés (branches de longueur nulle). Utilisez plutôt
+  [IcyTree](https://icytree.org) dans un navigateur:
     - `Style > Axis > Age` pour l'échelle de temps;
     - décocher `Style > Collapse zero-length edges` pour voir les ancêtres
-   échantillonnés;
+    échantillonnés;
     - `Style > Node height error bars > height_95%_HPD` pour l'incertitude
-   sur les âges.
+    sur les âges.
 
 - **Question**: Quels fossiles sont placés comme ancêtres échantillonnés?
- Leur position dans l'arbre est-elle bien soutenue? Pourquoi la position des
- fossiles est-elle souvent beaucoup plus incertaine que celle des espèces
- actuelles?
+  Leur position dans l'arbre est-elle bien soutenue? Pourquoi la position des
+  fossiles est-elle souvent beaucoup plus incertaine que celle des espèces
+  actuelles?
 
 ### Fossiles comme feuilles dans MrBayes
 
