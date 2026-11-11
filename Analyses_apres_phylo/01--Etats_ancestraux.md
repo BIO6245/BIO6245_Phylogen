@@ -55,10 +55,12 @@ Pour Mesquite, les mêmes données sont fournies dans le fichier
 
   1. Installer **R** à partir du CRAN: <https://cran.r-project.org> (choisir
   votre système d'exploitation, puis la version de base, *base*).
-  2. (Recommandé) Installer **RStudio Desktop**, une interface conviviale pour
+  2. Sur Windows, installer la version la plus récente de **RTools**: 
+  <https://cran.r-project.org/bin/windows/Rtools/>
+  3. (Recommandé) Installer **RStudio Desktop**, une interface conviviale pour
   R: <https://posit.co/download/rstudio-desktop/>. RStudio a besoin que R soit
   déjà installé.
-  3. Ouvrir R ou RStudio et installer le paquet **phytools** (qui installe
+  4. Ouvrir R ou RStudio et installer le paquet **phytools** (qui installe
   aussi **ape** automatiquement) en tapant dans la console:
   ```r
   install.packages("phytools")
